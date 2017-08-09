@@ -52,6 +52,8 @@ Object.keys(allRooms).sort().forEach(owner => {
 
     var room = document.createElement('div');
     var roomHeader = document.createElement('div');
+    var course = document.createElement('div');
+    var hole = document.createElement('div');
     var roomOwner = document.createElement('div');
     var roomNo = document.createElement('div');
 
