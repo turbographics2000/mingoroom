@@ -77,9 +77,26 @@ Object.keys(allRooms).sort().forEach(owner => {
 
 
 OAuth.initialize('yX1CCTTxmjkYiKN-OOcWyiIaxQE');
-OAuth.redirect('twitter', 'https://turbographics2000.github.io/mingoroom/');
-OAuth.callback('twitter').done(function(twitter) {
-  console.log(twitter);
+//OAuth.redirect('twitter', 'https://turbographics2000.github.io/mingoroom/');
+OAuth.callback('twitter').done(function(result) {
+  result.me()
+    .done(res => {
+        // res = {
+        //   alias:"gtk2k"
+        //   avatar:"https://pbs.twimg.com/profile_images/3505213319/b01e2067b3fa616659f3e9cd8e9bc0e7_normal.jpeg",
+        //   bio:"とりあえず、プログラマーです。",
+        //   id:"152128707",
+        //   language:"ja",
+        //   location:"",
+        //   name:"mashroom23",
+        //   raw:{id: 152128707, id_str: "152128707", name: "mashroom23", screen_name: "mashroom23", location: "", …}
+        //   timezone:"Hawaii"
+        //   url:"https://twitter.com/mashroom23"
+        //   website:null
+        // };
+        console.log(response.name);
+
+    });
 }).fail(function(err) {
   //todo when the OAuth flow failed
 });
@@ -87,20 +104,6 @@ OAuth.callback('twitter').done(function(twitter) {
 //   .done(result => {
 //     result.me()
 //       .done(function (response) {
-//         //response = {
-//         //   alias:"mashroom23"
-//         //   avatar:"https://pbs.twimg.com/profile_images/3505213319/b01e2067b3fa616659f3e9cd8e9bc0e7_normal.jpeg",
-//         //   bio:"とりあえず、プログラマーです。",
-//         //   id:"152128707",
-//         //   language:"ja",
-//         //   location:"",
-//         //   name:"mashroom23",
-//         //   raw:{id: 152128707, id_str: "152128707", name: "mashroom23", screen_name: "mashroom23", location: "", …}
-//         //   timezone:"Hawaii"
-//         //   url:"https://twitter.com/mashroom23"
-//         //   website:null
-//         // };
-//         console.log(response.name);
 //       })
 //       .fail(function (err) {
 //         console.log(err);
