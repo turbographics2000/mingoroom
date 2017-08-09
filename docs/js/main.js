@@ -77,9 +77,9 @@ Object.keys(allRooms).sort().forEach(owner => {
 
 
 OAuth.initialize('yX1CCTTxmjkYiKN-OOcWyiIaxQE');
-//OAuth.redirect('twitter', 'https://turbographics2000.github.io/mingoroom/');
-OAuth.callback('twitter').done(function(result) {
-  result.me()
+OAuth.redirect('twitter', 'https://turbographics2000.github.io/mingoroom/');
+OAuth.callback('twitter').done(twitter => {
+  twitter.me()
     .done(res => {
         // res = {
         //   alias:"gtk2k"
