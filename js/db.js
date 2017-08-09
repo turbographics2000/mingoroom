@@ -1,5 +1,4 @@
 db.version(1).stores({
-    login: 'accessToken, accessTokenSecret',
     rooms: '[owner+time], course, holes, no',
     roomImages: '*owner, *tag, img',
     users: 'name, img'
