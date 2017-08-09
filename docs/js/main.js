@@ -86,9 +86,11 @@ OAuth.popup('twitter')
         console.log(response.name);
       })
       .fail(function (err) {
+        console.log(err);
         //handle error with err
       });
   })
   .fail(err => {
+    console.log(err);
     //handle error with err
   });
