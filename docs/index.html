@@ -2,16 +2,200 @@
 <html lang="ja">
 
 <head>
-    <title>みんゴルーム(仮)</title>
+    <title>みんなでゴルフ待合所(仮題)</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
-    <div id="mingoroomContainer"></div>
+    <div class="page-header">
+        <div class="page-title bold">みんなでゴルフ待合所 (仮題)</div>
+        <div class="account-container">
+            <img id="accountAvatar" src="" alt="avater">
+        </div>
+    </div>
+    <div class="filter-row">
+        <div class="filter-container">
+            <div class="filter-title">フィルター：</div>
+            <div class="filter-label">コース</div>
+            <select id="filterCourseSelect" class="filter-select">
+                        <option value="all">全コース</option>
+                        <option value="tokyo">東京</option>
+                        <option value="scotish">スコ</option>
+                        <option value="ocean">オーシャン</option>
+                        <option value="kafu">華風</option>
+                        <option value="panta">パンタ</option>
+                        <option value="acro">アクロ</option>
+                    </select>
+            <div class="filter-label">Hole</div>
+            <select id="filterHoleSelect" class="filter-select">
+                        <option value="all">全Hole</option>
+                        <option value="3">3</option>
+                        <option value="6">6</option>
+                        <option value="9">9</option>
+                    </select>
+            <div id="roomCount" style="display:none">30室</div>
+        </div>
+    </div>
+    <div id="mingoroomContainer">
+    </div>
+    <div id="dialogMask" style="display:none"></div>
+    <div id="welcomDialog" style="display: none" class="dialog">
+        <div class="dialog-header">ようこそ 「みんなでゴルフ待合所 (仮題)」へ</div>
+        <h3>「みんなでゴルフ待合所 (仮題)」について</h3>
+        <div>「みんなでゴルフ待合所 (仮題)」は拡張機能で動作するシステムとなっています。ですので、<span class="bold">拡張機能をインストールしなければなりません。</span></div>
+        <div>拡張機能はChromeの拡張機能となっていますので、<span class="bold">対応ブラウザーはChromeのみ、また、対応デバイスはPCのみとさせていただきます。</span></div>
+        <div class="button-container">
+            <button id="btnExtInstall">拡張機能インストール</button>
+        </div>
+    </div>
+    <div id="startDialog" style="display: none" class="dialog">
+        <div class="dialog-header">初めに</div>
+        <div>「みんなでゴルフ待合所 (仮題)」は経費0にするため、サーバーのないシステムとなっています。 </div>
+        <div>そのため、普通のシステムとは違いちょっと面倒くさいシステムとなっています。</div>
+        <div>次のステップから面倒くさいところの説明をしますので、お読みになりご理解のほどよろしくお願いいたします。</div>
+        <div class="button-container">
+            <button id="btnGoToStep1">次へ</button>
+        </div>
+    </div>
+    <div id="step1Dialog" style="display: none" class="dialog">
+        <div class="dialog-header">面倒くさいところ その1/2</div>
+        <h2>アカウント登録</h2>
+        <div><span class="bold">アカウント登録は必須とさせていただきます。</span></div>
+        <div>少し手間がかかるTwitterアカウントを利用したなんちゃって認証による登録となっているため、<span class="bold">Twitterアカウントも必須となります。</span></div>
+        <div>サーバーがないため登録情報は、ローカルに保存されます。</div>
+        <div class="button-container">
+            <button id="btnGoToStep2">次へ</button>
+        </div>
+    </div>
+    <div id="step2Dialog" style=" display: none" class="dialog">
+        <div class="dialog-header">面倒くさいところ その2/2</div>
+        <h2>待合室作成</h2>
+        <div>待合室を作成すると、アカウント情報と同様にローカルに保存されます。</div>
+        <div>他のユーザーの画面に自分が作成した待合室を表示させるには、<span class="bold">「みんなでゴルフ待合所 (仮題)」を開いておかなければなりません。</span></div>
+        <div class="button-container">
+            <button id="btnRegAccountStep">アカウント登録へ</button>
+        </div>
+    </div>
+    <div id="accountDialog" style="display: none" class="dialog">
+        <div class="dialog-header">アカウント登録</div>
+        <div class="dialog-row">
+            <div>１．まず、Twitterのアカウントのユーザー名を以下の認証キーに変更します。</div>
+        </div>
+        <div class="dialog-row">
+            <div id="accountKeyDisp"></div>
+        </div>
+        <div class="dialog-row"></div>
+        <div class="dialog-row">
+            <div>２．みんゴルの名前とTwitterのIDを入力し、登録ボタンをクリックしてください。</div>
+            <div class="dialog-row">
+                <div class="dialog-label">みんゴル名</div>
+                <div class="dialog-input">
+                    <input type="text" id="regMingolName">
+                    <span class="invalid-message" id="regMingolNameErrorMsg"></span>
+                </div>
+            </div>
+            <div class="dialog-row">
+                <div class="dialog-label">Twitter ID</div>
+                <div class="dialog-input">
+                    <input type="text" id="regTwitterId">
+                    <span class="invalid-message" id="regTwitterIdErrorMsg"></span>
+                </div>
+            </div>
+        </div>
+        <div class="button-container">
+            <button id="btnRegAccount">登録</button>
+        </div>
+    </div>
+    <div id="regAccountSuccesssDialog" style="display: none" class="dialog">
+        <span>ユーザー登録行いました。Twitterのユーザー名は元に戻して構いません。</span>
+        <button id="btnGoToSystem">OK</button>
+    </div>
+    <div id="accountSettingDialog" style="display: none" class="dialog">
+        <img id="imgAvatar" src="" alt="avatar">
+    </div>
+    <div id="roomDialog" style="display: none" class="dialog">
+        <div id="roomSettingHeader" class="dialog-header">待合室作成</div>
+        <div class="dialog-row">
+            <div class="dialog-label">開始日時</div>
+            <div class="dialog-input">
+                <span id="roomStartDate">2017/08/17</span>
+                <span id="roomStartTime">00:00</span>
+            </div>
+        </div>
+        <div class="dialog-row">
+            <div class="dialog-label">タイトル</div>
+            <div class="dialog-input">
+                <input type="text" id="regRoomTitle" class="require" maxlength="12"> (最大12文字)
+            </div>
+        </div>
+        <div class="dialog-row">
+            <div class="dialog-label">コース</div>
+            <div class="dialog-input">
+                <select id="regRoomCourse">
+                            <option value="tokyo">東京グランドゴルフガーデン</option>
+                            <option value="scotish">スコティッシュクラシック</option>
+                            <option value="ocean">オーシャンラグーンリゾート</option>
+                            <option value="kafu">華風カントリー倶楽部</option>
+                            <option value="panta">パンターノカントリークラブ</option>
+                            <option value="acro">アクロポリスレガシー</option>
+                        </select>
+            </div>
+        </div>
+        <div class="dialog-row">
+            <div class="dialog-label">Hole</div>
+            <select id="regRoomHole">
+                        <option value="3">3 Hole</option>
+                        <option value="6">6 Hole</option>
+                        <option value="9">9 Hole</option>
+                    </select>
+        </div>
+        <div class="dialog-row">
+            <div class="dialog-label">待ち合わせナンバー</div>
+            <div class="dialog-input">
+                <input type="text" id="regRoomNo" class="require" maxlength="6"> (6文字)
+            </div>
+        </div>
+        <div class="dialog-comment-title">コメント (最大200文字)</div>
+        <textarea id="regRoomComment" style="width:100%;height: 100px;" maxlength="200" rows="10" cols="30"></textarea>
+        <div class="button-container">
+            <button id="btnRegRoom">登録</button><button id="btnRegRoomCancel">キャンセル</button>
+        </div>
+    </div>
+    <div id="roomViewDialog" style="display:none" class="dialog">
+        <div class="dialog-header" id="viewRoomTitle">マッチA</div>
+        <div class="dialog-row">
+            <div id="viewRoomSummary">2017/08/17 00:00 オーシャン 3Hole</div>
+        </div>
+        <div class="dialog-row">
+            <div id="viewRoomComment">コメント</div>
+        </div>
+        <div class="dialog-row">
+            <div class="dialog-comment-title">参加予定
+                <div id="viewRoomMemberCount"></div>
+            </div>
+            <div id="memberList"></div>
+            <div id="btnRoomEdit" style="display:none">編集</div>
+        </div>
+        <div class="button-container">
+            <button id="btnRoomEdit">編集</button>
+            <button id="btnRoomViewDialogClose">閉じる</button>
+        </div>
+    </div>
+    <div id="failDialog" style="display: none" class="dialog">
+        <span id="failMsg"></span>
+        <button id="btnFailOK">OK</button>
+    </div>
+
+    <div class="modechange-container border" title="モード切替">
+        <div id="btnModeChange"></div>
+        <div id="modeChangeLabel">追加モード</div>
+    </div>
+
+    <!--<div id="connectCount">接続数：1000000</div>-->
+
+    <script src="js/main.js"></script>
 </body>
-<script src="js/oauth.min.js"></script>
-<script src="js/main.js"></script>
 
 </html>
