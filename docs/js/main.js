@@ -101,6 +101,7 @@ function createDebugRoom(year, month, day, hour, minute) {
         var minute = (i % 6) * 10;
         var time =('0' + hour).slice(-2) + ('0' + minute).slice(-2);
         var roomCount = Math.random() * 13 | 0;
+        var course = Object.keys(courses)[Math.random() * 6 | 0];
         for(var r = 0; r < roomCount; r++) {
             var roomId = UUID.generate();//'room' + (rid++); 
             var data = {
@@ -111,8 +112,8 @@ function createDebugRoom(year, month, day, hour, minute) {
                 hour: hour,
                 minute: minute,
                 title: '残暑お見舞い大会ーーーー',
-                course: 'ocean',
-                hole: '3',
+                course: course,
+                hole: [3, 6, 9][Math.random() * 3 | 0],
                 no: '999999',
                 comment: 'ほげ',
                 owner: Object.keys(debugAccounts)[Math.random() * 2 | 0],
@@ -224,7 +225,21 @@ btnModeChange.onclick = function() {
         currentMode = 'delete';
     }
     //document.querySelector('div[data-owner="gtk2kおしgtk2k"]');
-}
+};
+
+filterCourse.onchange = filterHole.onchange = function() {
+    var filter = '';
+    document.querySelectorAll('.room').forEach(elm => elm.style.display = '');
+    if(filterCourse.value !== 'all') {
+        filter += '.room:not([data-course="' + filterCourse.value + '"])';
+    }
+    if(filterHole.value !== 'all') {
+        filter += (filter ? ',' : '') + '.room:not([data-hole="' + filterHole.value + '"])';
+    }
+    if(filter) {
+        document.querySelectorAll(filter).forEach(elm => elm.style.display = 'none');
+    }
+};
 
 
 function appendTimetableRow(year, month, day) {
@@ -310,6 +325,8 @@ function appendRoom(data) {
 
     room.id = data.roomId;
     room.dataset.owner = data.owner;
+    room.dataset.course = data.course;
+    room.dataset.hole = data.hole;
     room.onclick = function(evt) {
         currentRoomData = {};
         Object.assign(currentRoomData, rooms_id[this.id]);
