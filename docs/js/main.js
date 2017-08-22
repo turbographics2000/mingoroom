@@ -135,7 +135,7 @@ accounts = debugAccounts;
 createDebugRoom();
 getMaxRoomCount();
 appendTimetableRow(2017, 8, 20);
-appendDebugRoom();
+appendAllRooms();
 
 accountAvatar.src = accounts[accountId].avatar;
 
@@ -295,6 +295,7 @@ function appendTimetableRow(year, month, day) {
             rowTime.classList.add('timetable-time');
             rowTime.textContent = fmt('h:m', 0, 0, 0, hour, minute, true);
             roomCount.classList.add('timetable-roomcount');
+            roomCount.id = row.id + 'RoomCount';
             btnCreateRoom.classList.add('create-room-button');
             if(currentMode === 'delete') {
                 elmHide(btnCreateRoom);
@@ -316,14 +317,27 @@ function appendTimetableRow(year, month, day) {
                 roomDialogShow();
             }
 
-            rowHeader.appendChild(btnCreateRoom);
             rowHeader.appendChild(rowTime);
             rowHeader.appendChild(roomCount);
+            rowHeader.appendChild(btnCreateRoom);
             row.appendChild(rowHeader);
             
             mingoroomContainer.appendChild(row);
         }
     }
+}
+
+function appendAllRooms() {
+    Object.keys(rooms_datetime).forEach(date => {
+        Object.keys(rooms_datetime[date]).forEach(time => {
+            var rowHeader = window['row' + date + time + 'RoomCount'];
+            var roomIdsParDatetime = Object.keys(rooms_datetime[date][time]);
+            rowHeader.textContent = roomIdsParDatetime.length + '室';
+            roomIdsParDatetime.forEach(roomId => {
+                appendRoom(rooms_id[roomId]);
+            })
+        });
+    })
 }
 
 function appendRoom(data) {

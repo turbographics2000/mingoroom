@@ -205,11 +205,10 @@ body * {
   font-size: smaller;
 }
 .create-room-button{
-  position: absolute;
+  position: relative;
+  display: inline-block;
   width: 30px;
   height: 30px;
-  bottom: 4px;
-  right: 7px;
   border: 1px solid gray;
   text-align: center;
   cursor: pointer;
@@ -226,6 +225,9 @@ body * {
   overflow: hidden;
   cursor: pointer;
   background: white;
+}
+.room.delete-mode {
+  background: #fdd;
 }
 
 .room div {
