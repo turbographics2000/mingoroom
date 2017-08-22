@@ -117,7 +117,8 @@ function createDebugRoom(year, month, day, hour, minute) {
                 no: '999999',
                 comment: 'ほげ',
                 owner: Object.keys(debugAccounts)[Math.random() * 2 | 0],
-                members: Object.keys(debugAccounts).slice(2).slice(0, Math.random() * 11 | 0)
+                members: Object.keys(debugAccounts).slice(2).slice(0, Math.random() * 11 | 0),
+                create_datetime: Date.now()
             };
             upsertRoomData(data);
         }
@@ -138,6 +139,14 @@ appendDebugRoom();
 
 accountAvatar.src = accounts[accountId].avatar;
 
+function elmShow(elm) {
+    elm.classList.remove('hide');
+}
+
+function elmHide(elm) {
+    elm.classList.add('hide');
+}
+
 window.onkeydown = function(evt) {
     if(evt.keyCode === 13) { // Enter
         currentOKButton.onclick.call(currentOKButton);
@@ -147,26 +156,26 @@ window.onkeydown = function(evt) {
 }
 
 btnGoToStep1.onclick = function (evt) {
-    startDialog.style.display = 'none';
-    step1Dialog.style.display = '';
+    elmHide(startDialog);
+    elmShow(step1Dialog);
 };
 btnGoToStep2.onclick = function (evt) {
-    step1Dialog.style.display = 'none';
-    step2Dialog.style.display = '';
+    elmHide(step1Dialog);
+    elmShow(step2Dialog);
 };
 btnRegAccountStep.onclick = function (evt) {
-    step2Dialog.style.display = 'none';
+    elmHide(step2Dialog);
     createRegAccountKey();
-    regAccountDialog.style.display = '';
+    elmShow(regAccountDialog);
 };
 
 btnRegAccount.onclick = function (evt) {
-    regAccountDialog.style.display = 'none';
-    dialogMask.style.display = 'none';
+    elmHide(regAccountDialog);
+    dialogMask.classList.add('hide');
 };
 btnGoToSystem.onclick = function (evt) {
     fadeOut(regAccountSuccesssDialog);
-    dialogMask.style.display = 'none';
+    elmHide(dialogMask);
 };
 btnFailOK.onclick = function (evt) {
     fadeOut(regAccountFailDialog);
@@ -216,12 +225,24 @@ btnModeChange.onclick = function() {
     if(this.classList.contains('delete-mode')) {
         this.classList.remove('delete-mode');
         modeChangeLabel.textContent = '追加モード';
-        document.querySelectorAll('.create-room-button').forEach(elm => elm.style.display = '');
+        document.querySelectorAll('.create-room-button').forEach(elm => elmShow(elm));
+        document.querySelectorAll('.timetable-row').forEach(elm => elm.classList.remove('empty'));        
+        filterCourse.onchange.call(filterCourse);
+        //elmShow(filterMask);
         currentMode = 'add';
     } else {
         this.classList.add('delete-mode');
         modeChangeLabel.textContent = '削除モード';
-        document.querySelectorAll('.create-room-button').forEach(elm => elm.style.display = 'none');
+        document.querySelectorAll('.create-room-button').forEach(elm => elmHide(elm));
+        document.querySelectorAll('.room:not([data-owner="' + accountId + '"])').forEach(elm => {
+           elmHide(elm);
+        });
+        document.querySelectorAll('.timetable-row').forEach(row => {
+            if(row.querySelectorAll('.room:not(.hide)').length === 0) {
+                row.classList.add('empty');
+            }
+        })
+        //elmShow(filterMask);
         currentMode = 'delete';
     }
     //document.querySelector('div[data-owner="gtk2kおしgtk2k"]');
@@ -229,7 +250,7 @@ btnModeChange.onclick = function() {
 
 filterCourse.onchange = filterHole.onchange = function() {
     var filter = '';
-    document.querySelectorAll('.room').forEach(elm => elm.style.display = '');
+    document.querySelectorAll('.room').forEach(elm => elmShow(elm));
     if(filterCourse.value !== 'all') {
         filter += '.room:not([data-course="' + filterCourse.value + '"])';
     }
@@ -237,7 +258,7 @@ filterCourse.onchange = filterHole.onchange = function() {
         filter += (filter ? ',' : '') + '.room:not([data-hole="' + filterHole.value + '"])';
     }
     if(filter) {
-        document.querySelectorAll(filter).forEach(elm => elm.style.display = 'none');
+        document.querySelectorAll(filter).forEach(elm => elmHide(elm));
     }
 };
 
@@ -276,7 +297,7 @@ function appendTimetableRow(year, month, day) {
             roomCount.classList.add('timetable-roomcount');
             btnCreateRoom.classList.add('create-room-button');
             if(currentMode === 'delete') {
-                btnCreateRoom.style.display = 'none';
+                elmHide(btnCreateRoom);
             }
             
             btnCreateRoom.dataset.year = year;
@@ -395,15 +416,15 @@ function regAccount() {
         chrome.storage.sync.set('twitterId', twitterId);
         chrome.storage.sync.set('mingolName', mingolName);
         mingoroomAccountId = mingolName + '@' + twitterId;
-        regAccountDialog.style.display = 'none';
-        regAccountSuccesssDialog.style.display = '';
+        elmHide(regAccountDialog);
+        elmShow(regAccountSuccesssDialog);
     }).catch(err => {
         if (err === 'connected') {
             regAccountFailMsg.textContent = '他の端末から @' + twitterId + ' ですでに接続しています。この端末に @' + twitterId + ' で登録したい場合は、いったん他の端末で開いている「みんなでゴルフ待合所(仮題)」のページを閉じてから登録を行ってください。';
         } else {
             regAccountFailMsg.textContent = err;
         }
-        regAccountFailDialog.style.display = '';
+        elmShow(regAccountFailDialog);
     });
 }
 
@@ -544,12 +565,12 @@ function setMemberList(members) {
 }
 
 function dialogShow(dialog) {
-    dialogMask.style.display = '';
-    dialog.style.display = '';
+    elmShow(dialogMask);
+    elmShow(dialog);
 }
 function dialogHide(dialog) {
-    dialogMask.style.display = 'none';
-    dialog.style.display = 'none';
+    elmHide(dialogMask);
+    elmHide(dialog);
 }
 
 function fmt(format, year, month, day, hour, minute) {
@@ -600,8 +621,3 @@ function getMaxRoomCount() {
     });
 }
 
-function changeMode() {
-    if(btnModeChnage.classList.contains('delete-mode')) {
-        
-    }
-}
