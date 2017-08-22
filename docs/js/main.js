@@ -135,6 +135,8 @@ getMaxRoomCount();
 appendTimetableRow(2017, 8, 20);
 appendDebugRoom();
 
+accountAvatar.src = accounts[accountId].avatar;
+
 window.onkeydown = function(evt) {
     if(evt.keyCode === 13) { // Enter
         currentOKButton.onclick.call(currentOKButton);
