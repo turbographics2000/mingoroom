@@ -15,7 +15,7 @@ var currentCancelButtn = null;
 var currentMode = 'add';
 
 
-chrom.runtime.onMessageExternal.addListener((msg, sender, res) => {
+chrome.runtime.onMessageExternal.addListener((msg, sender, res) => {
     if(msg.installCheck) {
         res(true);
     }
