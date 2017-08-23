@@ -1,11 +1,11 @@
 {
     "manifest_version":2,
     "version": "0.0.1",
-    "name": "みんゴル 待合所(仮題) 拡張機能",
+    "name": "みんなでゴルフ待合所 (仮題) 拡張機能",
     "content_scripts": [
         {
             "matches": [
-                "https://www.google.co.jp/*"
+                "https://turbographics2000.github.io/mingoroom/*"
             ],
             "js": [
                 "cs.js"
