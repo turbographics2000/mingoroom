@@ -5,7 +5,7 @@
     "content_scripts": [
         {
             "matches": [
-                "https://turbographics2000.github.io/mingoroom/*"
+                "https://turbographics2000.github.io/*"
             ],
             "js": [
                 "cs.js"
@@ -13,7 +13,7 @@
         }
     ],
     "externally_connectable": {
-        "matches": ["https://turbographics2000.github.io/mingoroom/*"]
+        "matches": ["https://turbographics2000.github.io/*"]
     },
     "permissions": [
         "https://twitter.com/"
