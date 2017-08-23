@@ -315,7 +315,6 @@ body * {
 
 .dialog-input {
   display: inline-block;
-  font-size: 16px;
 }
 .dialog-comment-title {
   text-align:center;
@@ -336,6 +335,7 @@ body * {
 
 .dialog input, .dialog select, .dialog textarea {
   border: 1px solid gray;
+  font-size: 16px;
 }
 
 .dialog input.require, .dialog select.require {
