@@ -170,7 +170,7 @@ body * {
   font-size: 20px;
 }
 
-.timetable-row {
+.row {
   position: relative;
   height: 80px;
   width: 100%;
@@ -178,11 +178,11 @@ body * {
   border-bottom: 1px solid gray;
   min-width: 100%;
 }
-.timetable-row.empty {
+.row.empty {
   height: 20px;
 }
 
-.timetable-rowheader {
+.rowheader {
   position:absolute;
   width: 50px;
   height: 100%;
@@ -310,7 +310,7 @@ body * {
 .dialog-label {
   display: inline-block;
   max-width: 150px;
-  min-width: 80px;
+  min-width: 65px;
   height: 30px;
   line-height: 30px;
 }
