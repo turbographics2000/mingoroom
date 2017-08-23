@@ -207,9 +207,14 @@ btnRegRoom.onclick = function (evt) {
         regRoomNo.focus();
         return;
     }
-    if(!/^[0-9]+$/.test(regRoomNo.value)) {
+    if(!/^[0-9０－９]+$/.test(regRoomNo.value)) {
         regRoomNo.focus();
         return;
+    }
+    if(/^[０-９]+$/.test(regRoomNo.value)) {
+      regRoomNo.value = regRoomNo.value.replace(/[０-９]/g, function(s) {
+          return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+      });
     }
     var data = currentRoomData;
     var isCreateRoom = !currentRoomData.roomId;
