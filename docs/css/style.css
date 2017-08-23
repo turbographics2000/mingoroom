@@ -349,6 +349,14 @@ body * {
   cursor: pointer;
 }
 
+#roomDialog .dialog-row {
+  text-align: center;
+}
+
+#regRoomTitle {
+  width: 100%;
+}
+
 #accountKeyDisp {
   display: inline-block;
 }
