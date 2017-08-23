@@ -530,7 +530,6 @@ function roomDialogShow(isView) {
         regRoomHole.value = '3';
         regRoomComment.value = comment;
         dialogShow(roomDialog);
-        regRoomTitle.focus();
         
         currentDialog = roomDialog;
         currentOKButton = btnRegRoom;
