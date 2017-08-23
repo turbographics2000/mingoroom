@@ -335,6 +335,7 @@ body * {
 .dialog input, .dialog select, .dialog textarea {
   border: 1px solid gray;
   font-size: 16px;
+  text-align: center;
 }
 
 .dialog input.require, .dialog select.require {
@@ -363,10 +364,6 @@ body * {
 
 .invalid-message {
 
-}
-
-#regRoomTitle {
-  width: 150px;
 }
 
 #regRoomNo {
