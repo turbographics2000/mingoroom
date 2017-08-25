@@ -36,6 +36,7 @@ function stepDialogShow(stepNo) {
         var day = dt.getDate();
         tutorialMask.style.background = 'rgba(0,0,0,0.01)';
         if (stepNo === 3) {
+            elmShow(accountAvatar);
             appendTimetableRow(year, month, day);
         } else if (stepNo === 4) {
             accounts = debugAccounts;
@@ -72,6 +73,7 @@ function stepDialogShow(stepNo) {
 
 var stepNo = 0;
 tutorialMask.style.background = 'gray';
+elmHide(accountAvatar);
 elmShow(tutorialMask);
 dialogChangeTo(step0Dialog);
 $('.step-button', btn => {
