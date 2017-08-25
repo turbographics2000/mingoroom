@@ -470,3 +470,6 @@ button {
   top: auto;
 }
 
+#btnReserve{
+  float:right;
+}

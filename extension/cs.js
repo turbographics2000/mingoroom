@@ -263,11 +263,11 @@ function createDebugRoom(year, month, day, hour, minute) {
                 day: day,
                 hour: hour,
                 minute: minute,
-                title: '残暑お見舞い大会ーーーー',
+                title: '残暑お見舞い大会',
                 course: course,
                 hole: [3, 6, 9][Math.random() * 3 | 0],
                 no: '999999',
-                comment: 'ほげ',
+                comment: '待合室コメント',
                 owner: objKeys(debugAccounts)[Math.random() * 10 | 0],
                 members: objKeys(debugAccounts).slice(0, Math.random() * 10 | 0),
                 create_datetime: Date.now()
