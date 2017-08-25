@@ -21,15 +21,16 @@ function saveStorage(data) {
 }
 
 function stepDialogShow(stepNo) {
+    elmShow(tutorialMask);
     var stepDialogs = document.querySelectorAll('.step-dialog');
     stepDialogs.forEach(dialog => dialogHide(dialog));
     dialogShow(stepDialogs[stepNo - 1]);
     if (stepNo < 3) {
-        dialogMask.style.background = 'gray';
+        tutorialMask.style.background = 'gray';
     } else {
         accountAvatar.src = 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_gtk2k.png';
         var dt = new Date();
-        dialogMask.style.background = 'rgba(0,0,0,0.1)';
+        tutorialMask.style.background = 'rgba(0,0,0,0.01)';
         if(stepNo === 3) {
             appendTimetableRow(dt.getFullYear(), dt.getMonth() + 1, dt.getDate());
         } else {
@@ -56,7 +57,14 @@ $('.step-button', btn => {
         stepNo++;
         stepDialogShow(stepNo);
     }
-})
+});
+$('.back-step-button', btn => {
+    btn.onclick = function() {
+        stepNo--;
+        stepDialogShow(stepNo);
+    }
+});
+
 
 // chrome.storage.local.get('step', val => {
 //     if (!val || val === 'start') {
