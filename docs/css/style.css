@@ -510,6 +510,10 @@ button {
   width: auto;
 }
 
+#btnGoToRegAccount {
+  width: 150px;
+}
+
 .hide {
   display: none;
 }

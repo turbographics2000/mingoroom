@@ -29,7 +29,7 @@ function stepDialogShow(stepNo) {
         tutorialMask.style.background = 'gray';
     } else {
         $('.step-dialog', elm => classAdd(elm, 'opdesc-mode'));
-        accountAvatar.src = 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_gtk2k.png';
+        accountAvatar.src = 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_a.png';
         var dt = new Date();
         var year = dt.getFullYear();
         var month = dt.getMonth() + 1;
@@ -69,7 +69,6 @@ function stepDialogShow(stepNo) {
 
 var stepNo = 0;
 tutorialMask.style.background = 'gray';
-elmHide(accountAvatar);
 elmShow(tutorialMask);
 dialogChangeTo(step0Dialog);
 $('.step-button', btn => {
