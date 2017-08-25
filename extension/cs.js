@@ -51,6 +51,8 @@ function stepDialogShow(stepNo) {
 }
 
 var stepNo = 0;
+tutorialMask.style.background = 'gray';
+elmShow(tutorialMask);
 dialogChangeTo(startDialog);
 $('.step-button', btn => {
     btn.onclick = function() {
