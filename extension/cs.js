@@ -394,7 +394,7 @@ btnRoomViewDialogClose.onclick = function () {
 btnModeChange.onclick = function () {
     if (this.classList.contains('delete-mode')) {
         classRemove(this, 'delete-mode');
-        modeChangeLabel.textContent = '追加モード';
+        modeChangeLabel.textContent = 'ノーマル';
         $('.create-room-button', elm => elmShow(elm));
         $('.timetable-roomcount', elm => elmShow(elm));
         $('.row[data-room-count="0"], .row[data-my-room-count="0"]', row => classRemove(row, 'empty'));
@@ -404,7 +404,7 @@ btnModeChange.onclick = function () {
         currentMode = 'add';
     } else {
         classAdd(this, 'delete-mode');
-        modeChangeLabel.textContent = '削除モード';
+        modeChangeLabel.textContent = '削除';
         $('.create-room-button', elm => elmHide(elm));
         $('.timetable-roomcount', elm => elmHide(elm));
         $('.room:not([data-owner="' + accountId + '"])', elm => elmHide(elm));
