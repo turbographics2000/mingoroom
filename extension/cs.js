@@ -46,7 +46,7 @@ function stepDialogShow(stepNo) {
             applyMaxRoomCount();
             updateAllRow();
             if(stepNo === 5) {
-                dialogChangeTo(roomViewDialog);
+                document.querySelector('.room').click();
             }
             if(stepNo === 6) {
     
