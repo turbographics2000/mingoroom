@@ -215,7 +215,7 @@ button {
   box-shadow: 2px 2px 1px 0px gray;
 }
 .create-room-button.opdesc-mode {
-  animation: createButtonTutorialAnime 1s linear infinite alternate;
+  animation: createButtonTutorialAnime 500ms linear infinite alternate;
 }
 @keyframes createButtonTutorialAnime {
   0% {
@@ -226,12 +226,8 @@ button {
   100% {
     border-color: red;
     color: red;
-    background-color: #fcc;
+    background-color: #f88;
   }
-}
-
-.create-room-button.desc-mode {
-  animation: animateTutorial 1s linear infinite alternate;
 }
 
 .room {
@@ -465,7 +461,7 @@ button {
   transition: transform 200ms;
 }
 #btnModeChange.opdesc-mode {
-  animation: modeChangeButtonTutorialAnime 1s linear infinite alternate;
+  animation: modeChangeButtonTutorialAnime 500ms linear infinite alternate;
 }
 @keyframes modeChangeButtonTutorialAnime {
   0% {
@@ -476,7 +472,7 @@ button {
   100% {
     border-color: blue;
     color: blue;
-    background-color: #ccf;
+    background-color: #88f;
   }
 }
 
