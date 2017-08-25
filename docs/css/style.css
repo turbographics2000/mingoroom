@@ -91,6 +91,18 @@ button {
   bottom:0;
   margin: auto;
 }
+#accountAvatar.opdesc-mode {
+  animation: accountAvatarTutorialAnime 500ms linear infinite alternate;
+}
+
+@keyframes accountAvatarTutorialAnime {
+  0% {
+    -webkit-filter: sepia(0) saturate(0);
+  }
+  100% {
+    -webkit-filter: sepia(0) saturate(8);
+  }
+}
 
 .filter-row {
   position:fixed;

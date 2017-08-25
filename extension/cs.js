@@ -63,6 +63,7 @@ function stepDialogShow(stepNo) {
             btnModeChange.click();
         } else if(stepNo === 10) {
             btnModeChange.click();
+            classAdd(accountAvatar, 'opdesc-mode');
         } 
     }
 }
