@@ -465,7 +465,7 @@ button {
 }
 .step-dialog.opdesc-mode {
   position: absolute;
-  height: 300px;
+  height: 230px;
   bottom:10px;
   top: auto;
 }
