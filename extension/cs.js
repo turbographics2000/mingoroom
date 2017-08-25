@@ -58,7 +58,7 @@ function stepDialogShow(stepNo) {
             classAdd(btnModeChange, 'opdesc-mode');
         } else if(stepNo === 9) {
             classRemove(btnModeChange, 'opdesc-mode');
-            accountId = accounts[0];
+            accountId = objKeys(debugAccounts)[0];
             btnModeChange.click();
         }
     }
