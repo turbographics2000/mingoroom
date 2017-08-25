@@ -113,7 +113,7 @@
     </div>
     <div id="step5Dialog" class="dialog hide step-dialog">
         <div class="dialog-header">操作説明 その1/4 (5/10)</div>
-        <div>待合室をクリックするとその待合室の作者コメントや参加予定者リスト等を見ることができ、また、参加予定の登録を行えます。</div>
+        <div>待合室をクリックするとその待合室の作者コメントや参加予定者リスト等画見れるダイアログが表示されます。また、このダイアログで参加予定の登録を行えます。</div>
         <div><span class="bold">参加予定の登録が行えるのは同じ年月日時分において一つのみです。</span>参加予定の登録をするときに、同じ年月日時分で既に他の待合室で参加予定を登録している場合は、その参加予定の登録を取り消してからの登録となります。</div>
         <div class="button-container">
             <button class="back-step-button">戻る</button>
@@ -237,15 +237,15 @@
         </div>
     </div>
     <div id="roomViewDialog" class="dialog hide">
-        <div class="dialog-header" id="viewRoomTitle">マッチA</div>
+        <div class="dialog-header" id="viewRoomTitle"></div>
         <div class="dialog-row">
-            <div id="viewRoomSummary">2017/08/17 00:00 オーシャン 3Hole</div>
+            <div id="viewRoomSummary"></div>
         </div>
         <div class="dialog-row">
             <div id="viewRoomComment">コメント</div>
         </div>
         <div class="dialog-row">
-            <div class="dialog-comment-title">参加予定
+            <div class="dialog-comment-title">参加予定<button id="btnReserve">参加予定登録</button>
                 <div id="viewRoomMemberCount"></div>
             </div>
             <div id="memberList"></div>
