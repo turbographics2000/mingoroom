@@ -15,14 +15,80 @@ var currentCancelButtn = null;
 var currentMode = 'add';
 
 
-chrome.runtime.onMessageExternal.addListener((msg, sender, res) => {
-    if(msg.installCheck) {
-        res(true);
+function saveStorage(data) {
+    chrome.storage.local.set(data, _ => {
+    });
+}
+
+function stepDialogShow(stepNo) {
+    var stepDialogs = document.querySelectorAll('.step-dialog');
+    stepDialogs.forEach(dialog => dialogHide(dialog));
+    dialogSHow(stepDialogs[stepNo - 1]);
+    if (stepNo < 3) {
+        dialogMask.style.background = 'gray';
+    } else {
+        accountAvatar.src = 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_gtk2k.png';
+        var dt = new Date();
+        dialogMask.style.background = 'rgba(0,0,0,0.1)';
+        if(stepNo === 3) {
+            appendTimetableRow(dt.getFullYear(), dt.getMonth() + 1, dt.getDate());
+        } else {
+            accounts = debugAccounts;
+            appendTimetableRow(dt.getFullYear(), dt.getMonth() + 1, dt.getDate());
+            createDebugRoom();
+            getMaxRoomCount();
+            applyMaxRoomCount();
+            updateAllRow();
+            if(stepNo === 5) {
+                dialogChangeTo(roomViewDialog);
+            }
+            if(stepNo === 6) {
+    
+            }
+        }
     }
-});
+}
+
+var stepNo = 0;
+dialogChangeTo(startDialog);
+$('.step-button', btn => {
+    btn.onclick = function() {
+        stepNo++;
+        stepDialogShow(stepNo);
+    }
+})
+
+// chrome.storage.local.get('step', val => {
+//     if (!val || val === 'start') {
+//         dialogShow(startDialog);
+//     } else if (val === 'setp1') {
+//         dialogShow(step1Dialog);
+//     } else if (val === 'step2') {
+//         dialogShow(step2Dialog);
+//     } else if (val === 'step3') { // ここから操作説明
+
+//     } else if (val === 'step4') {
+
+//     } else if (val === 'step5') {
+
+//     } else if (val === 'regAccount') {
+//         dialogShow(regAccountDialog);
+//     } else if (val === 'regRoomButtonDesc') {
+
+//     } else if (val === 'allStepComplete') {
+//         chrome.storage.local.get('accountId', id => {
+//             if (id) {
+//                 accountId = id;
+//                 connect();
+//             } else {
+//                 // エラー
+//             }
+//         });
+//     }
+// });
 
 function $(selector, func, parent) {
-  (parent || document).querySelectorAll(selector).forEach(func);  
+    (parent || document).querySelectorAll(selector).forEach(func);
 };
 function classAdd(elm, cls) {
     elm.classList.add(cls);
@@ -37,7 +103,7 @@ function elmHide(elm) {
     classAdd(elm, 'hide');
 }
 function appendChild(parent, child) {
-    if(!Array.isArray(child)) child = [child];
+    if (!Array.isArray(child)) child = [child];
     child.forEach(elm => parent.appendChild(elm));
 }
 function objKeys(obj) {
@@ -50,93 +116,115 @@ function upsertDataset(elm, dataset) {
     objKeysEach(dataset, key => elm.dataset[key] = dataset[key]);
 }
 function deleteDataset(elm, keys) {
-    if(!Array.isArray(keys)) keys = [keys];
+    if (!Array.isArray(keys)) keys = [keys];
     keys.forEach(key => delete elm.datase[key]);
+}
+function fmt(format, year, month, day, hour, minute) {
+    month = ('0' + month).slice(-2);
+    day = ('0' + day).slice(-2);
+    hour = ('0' + hour).slice(-2);
+    minute = ('0' + minute).slice(-2);
+    switch (format) {
+        case 'y/m/d':
+            return [year, month, day].join('/');
+        case 'ymd':
+            return year + month + day;
+        case 'y/m/d h:m':
+            return [year, month, day].join('/') + ' ' + [hour, minute].join(':');
+        case 'ymdhm':
+            return year + month + day + hour + minute;
+        case 'h:m':
+            return [hour, minute].join(':');
+        case 'hm':
+            return hour + minute;
+    }
+}
+function dialogShow(dialog) {
+    elmShow(dialogMask);
+    elmShow(dialog);
+}
+function dialogHide(dialog) {
+    elmHide(dialogMask);
+    elmHide(dialog);
+}
+function dialogChangeTo(dialog) {
+    $('.dialog', elm => elmHide(dialog));
+    elmShow(dialog);
 }
 
 
 var courses = {
-    tokyo: {normal:'東京グランドゴルフガーデン', short: '東京'},
-    scotish: {normal:'スコティッシュクラシック', short: 'スコティッシュ'},
-    ocean: {normal:'オーシャンラグーンリゾード', short: 'オーシャン'},
-    kafu: {normal:'華風カントリー倶楽部', short: '華風'},
-    panta: {normal:'パンターノカントリークラブ', short: 'パンタ'},
-    acro: {normal:'アクロポリスレガシー', short: 'アクロ'} 
+    tokyo: { normal: '東京グランドゴルフガーデン', short: '東京' },
+    scotish: { normal: 'スコティッシュクラシック', short: 'スコティッシュ' },
+    ocean: { normal: 'オーシャンラグーンリゾード', short: 'オーシャン' },
+    kafu: { normal: '華風カントリー倶楽部', short: '華風' },
+    panta: { normal: 'パンターノカントリークラブ', short: 'パンタ' },
+    acro: { normal: 'アクロポリスレガシー', short: 'アクロ' }
 }
 
 
 // debugData
 var debugAccounts = {
-    'gtk2kおしgtk2k': {
-        avatar: 'https://scontent-nrt1-1.xx.fbcdn.net/v/t1.0-1/c12.12.155.155/316037_263156007067869_1584096327_n.jpg?oh=c35fab418dd26663ab5d83dbc8876c1f&oe=5A126831',
-        name: 'gtk2k',
-        twitterId: 'gtk2k',
-    },
-    'rittoおしritto': {
-        avatar: 'https://pbs.twimg.com/profile_images/3505213319/b01e2067b3fa616659f3e9cd8e9bc0e7_400x400.jpeg',
-        name: 'ritto',
-        twitterId: 'ritto'
-    },
-    'あいうえおおしAAAAAAAAAAAAAAAAAAAA':{
-        avatar: 'https://turbographics2000.github.io/360viewer_demo/avatar_a.png',
+    'あいうえおおしAAAAAAAAAAAAAAAAAAAA': {
+        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_a.png',
         name: 'あいうえお',
         twitterId: 'AAAAAAAAAAAAAAAAAAAA'
     },
-    'かきくけこおしBBBBBBBBBBBBBBBBBBBB' : {
-        avatar: 'https://turbographics2000.github.io/360viewer_demo/avatar_k.png',
+    'かきくけこおしBBBBBBBBBBBBBBBBBBBB': {
+        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_k.png',
         name: 'かきくけこ',
         twitterId: 'BBBBBBBBBBBBBBBBBBBB'
     },
     'さしすせそおしCCCCCCCCCCCCCCCCCCCC': {
-        avatar: 'https://turbographics2000.github.io/360viewer_demo/avatar_s.png',
+        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_s.png',
         name: 'さしすせそ',
         twitterId: 'CCCCCCCCCCCCCCCCCCCC'
     },
     'たちつてとおしDDDDDDDDDDDDDDDDDDDD': {
-        avatar: 'https://turbographics2000.github.io/360viewer_demo/avatar_t.png',
+        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_t.png',
         name: 'たちつてと',
         twitterId: 'DDDDDDDDDDDDDDDDDDDD'
     },
     'なにぬねのおしEEEEEEEEEEEEEEEEEEEE': {
-        avatar: 'https://turbographics2000.github.io/360viewer_demo/avatar_t.png',
+        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_t.png',
         name: 'なにぬねの',
         twitterId: 'EEEEEEEEEEEEEEEEEEEE'
     },
     'はひふへほおしFFFFFFFFFFFFFFFFFFFF': {
-        avatar: 'https://turbographics2000.github.io/360viewer_demo/avatar_t.png',
+        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_t.png',
         name: 'はひふへほ',
         twitterId: 'FFFFFFFFFFFFFFFFFFFF'
     },
     'まみむめもおしGGGGGGGGGGGGGGGGGGGG': {
-        avatar: 'https://turbographics2000.github.io/360viewer_demo/avatar_t.png',
+        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_t.png',
         name: 'まみむめも',
         twitterId: 'GGGGGGGGGGGGGGGGGGGG'
     },
     'やゆよおしHHHHHHHHHHHHHHHHHHHH': {
-        avatar: 'https://turbographics2000.github.io/360viewer_demo/avatar_t.png',
+        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_t.png',
         name: 'やゆよ',
         twitterId: 'HHHHHHHHHHHHHHHHHHHH'
     },
     'らりるれろおしIIIIIIIIIIIIIIIIIIII': {
-        avatar: 'https://turbographics2000.github.io/360viewer_demo/avatar_t.png',
+        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_t.png',
         name: 'らりるれろ',
         twitterId: 'IIIIIIIIIIIIIIIIIIII'
     },
     'わをんおしJJJJJJJJJJJJJJJJJJJJ': {
-        avatar: 'https://turbographics2000.github.io/360viewer_demo/avatar_t.png',
+        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_t.png',
         name: 'わをん',
         twitterId: 'JJJJJJJJJJJJJJJJJJJJ'
     }
 };
 
 function createDebugRoom(year, month, day, hour, minute) {
-    for(var i = 0; i < 144; i++) {
+    for (var i = 0; i < 144; i++) {
         var hour = i / 6 | 0;
         var minute = (i % 6) * 10;
-        var time =('0' + hour).slice(-2) + ('0' + minute).slice(-2);
+        var time = ('0' + hour).slice(-2) + ('0' + minute).slice(-2);
         var roomCount = Math.random() * 13 | 0;
         var course = objKeys(courses)[Math.random() * 6 | 0];
-        for(var r = 0; r < roomCount; r++) {
+        for (var r = 0; r < roomCount; r++) {
             var roomId = UUID.generate();//'room' + (rid++); 
             var data = {
                 roomId: roomId,
@@ -163,36 +251,35 @@ function appendDebugRoom() {
     objKeysEach(room_id, roomId => appendRoom(rooms_id[roomId]));
 }
 
-accounts = debugAccounts;
-createDebugRoom();
-getMaxRoomCount();
-appendTimetableRow(2017, 8, 20);
-updateAllRow();
+// accounts = debugAccounts;
+// createDebugRoom();
+// getMaxRoomCount();
+// appendTimetableRow(2017, 8, 20);
+// updateAllRow();
 
 accountAvatar.src = accounts[accountId].avatar;
 
-window.onkeydown = function(evt) {
-    if(evt.keyCode === 13) { // Enter
+window.onkeydown = function (evt) {
+    if (evt.keyCode === 13) { // Enter
         currentOKButton.onclick.call(currentOKButton);
-    } else if(evt.keyCode === 27) { // Esc
+    } else if (evt.keyCode === 27) { // Esc
         currentCancelButton.onclick.call(currentCancelButton);
     }
 }
 
 btnGoToStep1.onclick = function (evt) {
-    elmHide(startDialog);
-    elmShow(step1Dialog);
+    dialogChangeTo(step1Dialog);
+    saveStorage({ step: 'step1' });
 };
 btnGoToStep2.onclick = function (evt) {
-    elmHide(step1Dialog);
-    elmShow(step2Dialog);
+    dialogChangeTo(step2Dialog);
+    saveStorage({ step: 'step2' });
 };
-btnRegAccountStep.onclick = function (evt) {
-    elmHide(step2Dialog);
+btnGoToRegAccount.onclick = function (evt) {
     createRegAccountKey();
-    elmShow(regAccountDialog);
+    dialogChangeTo(regAccountDialog);
+    saveStorage({ step: 'regAccount' });
 };
-
 btnRegAccount.onclick = function (evt) {
     elmHide(regAccountDialog);
     classAdd(dialogMask, 'hide');
@@ -205,22 +292,22 @@ btnOK.onclick = function (evt) {
     dialogHide(messageDialog);
 };
 btnRegRoom.onclick = function (evt) {
-    if(!regRoomTitle.value) {
+    if (!regRoomTitle.value) {
         regRoomTitle.focus();
         return;
-    } 
-    if(regRoomNo.value.length !== 6 || !/^[0-9０-９]+$/.test(regRoomNo.value)) {
+    }
+    if (regRoomNo.value.length !== 6 || !/^[0-9０-９]+$/.test(regRoomNo.value)) {
         regRoomNo.focus();
         return;
     }
-    if(/^[０-９]+$/.test(regRoomNo.value)) {
-      regRoomNo.value = regRoomNo.value.replace(/[０-９]/g, function(s) {
-          return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
-      });
+    if (/^[０-９]+$/.test(regRoomNo.value)) {
+        regRoomNo.value = regRoomNo.value.replace(/[０-９]/g, function (s) {
+            return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+        });
     }
     var data = currentRoomData;
     var isCreateRoom = !currentRoomData.roomId;
-    
+
     data.title = regRoomTitle.value;
     data.roomId = data.roomId || UUID.generate();
     data.dt = data.dt || new Date(data.year, data.month, data.day, data.hour, data.minute);
@@ -232,22 +319,22 @@ btnRegRoom.onclick = function (evt) {
     data.comment = regRoomComment.value;
     classRemove(regRoomTitle, 'hasvalue');
     classRemove(regRoomNo, 'hasvalue');
- 
+
     upsertRoomData(data, true);
     dialogHide(roomDialog);
 };
-btnRegRoomCancel.onclick = function() {
+btnRegRoomCancel.onclick = function () {
     dialogHide(roomDialog);
 };
-btnRoomEdit.onclick = function() {
+btnRoomEdit.onclick = function () {
     dialogHide(roomViewDialog);
     roomDialogShow();
 };
-btnRoomViewDialogClose.onclick = function() {
+btnRoomViewDialogClose.onclick = function () {
     dialogHide(roomViewDialog);
 };
-btnModeChange.onclick = function() {
-    if(this.classList.contains('delete-mode')) {
+btnModeChange.onclick = function () {
+    if (this.classList.contains('delete-mode')) {
         classRemove(this, 'delete-mode');
         modeChangeLabel.textContent = '追加モード';
         $('.create-room-button', elm => elmShow(elm));
@@ -267,24 +354,24 @@ btnModeChange.onclick = function() {
     }
     //document.querySelector('div[data-owner="gtk2kおしgtk2k"]');
 };
-regRoomTitle.oninput = regRoomNo.oninput = function() {
-    if(this.value) {
+regRoomTitle.oninput = regRoomNo.oninput = function () {
+    if (this.value) {
         classAdd(this, 'hasvalue');
     } else {
         classRemove(this, 'hasvalue');
     }
 }
 
-filterCourse.onchange = filterHole.onchange = function() {
+filterCourse.onchange = filterHole.onchange = function () {
     var filter = '';
     $('.room', elm => elmShow(elm));
-    if(filterCourse.value !== 'all') {
+    if (filterCourse.value !== 'all') {
         filter += '.room:not([data-course="' + filterCourse.value + '"])';
     }
-    if(filterHole.value !== 'all') {
+    if (filterHole.value !== 'all') {
         filter += (filter ? ',' : '') + '.room:not([data-hole="' + filterHole.value + '"])';
     }
-    if(filter) {
+    if (filter) {
         $(filter, elm => elmHide(elm));
     }
 };
@@ -295,18 +382,18 @@ function appendTimetableRow(year, month, day) {
     var colHeader = document.createElement('div');
     dateRow.className = 'timetable-daterow';
     dateRow.textContent = fmt('y/m/d', year, month, day);
-    
+
     colHeader.className = 'timetable-colheader border-bottom';
-    colHeader.style.width = ((maxRoomCount * 208) + 50 + 80) + 'px';
-    for(var i = 1; i <= maxRoomCount; i++) {
-        var headerCol = document.createElement('div');
-        headerCol.textContent = i;
-        appendChild(colHeader, headerCol);
-    }
+    // colHeader.style.width = ((maxRoomCount * 208) + 50 + 80) + 'px';
+    // for(var i = 1; i <= maxRoomCount; i++) {
+    //     var headerCol = document.createElement('div');
+    //     headerCol.textContent = i;
+    //     appendChild(colHeader, headerCol);
+    // }
     appendChild(mingoroomContainer, [dateRow, colHeader]);
-    
+
     for (var hour = 0; hour < 24; hour++) {
-        for (var minute = 0; minute < 60; minute += 10) { 
+        for (var minute = 0; minute < 60; minute += 10) {
             var row = document.createElement('div');
             var rowHeader = document.createElement('div');
             var rowTime = document.createElement('div');
@@ -316,7 +403,7 @@ function appendTimetableRow(year, month, day) {
 
             row.id = 'row' + fmt('ymdhm', year, month, day, hour, minute);
             roomCount.id = row.id + 'RoomCount';
-            row.style.width = ((maxRoomCount * 208) + 50 + 80) + 'px';
+            // row.style.width = ((maxRoomCount * 208) + 50 + 80) + 'px';
             row.dataset.roomCount = '0';
             rowTime.textContent = fmt('h:m', 0, 0, 0, hour, minute, true);
             roomCount.textContent = '0室';
@@ -325,12 +412,12 @@ function appendTimetableRow(year, month, day) {
             classAdd(rowTime, 'timetable-time');
             classAdd(roomCount, 'timetable-roomcount');
             classAdd(btnCreateRoom, 'create-room-button');
-            if(currentMode === 'delete') {
+            if (currentMode === 'delete') {
                 elmHide(btnCreateRoom);
             }
-            
-            upsertDataset(btnCreateRoom, {year, month, day, hour, minute});
-            btnCreateRoom.onclick = function(evt) {
+
+            upsertDataset(btnCreateRoom, { year, month, day, hour, minute });
+            btnCreateRoom.onclick = function (evt) {
                 currentRoomData = {
                     year: +this.dataset.year,
                     month: +this.dataset.month,
@@ -342,10 +429,24 @@ function appendTimetableRow(year, month, day) {
             }
 
             appendChild(rowHeader, [rowTime, roomCount, btnCreateRoom]);
-            appendChild(row, rowHeader);            
+            appendChild(row, rowHeader);
             appendChild(mingoroomContainer, row);
         }
     }
+}
+
+function applyMaxRoomCount() {
+    $('.timetable-colheader', colHeader => {
+        colHeader.style.width = ((maxRoomCount * 208) + 50 + 80) + 'px';
+        for (var i = 1; i <= maxRoomCount; i++) {
+            var headerCol = document.createElement('div');
+            headerCol.textContent = i;
+            appendChild(colHeader, headerCol);
+        }
+    });
+    $('.row', row => {
+        row.style.width = ((maxRoomCount * 208) + 50 + 80) + 'px';
+    });
 }
 
 function updateAllRow() {
@@ -359,29 +460,31 @@ function updateAllRow() {
 function updateRow(date, time) {
     var rowId = 'row' + date + time;
     var row = window[rowId];
-    if(!row) return;
+    if (!row) return;
     var rowHeader = window[rowId + 'RoomCount'];
-    var roomIds = objKeys(rooms_datetime[date][time]); 
+    var roomIds = objKeys(rooms_datetime[date][time]);
     var roomCount = roomIds.length;
     var myRoomCount = 0;
     $('.room', elm => elm.remove(), window[rowId]);
     rowHeader.textContent = roomCount + '室';
     roomIds.sort((a, b) => {
+        if(rooms_id[a].members.includes(accountId)) return -1;
+        if(rooms_id[b].members.includes(accountId)) return 1;
         return rooms_id[a].create_datetime - rooms_id[b].create_datetime;
     });
     roomIds.forEach(roomId => {
-        if(rooms_id[roomId].owner === accountId) myRoomCount++;
+        if (rooms_id[roomId].owner === accountId) myRoomCount++;
         appendRoom(rooms_id[roomId]);
     });
-    upsertDataset(row, {roomCount, myRoomCount});
+    upsertDataset(row, { roomCount, myRoomCount });
 }
 
 function appendRoom(data) {
     var date = fmt('ymd', data.year, data.month, data.day);
     var time = fmt('hm', 0, 0, 0, data.hour, data.minute);
     var row = window['row' + date + time];
-    if(!row) return;
-    
+    if (!row) return;
+
     var room = document.createElement('div');
     var roomTitle = document.createElement('div');
     var course = document.createElement('div');
@@ -395,13 +498,13 @@ function appendRoom(data) {
     classAdd(roomNo, 'room-no');
 
     room.id = data.roomId;
-    upsertDataset(room , {owner: data.owner, course: data.course, hole: data.hole});
-    room.onclick = function(evt) {
+    upsertDataset(room, { owner: data.owner, course: data.course, hole: data.hole });
+    room.onclick = function (evt) {
         var data = rooms_id[this.id];
-        if(currentMode === 'add') {
-        currentRoomData = {};
-        Object.assign(currentRoomData, data);
-        roomDialogShow(true);
+        if (currentMode === 'add') {
+            currentRoomData = {};
+            Object.assign(currentRoomData, data);
+            roomDialogShow(true);
         } else {
             message.textContent = data.title
         }
@@ -413,7 +516,7 @@ function appendRoom(data) {
     classAdd(ownerAvatar, 'room-owner-avatar');
     ownerAvatar.alt = ownerAvatar.title = '作成者：' + accounts[rooms_id[data.roomId].owner].name + '(@' + accounts[rooms_id[data.roomId].owner].twitterId + ')';
     ownerAvatar.src = accounts[rooms_id[data.roomId].owner].avatar;
-    member.textContent = '参加予定：'　+ 99999;
+    member.textContent = '参加予定：' 　+ 99999;
 
     appendChild(roomNo, ownerAvatar);
     appendChild(room, [roomTitle, course, member, roomNo]);
@@ -431,30 +534,30 @@ function roomDialogShow(isView) {
     var course = currentRoomData.course;
     var hole = currentRoomData.hole;
     var comment = currentRoomData.comment || '';
-    
-    if(isView) {
+
+    if (isView) {
         viewRoomTitle.textContent = title;
         viewRoomSummary.textContent = [
             fmt('y/m/d h:m', year, month, day, hour, minute),
             courses[course].short,
-            hole +'hole'
+            hole + 'hole'
         ].join(' ');
         viewRoomComment.textContent = comment;
 
         setMemberList(currentRoomData.members);
         dialogShow(roomViewDialog);
-        
+
         currentDialog = roomViewDialog;
         currentOKButton = currentCancelButton = btnRoomViewDialogClose;
     } else {
         roomStartDate.textContent = fmt('y/m/d', year, month, day);
-        roomStartTime.textContent = fmt('h:m', 0, 0, 0,hour, minute);
+        roomStartTime.textContent = fmt('h:m', 0, 0, 0, hour, minute);
         regRoomTitle.value = title;
         regRoomCourse.value = 'tokyo';
         regRoomHole.value = '3';
         regRoomComment.value = comment;
         dialogShow(roomDialog);
-        
+
         currentDialog = roomDialog;
         currentOKButton = btnRegRoom;
         currentCancelButton = btnRegRoomCancel;
@@ -476,7 +579,7 @@ function createRoom(evt) {
 function setMemberList(members) {
     memberList.innerHTML = '';
     viewRoomMemberCount.textCount = members.length + '人';
-    if(members) {
+    if (members) {
         members.forEach(memberId => {
             var accountData = accounts[memberId];
             var member = document.createElement('div');
@@ -488,8 +591,8 @@ function setMemberList(members) {
             classAdd(memberAvatar, 'member-avatar');
             classAdd(memberName, 'member-name');
             classAdd(memberTwitterId, 'member-twitterid');
-            
-            if(accountData.avatar) {
+
+            if (accountData.avatar) {
                 memberAvatar.src = accountData.avatar;
             }
             memberName.textContent = accountData.name;
@@ -501,57 +604,26 @@ function setMemberList(members) {
     }
 }
 
-function dialogShow(dialog) {
-    elmShow(dialogMask);
-    elmShow(dialog);
-}
-function dialogHide(dialog) {
-    elmHide(dialogMask);
-    elmHide(dialog);
-}
-
-function fmt(format, year, month, day, hour, minute) {
-    month = ('0' + month).slice(-2);
-    day = ('0' + day).slice(-2);
-    hour = ('0' + hour).slice(-2);
-    minute = ('0' + minute).slice(-2);
-    switch(format) {
-        case 'y/m/d':
-            return [year, month, day].join('/');
-        case 'ymd':
-            return year + month + day;
-        case 'y/m/d h:m':
-            return [year, month, day].join('/') + ' ' + [hour, minute].join(':');
-        case 'ymdhm':
-            return year + month + day + hour + minute;
-        case 'h:m':
-            return [hour, minute].join(':');
-        case 'hm':
-            return hour + minute;
-    } 
-}
-
-
-function upsertRoomData(data, withUpdateRow){
+function upsertRoomData(data, withUpdateRow) {
     var roomId = data.roomId;
     var date = fmt('ymd', data.year, data.month, data.day);
     var time = fmt('hm', 0, 0, 0, data.hour, data.minute);
     var owner = data.owner;
-    
+
     rooms_id[roomId] = rooms_id[roomId] || data;
-    
-    if(rooms_id[roomId].owner === accountId) {
+
+    if (rooms_id[roomId].owner === accountId) {
         myRooms[roomId] = data;
     }
-    
+
     rooms_datetime[date] = rooms_datetime[date] || {};
     rooms_datetime[date][time] = rooms_datetime[date][time] || {};
     rooms_datetime[date][time][roomId] = rooms_datetime[date][time][roomId] || data;
 
     rooms_owner[owner] = rooms_owner[owner] || {};
     rooms_owner[owner][roomId] = rooms_owner[owner][roomId] || data;
-    
-    if(withUpdateRow) {
+
+    if (withUpdateRow) {
         updateRow(date, time);
     }
 }
@@ -591,8 +663,8 @@ function regAccount() {
     }).then(_ => {
         twitterId = regTwitterId.value;
         mingolName = regMingolName.value;
-        chrome.storage.sync.set('twitterId', twitterId);
-        chrome.storage.sync.set('mingolName', mingolName);
+        chrome.storage.local.set('twitterId', twitterId);
+        chrome.storage.local.set('mingolName', mingolName);
         mingoroomAccountId = mingolName + '@' + twitterId;
         elmHide(regAccountDialog);
         elmShow(regAccountSuccesssDialog);
@@ -658,3 +730,12 @@ function connectedCheck(peer, twitterId) {
     })
 }
 
+function connect() {
+    peer = new Peer(accountId, { key: skywayAPIKey });
+    peer.on('open', id => {
+        peer.
+    });
+    peer.on('error', err => {
+
+    });
+}
