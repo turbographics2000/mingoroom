@@ -24,19 +24,24 @@ function stepDialogShow(stepNo) {
     elmShow(tutorialMask);
     var stepDialogs = document.querySelectorAll('.step-dialog');
     stepDialogs.forEach(dialog => dialogHide(dialog));
-    dialogChangeTo(stepDialogs[stepNo - 1]);
+    dialogChangeTo(stepDialogs[stepNo]);
     if (stepNo < 3) {
         tutorialMask.style.background = 'gray';
     } else {
+        $('.step-dialog', elm => classAdd(elm, 'opdesc-mode'));
         accountAvatar.src = 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_gtk2k.png';
         var dt = new Date();
+        var year = dt.getFullYear();
+        var month = dt.getMonth() + 1;
+        var day = dt.getDate();
         tutorialMask.style.background = 'rgba(0,0,0,0.01)';
         if(stepNo === 3) {
-            appendTimetableRow(dt.getFullYear(), dt.getMonth() + 1, dt.getDate());
+            appendTimetableRow(year, month, day);
         } else {
             accounts = debugAccounts;
-            appendTimetableRow(dt.getFullYear(), dt.getMonth() + 1, dt.getDate());
-            createDebugRoom();
+            mingoroomContainer.innerHTML = '';
+            appendTimetableRow(year, month, day);
+            createDebugRoom(year, month, day);
             getMaxRoomCount();
             applyMaxRoomCount();
             updateAllRow();
@@ -54,7 +59,7 @@ var stepNo = 0;
 tutorialMask.style.background = 'gray';
 elmHide(accountAvatar);
 elmShow(tutorialMask);
-dialogChangeTo(startDialog);
+dialogChangeTo(step0Dialog);
 $('.step-button', btn => {
     btn.onclick = function() {
         stepNo++;
@@ -228,20 +233,34 @@ var debugAccounts = {
     }
 };
 
+var debugTitles = [
+    '残暑お見舞い大会',
+    'マッチA',
+    'マッチB',
+    '延長戦',
+    'SRギア縛り大会',
+    'パター縛り大会',
+    '東京',
+    'スコティッシュ',
+    '華風',
+    'パンターノ',
+]
+
 function createDebugRoom(year, month, day, hour, minute) {
     for (var i = 0; i < 144; i++) {
         var hour = i / 6 | 0;
         var minute = (i % 6) * 10;
         var time = ('0' + hour).slice(-2) + ('0' + minute).slice(-2);
-        var roomCount = Math.random() * 13 | 0;
+        var roomCount = Math.random() * 4 | 0;
         var course = objKeys(courses)[Math.random() * 6 | 0];
+        var dt = new Date();
         for (var r = 0; r < roomCount; r++) {
             var roomId = UUID.generate();//'room' + (rid++); 
             var data = {
                 roomId: roomId,
-                year: 2017,
-                month: 8,
-                day: 20,
+                year: year,
+                month: month,
+                day: day,
                 hour: hour,
                 minute: minute,
                 title: '残暑お見舞い大会ーーーー',
@@ -249,8 +268,8 @@ function createDebugRoom(year, month, day, hour, minute) {
                 hole: [3, 6, 9][Math.random() * 3 | 0],
                 no: '999999',
                 comment: 'ほげ',
-                owner: objKeys(debugAccounts)[Math.random() * 2 | 0],
-                members: objKeys(debugAccounts).slice(2).slice(0, Math.random() * 11 | 0),
+                owner: objKeys(debugAccounts)[Math.random() * 10 | 0],
+                members: objKeys(debugAccounts).slice(0, Math.random() * 10 | 0),
                 create_datetime: Date.now()
             };
             upsertRoomData(data);
@@ -278,27 +297,6 @@ window.onkeydown = function (evt) {
     }
 }
 
-btnGoToStep1.onclick = function (evt) {
-    dialogChangeTo(step1Dialog);
-    saveStorage({ step: 'step1' });
-};
-btnGoToStep2.onclick = function (evt) {
-    dialogChangeTo(step2Dialog);
-    saveStorage({ step: 'step2' });
-};
-btnGoToRegAccount.onclick = function (evt) {
-    createRegAccountKey();
-    dialogChangeTo(regAccountDialog);
-    saveStorage({ step: 'regAccount' });
-};
-btnRegAccount.onclick = function (evt) {
-    elmHide(regAccountDialog);
-    classAdd(dialogMask, 'hide');
-};
-btnGoToSystem.onclick = function (evt) {
-    fadeOut(regAccountSuccesssDialog);
-    elmHide(dialogMask);
-};
 btnOK.onclick = function (evt) {
     dialogHide(messageDialog);
 };
@@ -640,6 +638,7 @@ function upsertRoomData(data, withUpdateRow) {
 }
 
 function getMaxRoomCount() {
+    maxRoomCount = 0;
     objKeysEach(rooms_datetime, date => {
         var roomsParDate = rooms_datetime[date];
         objKeysEach(roomsParDate, time => {

@@ -45,6 +45,13 @@ button {
   height: 100%;
 }
 
+.step-dialog.opdesc-mode {
+  position: absolute;
+  height: 300px;
+  bottom:10px;
+  transition: all 400ms;
+}
+
 #mingoroomContainer {
   position: absolute;
   width: 100%;
