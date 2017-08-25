@@ -343,6 +343,9 @@ window.onkeydown = function (evt) {
     }
 }
 
+btnGoToRegAccount.onclick = function() {
+    dialogChangeTo(accountDialog);
+}
 btnOK.onclick = function (evt) {
     dialogHide(messageDialog);
 };
