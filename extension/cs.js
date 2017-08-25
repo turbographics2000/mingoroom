@@ -61,7 +61,9 @@ function stepDialogShow(stepNo) {
             accountId = objKeys(debugAccounts)[0];
             updateAllRow();
             btnModeChange.click();
-        }
+        } else if(stepNo === 10) {
+            btnModeChange.click();
+        } 
     }
 }
 
@@ -387,6 +389,7 @@ btnModeChange.onclick = function () {
         classRemove(this, 'delete-mode');
         modeChangeLabel.textContent = '追加モード';
         $('.create-room-button', elm => elmShow(elm));
+        $('.timetable-roomcount', elm => elmShow(elm));
         $('.row[data-room-count="0"], .row[data-my-room-count="0"]', row => classRemove(row, 'empty'));
         $('.room', elm => classRemove(elm, 'delete-mode'));
         filterCourse.onchange.call(filterCourse);
@@ -396,6 +399,7 @@ btnModeChange.onclick = function () {
         classAdd(this, 'delete-mode');
         modeChangeLabel.textContent = '削除モード';
         $('.create-room-button', elm => elmHide(elm));
+        $('.timetable-roomcount', elm => elmHide(elm));
         $('.room:not([data-owner="' + accountId + '"])', elm => elmHide(elm));
         $('.row[data-room-count="0"], .row[data-my-room-count="0"]', row => classAdd(row, 'empty'));
         $('.room', elm => classAdd(elm, 'delete-mode'));
