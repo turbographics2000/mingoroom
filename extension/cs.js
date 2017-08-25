@@ -34,7 +34,7 @@ function stepDialogShow(stepNo) {
         var year = dt.getFullYear();
         var month = dt.getMonth() + 1;
         var day = dt.getDate();
-        tutorialMask.style.background = 'rgba(0,0,0,0.01)';
+        tutorialMask.style.background = 'rgba(0,0,0,0.05)';
         if (stepNo === 3) {
             elmShow(accountAvatar);
             appendTimetableRow(year, month, day);
