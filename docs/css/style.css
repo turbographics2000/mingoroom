@@ -28,9 +28,6 @@ body * {
 .border-bottom {
   border-bottom: 1px solid gray;
 }
-.hide {
-  display: none;
-}
 button {
   border: 1px solid gray;
   background: white;
@@ -511,4 +508,8 @@ button {
   right: 0;
   top: 0;
   width: auto;
+}
+
+.hide {
+  display: none;
 }
