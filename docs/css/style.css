@@ -280,6 +280,9 @@ button {
   position:fixed;
   z-index: 2;
 }
+#tutorialMask {
+  top: 40px;
+}
 
 .dialog {
   padding: 10px;

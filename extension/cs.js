@@ -24,7 +24,7 @@ function stepDialogShow(stepNo) {
     elmShow(tutorialMask);
     var stepDialogs = document.querySelectorAll('.step-dialog');
     stepDialogs.forEach(dialog => dialogHide(dialog));
-    dialogShow(stepDialogs[stepNo - 1]);
+    dialogChangeTo(stepDialogs[stepNo - 1]);
     if (stepNo < 3) {
         tutorialMask.style.background = 'gray';
     } else {
@@ -52,6 +52,7 @@ function stepDialogShow(stepNo) {
 
 var stepNo = 0;
 tutorialMask.style.background = 'gray';
+elmHide(accountAvatar);
 elmShow(tutorialMask);
 dialogChangeTo(startDialog);
 $('.step-button', btn => {
