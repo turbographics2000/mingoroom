@@ -145,6 +145,7 @@ button {
   padding-left: 49px;
   z-index: 2;
   background: white;
+  min-width: 100%;
 }
 .timetable-colheader div {
   height: 15px;
@@ -471,8 +472,9 @@ button {
 }
 
 #btnReserve{
-  font-size: 20px;
+  font-size: 16px;
   float: right;
+  position: absolute;
   position: absolute;
   right: 0;
   top: 0;

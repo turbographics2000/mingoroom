@@ -37,20 +37,16 @@ function stepDialogShow(stepNo) {
         tutorialMask.style.background = 'rgba(0,0,0,0.01)';
         if(stepNo === 3) {
             appendTimetableRow(year, month, day);
-        } else {
+        } else if(stepNo === 4) {
             accounts = debugAccounts;
-            mingoroomContainer.innerHTML = '';
-            appendTimetableRow(year, month, day);
             createDebugRoom(year, month, day);
             getMaxRoomCount();
             applyMaxRoomCount();
             updateAllRow();
-            if(stepNo === 5) {
-                document.querySelector('.room').click();
-            }
-            if(stepNo === 6) {
-    
-            }
+        } else if(stepNo === 5) {
+            document.querySelector('.room').click();
+        } else if(stepNo === 6) {
+            dialogHide(roomViewDialog);
         }
     }
 }
@@ -251,7 +247,7 @@ function createDebugRoom(year, month, day, hour, minute) {
         var hour = i / 6 | 0;
         var minute = (i % 6) * 10;
         var time = ('0' + hour).slice(-2) + ('0' + minute).slice(-2);
-        var roomCount = Math.random() * 4 | 0;
+        var roomCount = Math.random() * 3 | 0;
         var course = objKeys(courses)[Math.random() * 6 | 0];
         var dt = new Date();
         for (var r = 0; r < roomCount; r++) {
