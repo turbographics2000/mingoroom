@@ -46,16 +46,6 @@ button {
 }
 
 
-.step-dialog {
-  transition: all 400ms;  
-}
-.step-dialog.opdesc-mode {
-  position: absolute;
-  height: 300px;
-  bottom:10px;
-  top: auto;
-}
-
 #mingoroomContainer {
   position: absolute;
   width: 100%;
@@ -117,16 +107,10 @@ button {
   z-index: 2;
   line-height: 30px;
 }
-.filter-title{
 
-}
-.filter-select {
-
-}
 .filter-container {
   transform:translateX(-20px);
   display: flex;
-  adjust-content: center;
   align-items: center;
   justify-content: center;
   text-align: chenter;
@@ -475,3 +459,14 @@ button {
 :-ms-input-placeholder {
   text-align: center;
 }
+
+.step-dialog {
+  transition: all 400ms;  
+}
+.step-dialog.opdesc-mode {
+  position: absolute;
+  height: 300px;
+  bottom:10px;
+  top: auto;
+}
+
