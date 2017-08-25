@@ -730,12 +730,12 @@ function connectedCheck(peer, twitterId) {
     })
 }
 
-function connect() {
-    peer = new Peer(accountId, { key: skywayAPIKey });
-    peer.on('open', id => {
-        peer.
-    });
-    peer.on('error', err => {
+// function connect() {
+//     peer = new Peer(accountId, { key: skywayAPIKey });
+//     peer.on('open', id => {
+//         peer.
+//     });
+//     peer.on('error', err => {
 
-    });
-}
+//     });
+// }
