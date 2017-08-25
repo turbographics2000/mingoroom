@@ -214,6 +214,21 @@ button {
   background-size: 30px;
   box-shadow: 2px 2px 1px 0px gray;
 }
+.create-room-button.opdesc-mode {
+  animation: createButtonTutorialAnime 1s linear infinite alternate;
+}
+@keyframes createButtonTutorialAnime {
+  0% {
+    border-color: gray;
+    color: black;
+    background-color: white;
+  }
+  100% {
+    border-color: red;
+    color: red;
+    background-color: #fcc;
+  }
+}
 
 .create-room-button.desc-mode {
   animation: animateTutorial 1s linear infinite alternate;

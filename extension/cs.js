@@ -50,6 +50,9 @@ function stepDialogShow(stepNo) {
             $('.row', row => {
                 classAdd(row.querySelector('.room'), 'reserved');
             });
+        } else if(stepNo === 7) {
+            $('.reserved', elm => classRemove(elm, 'reserved'));
+            $('.create-room-button', elm => classAdd(elm, 'opdesc-mode'));
         }
     }
 }
