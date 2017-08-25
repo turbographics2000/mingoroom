@@ -14,6 +14,7 @@ chrome.runtime.sendMessage(extId, {installCheck: true}, res => {
     // res=undefined
     // になる
     if(res) {
+        console.log('ext installed');
         step = 'extInstalled';
         localStorage.setItem('step', step);
     } else {
