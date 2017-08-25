@@ -232,6 +232,11 @@ button {
 .room.delete-mode {
   background: #fdd;
 }
+.room.reserved {
+  border-color: blue;
+  color: blue;
+  background-color: #ccf;
+}
 
 .room div {
   font-size: 14px;

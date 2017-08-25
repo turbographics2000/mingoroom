@@ -1,4 +1,4 @@
-var accountId = 'gtk2kおしgtk2k';
+var accountId = 'なにぬねのおしEEEEEEEEEEEEEEEEEEEE';
 var peer;
 var accounts = {};
 var myRooms = {};
@@ -35,18 +35,21 @@ function stepDialogShow(stepNo) {
         var month = dt.getMonth() + 1;
         var day = dt.getDate();
         tutorialMask.style.background = 'rgba(0,0,0,0.01)';
-        if(stepNo === 3) {
+        if (stepNo === 3) {
             appendTimetableRow(year, month, day);
-        } else if(stepNo === 4) {
+        } else if (stepNo === 4) {
             accounts = debugAccounts;
             createDebugRoom(year, month, day);
             getMaxRoomCount();
             applyMaxRoomCount();
             updateAllRow();
-        } else if(stepNo === 5) {
+        } else if (stepNo === 5) {
             document.querySelector('.room').click();
-        } else if(stepNo === 6) {
+        } else if (stepNo === 6) {
             dialogHide(roomViewDialog);
+            $('.row', row => {
+                classAdd(row.querySelector('.room'), 'reserved');
+            });
         }
     }
 }
@@ -57,13 +60,13 @@ elmHide(accountAvatar);
 elmShow(tutorialMask);
 dialogChangeTo(step0Dialog);
 $('.step-button', btn => {
-    btn.onclick = function() {
+    btn.onclick = function () {
         stepNo++;
         stepDialogShow(stepNo);
     }
 });
 $('.back-step-button', btn => {
-    btn.onclick = function() {
+    btn.onclick = function () {
         stepNo--;
         stepDialogShow(stepNo);
     }
@@ -103,15 +106,19 @@ function $(selector, func, parent) {
     (parent || document).querySelectorAll(selector).forEach(func);
 };
 function classAdd(elm, cls) {
+    if(!elm) return;
     elm.classList.add(cls);
 }
 function classRemove(elm, cls) {
+    if(!elm) return;
     elm.classList.remove(cls);
 }
 function elmShow(elm) {
+    if(!elm) return;
     classRemove(elm, 'hide');
 }
 function elmHide(elm) {
+    if(!elm) return;
     classAdd(elm, 'hide');
 }
 function appendChild(parent, child) {
@@ -198,76 +205,102 @@ var debugAccounts = {
         twitterId: 'DDDDDDDDDDDDDDDDDDDD'
     },
     'なにぬねのおしEEEEEEEEEEEEEEEEEEEE': {
-        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_t.png',
+        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_n.png',
         name: 'なにぬねの',
         twitterId: 'EEEEEEEEEEEEEEEEEEEE'
     },
     'はひふへほおしFFFFFFFFFFFFFFFFFFFF': {
-        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_t.png',
+        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_h.png',
         name: 'はひふへほ',
         twitterId: 'FFFFFFFFFFFFFFFFFFFF'
     },
     'まみむめもおしGGGGGGGGGGGGGGGGGGGG': {
-        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_t.png',
+        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_m.png',
         name: 'まみむめも',
         twitterId: 'GGGGGGGGGGGGGGGGGGGG'
     },
     'やゆよおしHHHHHHHHHHHHHHHHHHHH': {
-        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_t.png',
+        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_y.png',
         name: 'やゆよ',
         twitterId: 'HHHHHHHHHHHHHHHHHHHH'
     },
     'らりるれろおしIIIIIIIIIIIIIIIIIIII': {
-        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_t.png',
+        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_r.png',
         name: 'らりるれろ',
         twitterId: 'IIIIIIIIIIIIIIIIIIII'
     },
     'わをんおしJJJJJJJJJJJJJJJJJJJJ': {
-        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_t.png',
+        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_w.png',
         name: 'わをん',
         twitterId: 'JJJJJJJJJJJJJJJJJJJJ'
     }
 };
 
-var debugTitles = [
-    '残暑お見舞い大会',
-    'マッチA',
-    'マッチB',
-    '延長戦',
-    'SRギア縛り大会',
-    'パター縛り大会',
-    '東京',
-    'スコティッシュ',
-    '華風',
-    'パンターノ',
-]
+var debugRoomsSrc = [
+    {
+        title: '残暑お見舞い大会',
+        year: (new Date).getFullYear(),
+        month: (new Date).getMonth() + 1,
+        day: (new Date).getDate(),
+        course: 'panta',
+        hole: '9',
+        owner: objKeys(debugAccounts)[0],
+        no: '365365',
+        members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
+    },
+    {
+        title: '延長戦',
+        year: (new Date).getFullYear(),
+        month: (new Date).getMonth() + 1,
+        day: (new Date).getDate(),
+        course: 'tokyo',
+        hole: '6',
+        owner: objKeys(debugAccounts)[1],
+        no: '123123',
+        members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
+    },
+    {
+        title: 'SRギア縛り大会',
+        year: (new Date).getFullYear(),
+        month: (new Date).getMonth() + 1,
+        day: (new Date).getDate(),
+        course: 'ocean',
+        hole: '3',
+        owner: objKeys(debugAccounts)[2],
+        no: '898989',
+        members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
+    },
+    {
+        title: 'パター縛り大会',
+        year: (new Date).getFullYear(),
+        month: (new Date).getMonth() + 1,
+        day: (new Date).getDate(),
+        course: 'ocean',
+        hole: '6',
+        owner: objKeys(debugAccounts)[3],
+        no: '012345',
+        members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
+    },
+];
 
 function createDebugRoom(year, month, day, hour, minute) {
     for (var i = 0; i < 144; i++) {
         var hour = i / 6 | 0;
         var minute = (i % 6) * 10;
         var time = ('0' + hour).slice(-2) + ('0' + minute).slice(-2);
-        var roomCount = Math.random() * 3 | 0;
+        var roomCount = Math.random() * 5 | 0;
         var course = objKeys(courses)[Math.random() * 6 | 0];
         var dt = new Date();
         for (var r = 0; r < roomCount; r++) {
             var roomId = UUID.generate();//'room' + (rid++); 
             var data = {
-                roomId: roomId,
-                year: year,
-                month: month,
-                day: day,
-                hour: hour,
-                minute: minute,
-                title: '残暑お見舞い大会',
-                course: course,
-                hole: [3, 6, 9][Math.random() * 3 | 0],
-                no: '999999',
-                comment: '待合室コメント',
-                owner: objKeys(debugAccounts)[Math.random() * 10 | 0],
-                members: objKeys(debugAccounts).slice(0, Math.random() * 10 | 0),
+                roomId: UUID.generate(),
+                hour, 
+                minute,
+                comment: '待合室コメント', 
                 create_datetime: Date.now()
             };
+            Object.assign(data, debugRoomsSrc[r]);
             upsertRoomData(data);
         }
     }
@@ -473,8 +506,8 @@ function updateRow(date, time) {
     $('.room', elm => elm.remove(), window[rowId]);
     rowHeader.textContent = roomCount + '室';
     roomIds.sort((a, b) => {
-        if(rooms_id[a].members.includes(accountId)) return -1;
-        if(rooms_id[b].members.includes(accountId)) return 1;
+        if (rooms_id[a].members.includes(accountId)) return -1;
+        if (rooms_id[b].members.includes(accountId)) return 1;
         return rooms_id[a].create_datetime - rooms_id[b].create_datetime;
     });
     roomIds.forEach(roomId => {
@@ -521,7 +554,7 @@ function appendRoom(data) {
     classAdd(ownerAvatar, 'room-owner-avatar');
     ownerAvatar.alt = ownerAvatar.title = '作成者：' + accounts[rooms_id[data.roomId].owner].name + '(@' + accounts[rooms_id[data.roomId].owner].twitterId + ')';
     ownerAvatar.src = accounts[rooms_id[data.roomId].owner].avatar;
-    member.textContent = '参加予定：' 　+ 99999;
+    member.textContent = '参加予定：' + 99999;
 
     appendChild(roomNo, ownerAvatar);
     appendChild(room, [roomTitle, course, member, roomNo]);
