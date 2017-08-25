@@ -23,7 +23,7 @@ function saveStorage(data) {
 function stepDialogShow(stepNo) {
     var stepDialogs = document.querySelectorAll('.step-dialog');
     stepDialogs.forEach(dialog => dialogHide(dialog));
-    dialogSHow(stepDialogs[stepNo - 1]);
+    dialogShow(stepDialogs[stepNo - 1]);
     if (stepNo < 3) {
         dialogMask.style.background = 'gray';
     } else {
