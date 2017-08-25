@@ -53,6 +53,11 @@ function stepDialogShow(stepNo) {
         } else if(stepNo === 7) {
             $('.reserved', elm => classRemove(elm, 'reserved'));
             $('.create-room-button', elm => classAdd(elm, 'opdesc-mode'));
+        } else if(stepNo === 8) {
+            $('.create-room-button', elm => classRemove(elm, 'opdesc-mode'));
+            classAdd(btnModeChange, 'opdesc-mode');
+        } else if(stepNo === 9) {
+            classRemove(btnModeChange, 'opdesc-mode');
         }
     }
 }

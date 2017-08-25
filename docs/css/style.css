@@ -464,6 +464,22 @@ button {
   cursor: pointer;
   transition: transform 200ms;
 }
+#btnModeChange.opdesc-mode {
+  animation: modeChangeButtonTutorialAnime 1s linear infinite alternate;
+}
+@keyframes modeChangeButtonTutorialAnime {
+  0% {
+    border-color: gray;
+    color: black;
+    background-color: white;
+  }
+  100% {
+    border-color: brue;
+    color: brue;
+    background-color: #ccf;
+  }
+}
+
 
 #btnModeChange.delete-mode {
   transform: rotate(0deg);
