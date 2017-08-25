@@ -257,7 +257,7 @@ function appendDebugRoom() {
 // appendTimetableRow(2017, 8, 20);
 // updateAllRow();
 
-accountAvatar.src = accounts[accountId].avatar;
+//accountAvatar.src = accounts[accountId].avatar;
 
 window.onkeydown = function (evt) {
     if (evt.keyCode === 13) { // Enter
