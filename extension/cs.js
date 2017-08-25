@@ -64,7 +64,9 @@ function stepDialogShow(stepNo) {
         } else if(stepNo === 10) {
             btnModeChange.click();
             classAdd(accountAvatar, 'opdesc-mode');
-        } 
+        } else if(stepNo === 11) {
+            classRemove(accountAvatar, 'opdesc-mode');
+        }
     }
 }
 
