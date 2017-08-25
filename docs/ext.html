@@ -67,7 +67,7 @@
         <div>そのため、普通のシステムとは違いちょっと面倒くさいシステムとなっています。</div>
         <div>少々前置きが長いですが、面倒くさいところと操作の説明をしますので、お読みになりご理解のほどよろしくお願いいたします。(合計10ステップ)</div>
         <div class="button-container">
-            <button id="btnGoToStep1">次へ</button>
+            <button id="btnGoToStep1" class="step-button">次へ</button>
         </div>
     </div>
     <div id="step1Dialog" class="dialog hide step-dialog">
@@ -77,7 +77,7 @@
         <div>少し手間がかかるTwitterアカウントを利用したなんちゃって認証による登録となっているため、<span class="bold">Twitterアカウントも必須となります。</span></div>
         <div>サーバーがないため登録情報は、ローカルに保存されます。</div>
         <div class="button-container">
-            <button id="btnGoToStep2">次へ</button>
+            <button id="btnGoToStep2" class="step-button">次へ</button>
         </div>
     </div>
     <div id="step2Dialog" class="dialog hide step-dialog">
@@ -87,7 +87,7 @@
         <div>他のユーザーの画面に自分が作成した待合室を表示させるには、<span class="bold">「みんなでゴルフ待合所 (仮題)」を開いておかなければなりません。</span></div>
         <div>続いて操作説明に移ります。</div>
         <div class="button-container">
-            <button id="btnGoToStep3">操作説明へ</button>
+            <button id="btnGoToStep3" class="step-button">操作説明へ</button>
         </div>
     </div>
     <div id="step3Dialog" class="dialog hide step-dialog">
@@ -96,7 +96,7 @@
         <div>これが「みんなでゴルフ待合所 (仮題)」のメイン画面です。(デザインセンスのないダサい画面で申し訳ございません。)</div>
         <div>最初は、まったくない画面ですが．．．</div>
         <div class="button-container">
-            <button id="btnGoToStep4">次へ</button>
+            <button id="btnGoToStep4" class="step-button">次へ</button>
         </div>
     </div>
     <div id="step4Dialog" class="dialog hide step-dialog">
@@ -104,7 +104,7 @@
         <h2>画面</h2>
         <div>自分が待合室を作成したり、他のユーザーが待合室を作成するとこのように画面に待合室が表示されるようになります。(こんな盛況にならないと思いますがw)</div>
         <div class="button-container">
-            <button id="btnGoToStep5">次へ</button>
+            <button id="btnGoToStep5" class="step-button">次へ</button>
         </div>
     </div>
     <div id="step5Dialog" class="dialog hide step-dialog">
@@ -114,7 +114,7 @@
         <div>また、この画面で参加予定の登録を行えます。</div>
         <div><span class="bold">参加予定の登録が行えるのは同じ年月日時分において一つのみです。</span>参加予定の登録をするときに、同じ年月日時分で既に他の待合室で参加予定を登録している場合は、その参加予定の登録を取り消してからの登録となります。</div>
         <div class="button-container">
-            <button id="btnGoToStep6">次へ</button>
+            <button id="btnGoToStep6" class="step-button">次へ</button>
         </div>
     </div>
     <div id="step6Dialog" class="dialog hide step-dialog">
@@ -122,7 +122,7 @@
         <h2>画面</h2>
         <div>参加予定を登録すると、メイン画面で参加予定登録をした待合室が青になり、またその年月日時時分の先頭(１番目)に表示されるようになります。</div>
         <div class="button-container">
-            <button id="btnGoToStep7">次へ</button>
+            <button id="btnGoToStep7" class="step-button">次へ</button>
         </div>
     </div>
     <div id="step7Dialog" class="dialog hide step-dialog">
@@ -130,7 +130,7 @@
         <h2>待合室作成</h2>
         <div>画面左、赤く点滅しているボタンが待合室作成ボタンです。このボタンをクリックすると、その時刻を開始時間とした待合室を作成できます。</div>
         <div class="button-container">
-            <button id="btnGoToStep8">次へ</button>
+            <button id="btnGoToStep8" class="step-button">次へ</button>
         </div>
     </div>
     <div id="step8Dialog" class="dialog hide step-dialog">
@@ -138,7 +138,7 @@
         <h2>モード切替</h2>
         <div>画面右下、青く点滅しているボタンがモード切替ボタンです。普段はノーマルモードですが、このボタンをクリックすると．．．</div>
         <div class="button-container">
-            <button id="btnGoToStep9">次へ</button>
+            <button id="btnGoToStep9" class="step-button">次へ</button>
         </div>
     </div>
     <div id="step9Dialog" class="dialog hide step-dialog">
@@ -147,7 +147,7 @@
         <div>タイムテーブルには自分が作成した待合室のみ表示されるようになり、このモードで待合室をクリックするとその待合室を削除することができます。</div>
         <div>ノーマルモードに戻るには、再度、モード切替ボタンをクリックします。</div>
         <div class="button-container">
-            <button id="btnGoToStep10">次へ</button>
+            <button id="btnGoToStep10" class="step-button">次へ</button>
         </div>
     </div>
     <div id="step10Dialog" class="dialog hide step-dialog">
@@ -193,24 +193,6 @@
     <div id="regAccountSuccesssDialog" class="dialog hide">
         <span>ユーザー登録行いました。Twitterのユーザー名は元に戻してください。</span>
         <button id="btnGoToSystem">OK</button>
-    </div>
-    <div id="accountSettingDialog" class="dialog hide">
-        <img id="imgAvatar" src="" alt="avatar">
-    </div>
-    <div id="operationDesc1Dialog">
-        <div>この画面が「みんなでゴルフ待合所 (仮題)」の画面となります。</div>
-
-        <div>左の時刻表示の下にある、今、赤く点滅しているボタンをクリックすると待合室を作成できます。</div>
-        <div><span class="bold">ただし、待合室の乱立防止のため、待合室作成は一つの開始時刻に１つまで、また１時間以内に３つまでという制限を設けています。</span></div>
-
-        <div>右下にある、今、青く点滅しているボタンがモード切替ボタンです。</div>
-        <div>このモード切替ボタンをクリックすると削除モードに切り替わり、自分が作成した待合室を削除することができます。再度、モード切替ボタンをクリックするとノーマルモードに戻ります。</div>
-        <div class="button-container">
-            <button id="btnNextOpDesc">登録</button>
-        </div>
-    </div>
-    <div id="regRoomButtonDescDialog">
-        <div>左の時刻表示の下にある、今、赤く点滅している＋ボタンが</div>
     </div>
     <div id="roomDialog" class="dialog hide">
         <div id="roomSettingHeader" class="dialog-header">待合室作成</div>
