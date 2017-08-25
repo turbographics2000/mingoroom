@@ -97,10 +97,10 @@ button {
 
 @keyframes accountAvatarTutorialAnime {
   0% {
-    -webkit-filter: sepia(0) saturate(0);
+    filter: hue-rotate(0);
   }
   100% {
-    -webkit-filter: sepia(0) saturate(8);
+    filter: hue-rotate(90deg);
   }
 }
 
