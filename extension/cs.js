@@ -799,15 +799,15 @@ function regAccount() {
     validateAccountKey(regTwitterId.value).then(_ => {
         return new Promise((resolve, reject) => {
             var anonymousPeerId = 'anonymouse' + (new MediaStream).id.replace(/\{|\}|-/g, '').substr(0, 20);
-            var anonymousPeer = new Peer({ key: apiKey, id: anonymousPeerId });
-            peer.on('open', _ => {
+            var anonymousPeer = new Peer(anonymousPeerId, { key: skywayAPIKey});
+            anonymousPeer.on('open', id => {
                 connectedCheck(anonymousPeer, regTwitterId.value).then(_ => {
                     resolve();
                 }).catch(err => {
                     reject(err);
                 });
             });
-            peer.on('error', err => {
+            anonymousPeer.on('error', err => {
                 reject('他の端末での接続チェックで接続チェック用のピアでの接続が行えず、アカウント登録が行えません。' + err);
             });
         });
