@@ -1,4 +1,6 @@
 var accountId = 'なにぬねのおしEEEEEEEEEEEEEEEEEEEE';
+var twitterName = null;
+var mingolName = null;
 var peer;
 var accounts = {};
 var myRooms = {};
@@ -485,12 +487,13 @@ btnModeChange.onclick = function () {
     //document.querySelector('div[data-owner="gtk2kおしgtk2k"]');
 };
 btnRegAccount.onclick = function() {
+    elmHide(btnRegAccount);
     if(!regMingolName.value) {
         regMingolName.focus();
         return;
     }
-    if(!regTwitterId.value) {
-        regTwitterId.focus();
+    if(!regTwitterName.value) {
+        regTwitterName.focus();
         return;
     }
     regAccount();
@@ -796,12 +799,12 @@ function createRegAccountKey() {
 }
 
 // function regAccount() {
-//     validateAccountKey(regTwitterId.value).then(_ => {
+//     validateAccountKey(regTwitterName.value).then(_ => {
 //         return new Promise((resolve, reject) => {
 //             var anonymousPeerId = 'anonymouse' + (new MediaStream).id.replace(/\{|\}|-/g, '').substr(0, 20);
 //             var anonymousPeer = new Peer(anonymousPeerId, { key: skywayAPIKey});
 //             anonymousPeer.on('open', id => {
-//                 connectedCheck(anonymousPeer, regTwitterId.value).then(_ => {
+//                 connectedCheck(anonymousPeer, regTwitterName.value).then(_ => {
 //                     resolve();
 //                 }).catch(err => {
 //                     reject(err);
@@ -812,7 +815,7 @@ function createRegAccountKey() {
 //             });
 //         });
 //     }).then(_ => {
-//         twitterId = regTwitterId.value;
+//         twitterId = regTwitterName.value;
 //         mingolName = regMingolName.value;
 //         chrome.storage.local.set('twitterId', twitterId);
 //         chrome.storage.local.set('mingolName', mingolName);
@@ -829,7 +832,7 @@ function createRegAccountKey() {
 // }
 
 function regAccount() {
-    validateAccountKey(regTwitterId.value).then(_ => {
+    validateAccountKey(regTwitterName.value).then(_ => {
         var evt = new CustomEvent('regAccount', {detail: null});
         window.dispatchEvent(evt);
     }).catch(err => {
@@ -871,23 +874,14 @@ function validateAccountKey(twitterId) {
     });
 }
 
-function connectedCheck(peer, twitterId) {
-    new Promise((resolve, reject) => {
-        peer.listAllPeers((list) => {  // エラーになってもコールバックされる(引数の値は[](要素数0の配列))
-            peer.close();
-            if (list.filter(peerId => !peerId.startsWith('anonymous')).some(peerId => {
-                // 'おし'はみんゴルの名前に使用できない
-                return twitterId === peerId.split('おし')[1];
-            })) {
-                // 接続あり
-                reject('connected');
-            } else {
-                // 接続なし
-                resolve();
-            }
-        });
-    })
-}
+window.addEventListener('regAccountSuccess', evt => {
+    twitterName = regTwitterName.value;
+    mingolName = regMingolName.value;
+    accountId = mingolName + 'おし' + twitterName;    
+    chrome.storage.local.set('accountId', mingolName);
+    dialogHide(accountDialog);
+    elmShow(btnRegAccount);
+});
 
 // function connect() {
 //     peer = new Peer(accountId, { key: skywayAPIKey });
