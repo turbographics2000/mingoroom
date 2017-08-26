@@ -29,13 +29,8 @@ chrome.runtime.sendMessage(extId, { installCheck: true }, res => {
 
 window.addEventListener('regAccount', evt => {
     connectedCheck().then(_ => {
-        twitterId = regTwitterId.value;
-        mingolName = regMingolName.value;
-        chrome.storage.local.set('twitterId', twitterId);
-        chrome.storage.local.set('mingolName', mingolName);
-        mingoroomAccountId = mingolName + '@' + twitterId;
-        elmHide(regAccountDialog);
-        elmShow(regAccountSuccesssDialog);
+        var cevt = new CustomEvent('regAccountSuccess', {detail: null});
+        window.dispatchEvent(cevt);
     }).catch(err => {
         if (err === 'connected') {
             messageDialogShow('他の端末から @' + twitterId + ' ですでに接続しています。この端末に @' + twitterId + ' で登録したい場合は、いったん他の端末で開いている「みんなでゴルフ待合所(仮題)」のページを閉じてから登録を行ってください。');
