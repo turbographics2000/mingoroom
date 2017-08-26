@@ -902,8 +902,8 @@ window.addEventListener('regAccountSuccess', evt => {
     }, _ => {
         dialogHide(accountDialog);
         elmShow(btnRegAccount);
+        messageDialogShow('アカウントを登録しました。忘れずに、Twitterの名前をもとに戻してください。');
     });
-    messageDialogShow('アカウントを登録しました。忘れずに、Twitterの名前をもとに戻してください。');
 });
 
 // function connect() {
