@@ -541,9 +541,21 @@ function appendTimetableRow(year, month, day) {
     //     appendChild(colHeader, headerCol);
     // }
     appendChild(mingoroomContainer, [dateRow, colHeader]);
+    var now = new Date();
+    var nowYear = now.getFullYear();
+    var nowMonth = now.getMonth() + 1;
+    var nowDay = now.getDate();
+    var nowHour = now.getHours();
+    var nowMinute = now.getMinutes();
+    var startHour = 0;
+    var startMinute = 0;
+    if(year === nowYear && month === nowMonth && day === nowDay) {
+        startHour = nowHour;
+        startMinute = ((nowMinute + 9) / 10 | 0) * 10;
+    }
 
-    for (var hour = 0; hour < 24; hour++) {
-        for (var minute = 0; minute < 60; minute += 10) {
+    for (var hour = startHour; hour < 24; hour++) {
+        for (var minute = hour === startHour ? startMinute : 0; minute < 60; minute += 10) {
             var row = document.createElement('div');
             var rowHeader = document.createElement('div');
             var rowTime = document.createElement('div');
