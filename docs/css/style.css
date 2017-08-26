@@ -547,6 +547,13 @@ button {
   color:red;
 }
 
+#messageDialog {
+  height: 150px;
+}
+#dlgMessage {
+  text-align: center;
+}
+
 .hide {
   display: none;
 }
