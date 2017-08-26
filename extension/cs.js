@@ -244,6 +244,10 @@ function dialogChangeTo(dialog) {
     $('.dialog', elm => elmHide(dialog));
     elmShow(dialog);
 }
+function messageDialogShow(msg) {
+    dlgMessage.textContent = msg;
+    classRemove(messageDialog, 'hide');
+}
 
 
 var courses = {
@@ -481,6 +485,14 @@ btnModeChange.onclick = function () {
     //document.querySelector('div[data-owner="gtk2kおしgtk2k"]');
 };
 btnRegAccount.onclick = function() {
+    if(!regMingolName.value) {
+        regMingolName.focus();
+        return;
+    }
+    if(!regTwitterId.value) {
+        regTwitterId.focus();
+        return;
+    }
     regAccount();
 };
 function requireInput() {
@@ -784,7 +796,7 @@ function createRegAccountKey() {
 }
 
 function regAccount() {
-    validateAccountKey().then(_ => {
+    validateAccountKey(regTwitterId.value).then(_ => {
         return new Promise((resolve, reject) => {
             var anonymousPeerId = 'anonymouse' + (new MediaStream).id.replace(/\{|\}|-/g, '').substr(0, 20);
             var anonymousPeer = new Peer({ key: apiKey, id: anonymousPeerId });
@@ -809,9 +821,9 @@ function regAccount() {
         elmShow(regAccountSuccesssDialog);
     }).catch(err => {
         if (err === 'connected') {
-            regAccountFailMsg.textContent = '他の端末から @' + twitterId + ' ですでに接続しています。この端末に @' + twitterId + ' で登録したい場合は、いったん他の端末で開いている「みんなでゴルフ待合所(仮題)」のページを閉じてから登録を行ってください。';
+            messageDialogShow('他の端末から @' + twitterId + ' ですでに接続しています。この端末に @' + twitterId + ' で登録したい場合は、いったん他の端末で開いている「みんなでゴルフ待合所(仮題)」のページを閉じてから登録を行ってください。');
         } else {
-            regAccountFailMsg.textContent = err;
+            messageDialogShow(err);
         }
         elmShow(regAccountFailDialog);
     });
