@@ -25,6 +25,7 @@
     },
     "permissions": [
         "storage",
+        "https://turbographics2000.github.io/",
         "https://twitter.com/"
     ]
 }

@@ -795,36 +795,45 @@ function createRegAccountKey() {
     accountKeyDisp.textContent = accountKey;
 }
 
+// function regAccount() {
+//     validateAccountKey(regTwitterId.value).then(_ => {
+//         return new Promise((resolve, reject) => {
+//             var anonymousPeerId = 'anonymouse' + (new MediaStream).id.replace(/\{|\}|-/g, '').substr(0, 20);
+//             var anonymousPeer = new Peer(anonymousPeerId, { key: skywayAPIKey});
+//             anonymousPeer.on('open', id => {
+//                 connectedCheck(anonymousPeer, regTwitterId.value).then(_ => {
+//                     resolve();
+//                 }).catch(err => {
+//                     reject(err);
+//                 });
+//             });
+//             anonymousPeer.on('error', err => {
+//                 reject('他の端末での接続チェックで接続チェック用のピアでの接続が行えず、アカウント登録が行えません。' + err);
+//             });
+//         });
+//     }).then(_ => {
+//         twitterId = regTwitterId.value;
+//         mingolName = regMingolName.value;
+//         chrome.storage.local.set('twitterId', twitterId);
+//         chrome.storage.local.set('mingolName', mingolName);
+//         mingoroomAccountId = mingolName + '@' + twitterId;
+//         elmHide(regAccountDialog);
+//         elmShow(regAccountSuccesssDialog);
+//     }).catch(err => {
+//         if (err === 'connected') {
+//             messageDialogShow('他の端末から @' + twitterId + ' ですでに接続しています。この端末に @' + twitterId + ' で登録したい場合は、いったん他の端末で開いている「みんなでゴルフ待合所(仮題)」のページを閉じてから登録を行ってください。');
+//         } else {
+//             messageDialogShow(err);
+//         }
+//     });
+// }
+
 function regAccount() {
     validateAccountKey(regTwitterId.value).then(_ => {
-        return new Promise((resolve, reject) => {
-            var anonymousPeerId = 'hoge'; //+ (new MediaStream).id.replace(/\{|\}|-/g, '').substr(0, 20);
-            var anonymousPeer = new Peer({ key: skywayAPIKey});
-            anonymousPeer.on('open', id => {
-                connectedCheck(anonymousPeer, regTwitterId.value).then(_ => {
-                    resolve();
-                }).catch(err => {
-                    reject(err);
-                });
-            });
-            anonymousPeer.on('error', err => {
-                reject('他の端末での接続チェックで接続チェック用のピアでの接続が行えず、アカウント登録が行えません。' + err);
-            });
-        });
-    }).then(_ => {
-        twitterId = regTwitterId.value;
-        mingolName = regMingolName.value;
-        chrome.storage.local.set('twitterId', twitterId);
-        chrome.storage.local.set('mingolName', mingolName);
-        mingoroomAccountId = mingolName + '@' + twitterId;
-        elmHide(regAccountDialog);
-        elmShow(regAccountSuccesssDialog);
+        var evt = new CustomEvent('regAccount', {detail: null});
+        window.dispatchEvent(evt);
     }).catch(err => {
-        if (err === 'connected') {
-            messageDialogShow('他の端末から @' + twitterId + ' ですでに接続しています。この端末に @' + twitterId + ' で登録したい場合は、いったん他の端末で開いている「みんなでゴルフ待合所(仮題)」のページを閉じてから登録を行ってください。');
-        } else {
-            messageDialogShow(err);
-        }
+        messageDialogShow(err);
     });
 }
 
@@ -858,7 +867,7 @@ function validateAccountKey(twitterId) {
             }
         });
     }).catch(err => {
-        reject('fetch()実行時にエラーが発生しアカウント登録が行えません。' + (err.message || err));
+        throw new Error('fetch()実行時にエラーが発生しアカウント登録が行えません。' + (err.message || err));
     });
 }
 
