@@ -46,7 +46,7 @@ window.addEventListener('regAccount', evt => {
 });
 
 function connectedCheck(peer, twitterId) {
-    new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         var anonymousPeerId = 'anonymouse' + (new MediaStream).id.replace(/\{|\}|-/g, '').substr(0, 20);
         var anonymousPeer = new Peer(anonymousPeerId, { key: skywayAPIKey });
         anonymousPeer.on('open', id => {
