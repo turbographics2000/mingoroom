@@ -123,12 +123,14 @@ function stepBackDialogShow(stepNo) {
 chrome.storage.local.get('step', val => {
     if(val.step === 'complete') {
         chrome.storage.local.get('accountId', val => {
-            if(val.accountId) {
-                accountId = val;
-                appendTimetableRow(year, month, day);                
-            } else {
-                btnGoToRegAccount.click();
-            }
+            
+            // if(val.accountId) {
+            //     accountId = val;
+            //     appendTimetableRow(year, month, day);                
+            // } else {
+            //     btnGoToRegAccount.click();
+            // }
+            btnGoToRegAccount.click();
         });
     } else {
         tutorialMask.style.background = 'gray';
@@ -878,9 +880,10 @@ window.addEventListener('regAccountSuccess', evt => {
     twitterName = regTwitterName.value;
     mingolName = regMingolName.value;
     accountId = mingolName + 'おし' + twitterName;    
-    chrome.storage.local.set('accountId', mingolName);
-    dialogHide(accountDialog);
-    elmShow(btnRegAccount);
+    chrome.storage.local.set({accountId: accountId}, _ => {
+        dialogHide(accountDialog);
+        elmShow(btnRegAccount);
+    });
 });
 
 // function connect() {
