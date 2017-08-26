@@ -1,6 +1,7 @@
 var step = localStorage.getItem('step') || 'extNotInstalled';
 var extId = 'ioaancmfccbkoknfeibefmdahkpiincg';
 //var extId = 'ioaancmfccbkoknfeibefmdahkpiinch';
+var skywayAPIKey = '5aeee120-69f8-4f6e-80d7-643f1eb7070d';
 
 btnExtInstall.onclick = btnExtInstall2.onclick = function () {
     step = 'installButtonClicked';
