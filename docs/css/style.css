@@ -543,6 +543,10 @@ button {
   width: 220px;
 }
 
+#regAccountErrorMessage{
+  color:red;
+}
+
 .hide {
   display: none;
 }

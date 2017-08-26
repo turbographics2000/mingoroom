@@ -839,7 +839,7 @@ function regAccount() {
         var evt = new CustomEvent('regAccount', {detail: null});
         window.dispatchEvent(evt);
     }).catch(err => {
-        messageDialogShow(err);
+        regAccountErrorMessage.textContent = err;
     });
 }
 
@@ -849,7 +849,7 @@ function validateAccountKey(twitterId) {
             if (res.ok) {
                 resolve(res.text());
             } else {
-                reject('入力したTwitterID ' + twitterId + ' は存在しないようです。入力したTwitterIDを確認してください。');
+                reject('入力したTwitterの名前 ' + twitterId + ' は存在しないようです。入力したTwitterの名前を確認してください。');
             }
         });
     }).then(txt => {
@@ -885,7 +885,10 @@ window.addEventListener('regAccountSuccess', evt => {
     accountId = mingolName + 'おし' + twitterName;
     accountAvatar.src = myAvatar;
     elmShow(accountAvatar);
-    chrome.storage.local.set({accountId: accountId}, _ => {
+    chrome.storage.local.set({
+        accountId: accountId,
+        accountAvatar: myAvatar
+    }, _ => {
         dialogHide(accountDialog);
         elmShow(btnRegAccount);
     });
