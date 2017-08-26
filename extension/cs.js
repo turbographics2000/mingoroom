@@ -903,6 +903,7 @@ window.addEventListener('regAccountSuccess', evt => {
         dialogHide(accountDialog);
         elmShow(btnRegAccount);
     });
+    messageDialogShow('アカウントを登録しました。忘れずに、Twitterの名前をもとに戻してください。');
 });
 
 // function connect() {
