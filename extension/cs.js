@@ -1,4 +1,5 @@
 var accountId = 'なにぬねのおしEEEEEEEEEEEEEEEEEEEE';
+var myAvatar = '';
 var twitterName = null;
 var mingolName = null;
 var peer;
@@ -860,6 +861,8 @@ function validateAccountKey(twitterId) {
                 if (elmTwitterName) {
                     twitterName = elmTwitterName.textContent.trim();
                     if (twitterName === accountKey) {
+                        var elmAvatar = dom.querySelector('.ProfileAvatar-image');
+                        myAvatar = elmAvatar.src;
                         resolve();
                     } else {
                         reject('認証キーが一致しません。入力した認証キーを確認してください。');
@@ -879,7 +882,9 @@ function validateAccountKey(twitterId) {
 window.addEventListener('regAccountSuccess', evt => {
     twitterName = regTwitterName.value;
     mingolName = regMingolName.value;
-    accountId = mingolName + 'おし' + twitterName;    
+    accountId = mingolName + 'おし' + twitterName;
+    accountAvatar.src = myAvatar;
+    elmShow(accountAvatar);
     chrome.storage.local.set({accountId: accountId}, _ => {
         dialogHide(accountDialog);
         elmShow(btnRegAccount);
