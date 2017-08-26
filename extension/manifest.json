@@ -23,6 +23,7 @@
         "matches": ["https://turbographics2000.github.io/*"]
     },
     "permissions": [
+        "storage",
         "https://twitter.com/"
     ]
 }

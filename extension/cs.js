@@ -13,6 +13,7 @@ var currentDialog = null;
 var currentOKButton = null;
 var currentCancelButtn = null;
 var currentMode = 'add';
+var stepNo = 0;
 
 
 function saveStorage(data) {
@@ -20,7 +21,7 @@ function saveStorage(data) {
     });
 }
 
-function stepDialogShow(stepNo) {
+function stepNextDialogShow(stepNo) {
     elmShow(tutorialMask);
     var stepDialogs = document.querySelectorAll('.step-dialog');
     stepDialogs.forEach(dialog => dialogHide(dialog));
@@ -71,24 +72,80 @@ function stepDialogShow(stepNo) {
     }
 }
 
-var stepNo = 0;
-tutorialMask.style.background = 'gray';
-elmHide(accountAvatar);
-elmShow(tutorialMask);
-dialogChangeTo(step0Dialog);
-$('.step-button', btn => {
-    btn.onclick = function () {
-        stepNo++;
-        stepDialogShow(stepNo);
+function stepBackDialogShow(stepNo) {
+    elmShow(tutorialMask);
+    var stepDialogs = document.querySelectorAll('.step-dialog');
+    stepDialogs.forEach(dialog => dialogHide(dialog));
+    dialogChangeTo(stepDialogs[stepNo]);
+    if (stepNo < 3) {
+        tutorialMask.style.background = 'gray';
+    } else {
+        $('.step-dialog', elm => classAdd(elm, 'opdesc-mode'));
+        accountAvatar.src = 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_a.png';
+        var dt = new Date();
+        var year = dt.getFullYear();
+        var month = dt.getMonth() + 1;
+        var day = dt.getDate();
+        tutorialMask.style.background = 'rgba(0,0,0,0.1)';
+        if (stepNo === 3) {
+            mingoroomContainer.innerHTML = '';
+            clearRoomData();
+            elmShow(accountAvatar);
+            appendTimetableRow(year, month, day);
+        } else if (stepNo === 4) {
+            dialogHide(roomViewDialog);
+        } else if (stepNo === 5) {
+            document.querySelector('.room').click();
+            $('.reserved', elm => classRemove(elm, 'reserved'));
+        } else if (stepNo === 6) {
+            dialogHide(roomViewDialog);
+            $('.create-room-button', elm => classRemove(elm, 'opdesc-mode'));
+            $('.row', row => {
+                classAdd(row.querySelector('.room'), 'reserved');
+            });
+        } else if(stepNo === 7) {
+            $('.create-room-button', elm => classAdd(elm, 'opdesc-mode'));
+            classRemove(btnModeChange, 'opdesc-mode');
+        } else if(stepNo === 8) {
+            classAdd(btnModeChange, 'opdesc-mode');
+            btnModeChange.click();
+        } else if(stepNo === 9) {
+            classRemove(accountAvatar, 'opdesc-mode');
+            btnModeChange.click();
+        } else if(stepNo === 10) {
+            classAdd(accountAvatar, 'opdesc-mode');
+        }
     }
-});
-$('.back-step-button', btn => {
-    btn.onclick = function () {
-        stepNo--;
-        stepDialogShow(stepNo);
-    }
-});
+}
 
+chrome.storage.local.get('step', val => {
+    if(val.step === 'complete') {
+        chrome.storage.local.get('accountId', val => {
+            if(val.accountId) {
+                accountId = val;
+                appendTimetableRow(year, month, day);                
+            } else {
+                btnGoToRegAccount.click();
+            }
+        });
+    } else {
+        tutorialMask.style.background = 'gray';
+        elmShow(tutorialMask);
+        dialogChangeTo(step0Dialog);
+        $('.step-button', btn => {
+            btn.onclick = function () {
+                stepNo++;
+                stepNextDialogShow(stepNo);
+            }
+        });
+        $('.back-step-button', btn => {
+            btn.onclick = function () {
+                stepNo--;
+                stepBackDialogShow(stepNo);
+            }
+        });
+    }
+});
 
 // chrome.storage.local.get('step', val => {
 //     if (!val || val === 'start') {
@@ -344,7 +401,16 @@ window.onkeydown = function (evt) {
 }
 
 btnGoToRegAccount.onclick = function() {
-    dialogChangeTo(accountDialog);
+    chrome.storage.local.set({step: 'complete'}, _ => {
+        clearRoomData();
+        mingoroomContainer.innerHTML = '';
+        var dt = new Date();
+        appendTimetableRow(dt.getFullYear(), dt.getMonth() + 1, dt.getDate());
+        $('.dialog', elm => dialogHide(elm));
+        elmHide(tutorialMask);
+        createRegAccountKey();
+        dialogShow(accountDialog);
+    });
 }
 btnOK.onclick = function (evt) {
     dialogHide(messageDialog);
@@ -688,6 +754,13 @@ function upsertRoomData(data, withUpdateRow) {
     }
 }
 
+function clearRoomData() {
+    myRooms = {};
+    rooms_id = {};
+    rooms_datetime = {};
+    rooms_owner = {};
+}
+
 function getMaxRoomCount() {
     maxRoomCount = 0;
     objKeysEach(rooms_datetime, date => {
@@ -702,7 +775,6 @@ function getMaxRoomCount() {
 function createRegAccountKey() {
     accountKey = UUID.generate().replace(/\{|\}|-/g, '').substr(0, 20);
     accountKeyDisp.textContent = accountKey;
-    regAccountFailMsg.textContent = 'アカウント登録に失敗しました。Twitterのアカウント名が ' + accountKey + ' になっているか確認し、再度登録を行ってください。';
 }
 
 function regAccount() {
