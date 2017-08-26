@@ -480,13 +480,19 @@ btnModeChange.onclick = function () {
     }
     //document.querySelector('div[data-owner="gtk2kおしgtk2k"]');
 };
-regRoomTitle.oninput = regRoomNo.oninput = function () {
+btnRegAccount.onclick = function() {
+
+};
+function requireInput() {
     if (this.value) {
         classAdd(this, 'hasvalue');
     } else {
         classRemove(this, 'hasvalue');
     }
 }
+$('input.require', elm => {
+    elm.oninput = requireInput;
+});
 
 filterCourse.onchange = filterHole.onchange = function () {
     var filter = '';
