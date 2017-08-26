@@ -538,6 +538,11 @@ button {
   text-align: left;
 }
 
+.regaccount-label {
+  max-width: 220px;
+  width: 220px;
+}
+
 .hide {
   display: none;
 }
