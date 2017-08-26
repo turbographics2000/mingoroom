@@ -874,8 +874,6 @@ function validateAccountKey(twitterId) {
                 reject('Twitterのページをパースするときにエラーが発生しアカウント登録が行えません。');
             }
         });
-    }).catch(err => {
-        throw new Error('fetch()実行時にエラーが発生しアカウント登録が行えません。' + (err.message || err));
     });
 }
 
