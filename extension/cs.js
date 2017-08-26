@@ -481,7 +481,7 @@ btnModeChange.onclick = function () {
     //document.querySelector('div[data-owner="gtk2kおしgtk2k"]');
 };
 btnRegAccount.onclick = function() {
-
+    regAccount();
 };
 function requireInput() {
     if (this.value) {
