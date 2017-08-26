@@ -251,7 +251,7 @@ function dialogChangeTo(dialog) {
 }
 function messageDialogShow(msg) {
     dlgMessage.textContent = msg;
-    classRemove(messageDialog, 'hide');
+    dialogShow(messageDialog);
 }
 
 
