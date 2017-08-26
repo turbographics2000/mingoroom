@@ -798,8 +798,8 @@ function createRegAccountKey() {
 function regAccount() {
     validateAccountKey(regTwitterId.value).then(_ => {
         return new Promise((resolve, reject) => {
-            var anonymousPeerId = 'anonymouse' + (new MediaStream).id.replace(/\{|\}|-/g, '').substr(0, 20);
-            var anonymousPeer = new Peer(anonymousPeerId, { key: skywayAPIKey});
+            var anonymousPeerId = 'hoge'; //+ (new MediaStream).id.replace(/\{|\}|-/g, '').substr(0, 20);
+            var anonymousPeer = new Peer({ key: skywayAPIKey});
             anonymousPeer.on('open', id => {
                 connectedCheck(anonymousPeer, regTwitterId.value).then(_ => {
                     resolve();
