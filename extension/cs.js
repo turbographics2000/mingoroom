@@ -840,6 +840,7 @@ function regAccount() {
         window.dispatchEvent(evt);
     }).catch(err => {
         regAccountErrorMessage.textContent = err;
+        elmShow(btnRegAccount);
     });
 }
 
