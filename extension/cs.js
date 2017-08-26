@@ -866,7 +866,7 @@ function validateAccountKey(twitterId) {
                         myAvatar = elmAvatar.src;
                         resolve();
                     } else {
-                        reject('認証キーが一致しません。入力した認証キーを確認してください。');
+                        reject('認証キーが一致しません。Twitterで変更した名前と上記の認証キーが一致しているか確認してください。');
                     }
                 } else {
                     reject('Twitterのページデザインが変更になった等により、ページのパースに失敗しアカウント登録が行えません。');
