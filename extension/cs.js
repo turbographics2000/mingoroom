@@ -825,7 +825,6 @@ function regAccount() {
         } else {
             messageDialogShow(err);
         }
-        elmShow(regAccountFailDialog);
     });
 }
 
