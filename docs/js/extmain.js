@@ -51,7 +51,7 @@ function connectedCheck(peer, twitterId) {
         var anonymousPeer = new Peer(anonymousPeerId, { key: skywayAPIKey });
         anonymousPeer.on('open', id => {
             anonymousPeer.listAllPeers(list => {  // エラーになってもコールバックされる(引数の値は[](要素数0の配列))
-                anonymousPeer.close();
+                anonymousPeer.destroy();
                 if (list.filter(peerId => !peerId.startsWith('anonymous')).some(peerId => {
                     // 'おし'はみんゴルの名前に使用できない
                     return twitterId === peerId.split('おし')[1];
