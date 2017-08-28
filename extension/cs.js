@@ -169,7 +169,11 @@ getStrorage('step').then(({step}) => {
 });
 
 function arrayEach(data, func) {
-    var arr = Array.isArray(data) ? data : [data];
+    if(Array.isArray(data)) {
+        arr = data;
+    } else {
+        arr = [data];        
+    }
     arr.forEach(func);
 }
 function $(selector, func, parent) {
@@ -569,7 +573,7 @@ function appendTimetableRow(year, month, day) {
     //     headerCol.textContent = i;
     //     appendChild(colHeader, headerCol);
     // }
-    appendChild(mingoroomContainer, [dateRow, colHeader]);
+    appendChild(mingoroomContainer, dateRow, colHeader);
     var startHour = 0;
     var startMinute = 0;
 
