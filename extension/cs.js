@@ -1,8 +1,3 @@
-var accountId = 'なにぬねのおしEEEEEEEEEEEEEEEEEEEE';
-var myAvatar = '';
-var twitterName = null;
-var mingolName = null;
-var peer;
 var myAccountData = {
     accountId: null,
     mingolName: null,
@@ -15,9 +10,7 @@ var myRooms = {};
 var rooms_id = {};
 var rooms_datetime = {};
 var rooms_owner = {};
-var skywayAPIKey = '5aeee120-69f8-4f6e-80d7-643f1eb7070d';
 var currentRoomData = {};
-var maxRoomRow = null;
 var maxRoomCount = 0;
 var currentDialog = null;
 var currentOKButton = null;
@@ -26,6 +19,8 @@ var currentMode = 'add';
 var stepNo = 0;
 var MAX_PAR_MINUTE = 1;
 var MAX_PAR_HOUR = 3;
+var skywayAPIKey = '5aeee120-69f8-4f6e-80d7-643f1eb7070d';
+var peer;
 
 
 function saveStorage(data) {
@@ -526,10 +521,12 @@ btnRegAccount.onclick = function () {
     elmHide(btnRegAccount);
     if (!regMingolName.value) {
         regMingolName.focus();
+        elmShow(btnRegAccount);
         return;
     }
     if (!regTwitterScrName.value) {
         regTwitterScrName.focus();
+        elmShow(btnRegAccount);
         return;
     }
     regAccount();

@@ -342,6 +342,9 @@ button {
   position: relative;
   min-height: 30px;
 }
+.diarog-row.margin-top {
+  margin-top: 10px;
+}
 
 .dialog-label {
   display: inline-block;
