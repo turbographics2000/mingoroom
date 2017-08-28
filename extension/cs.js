@@ -197,7 +197,7 @@ function elmHide(elm) {
     if (!elm || !(elm instanceof HTMLElement)) return;
     classAdd(elm, 'hide');
 }
-function appendChild(parent, child) {
+function appendChild(parent, ...child) {
     arrayEach(child, elm => parent.appendChild(elm));
 }
 function objKeys(obj) {
