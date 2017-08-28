@@ -522,11 +522,13 @@ btnRegAccount.onclick = function () {
     if (!regMingolName.value) {
         regMingolName.focus();
         elmShow(btnRegAccount);
+        regAccountErrorMessage.textContent = 'みんゴル名を入力してください。'
         return;
     }
     if (!regTwitterScrName.value) {
         regTwitterScrName.focus();
         elmShow(btnRegAccount);
+        regAccountErrorMessage.textContent = 'Twitterのスクリーンネームを入力してください。'
         return;
     }
     regAccount();
