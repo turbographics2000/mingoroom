@@ -598,11 +598,11 @@ function appendTimetableRow(year, month, day) {
 
             row.id = 'row' + ymdhm;
             btnCreateRoom.id = 'btnCreateRoom' + ymdhm;
-            roomCount.id = row.id + 'RoomCount';
             // row.style.width = ((maxRoomCount * 208) + 50 + 80) + 'px';
-            row.dataset.roomCount = '0';
-            rowTime.textContent = fmtTime('h:m', hour, minute);
+            roomCount.id = row.id + 'RoomCount';
+            roomCount.textContent = '0';
             roomCountLabel.textContent = '室';
+            rowTime.textContent = fmtTime('h:m', hour, minute);
             classAdd(row, 'row');
             classAdd(rowHeader, 'rowheader');
             classAdd(rowTime, 'timetable-time');
@@ -612,7 +612,7 @@ function appendTimetableRow(year, month, day) {
                 elmHide(btnCreateRoom);
             }
 
-            upsertDataset(btnCreateRoom, { year, month, day, hour, minute });
+            upsertDataset(btnCreateRoom, { roomCount: 0, year, month, day, hour, minute });
             btnCreateRoom.onclick = function (evt) {
                 currentRoomData = {
                     year: +this.dataset.year,
