@@ -622,7 +622,7 @@ function appendTimetableRow(year, month, day) {
             }
 
             appendChild(roomCountContainer, roomCount, roomCountLabel);
-            appendChild(rowHeader, rowTime, roomCount, btnCreateRoom);
+            appendChild(rowHeader, rowTime, roomCountContainer, btnCreateRoom);
             appendChild(row, rowHeader);
             appendChild(container, row);
         }
