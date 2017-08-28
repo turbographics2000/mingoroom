@@ -37,7 +37,10 @@
                 <option value="9">9</option>
             </select>
         </div>
-        <div id="roomCount"></div>
+        <div class="filterd-roomcount-container">
+            <span id="filterdRoomCount"></span>
+            <span>室</span>
+        </div>
         <div id="filterMask" class="hide">無効</div>
     </div>
     <div id="mingoroomContainer">
@@ -185,14 +188,12 @@
                 <div class="dialog-label regaccount-label">みんゴル名</div>
                 <div class="dialog-input">
                     <input type="text" id="regMingolName" class="require">
-                    <span class="invalid-message" id="regMingolNameErrorMsg"></span>
                 </div>
             </div>
             <div class="dialog-row">
                 <div class="dialog-label regaccount-label">Twitterスクリーンネーム</div>
                 <div class="dialog-input">
-                    <input type="text" id="regTwitterName" class="require">
-                    <span class="invalid-message" id="regTwitterIdErrorMsg"></span>
+                    <input type="text" id="regTwitterScrName" class="require">
                 </div>
             </div>
         </div>
@@ -252,7 +253,10 @@
         </div>
         <div class="dialog-row">
             <div class="dialog-comment-title">参加予定</div>
-            <div id="viewRoomMemberCount"></div>
+            <div class="membercount-container">
+                <span id="roomMemberCount"></span>
+                <span>人</span>
+            </div>
             <div id="memberList"></div>
             <div id="btnRoomEdit" class="hide">編集</div>
         </div>
@@ -273,7 +277,7 @@
         <div id="modeChangeLabel">ノーマル</div>
     </div>
 
-    <!--<div id="connectCount">接続数：1000000</div>-->
+    <div id="connectCountContainer" class="hide"><span>接続数：</span><span id="connectCount"></span></div>
 
     <script src="js/peer.min.js"></script>
     <script src="js/extmain.js"></script>
