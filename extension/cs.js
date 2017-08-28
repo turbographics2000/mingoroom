@@ -169,7 +169,7 @@ getStrorage('step').then(({step}) => {
 });
 
 function arrayEach(data, func) {
-    var arr = Array.isArray ? data : [data];
+    var arr = Array.isArray(data) ? data : [data];
     arr.forEach(func);
 }
 function $(selector, func, parent) {
