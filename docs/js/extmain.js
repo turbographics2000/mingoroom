@@ -23,6 +23,9 @@ btnExtInstall.onclick = btnExtInstall2.onclick = function () {
     var win = window.open('https://chrome.google.com/webstore/detail/gellpinfkckcbeebkhanmfkfgihelpfm', '_blank');
     win.focus();
 };
+btnReload.onclick = btnReload2.onclick = function () {
+    document.location.reload();
+}
 
 chrome.runtime.sendMessage(extId, { installCheck: true }, res => {
     // インストールされていない場合は
