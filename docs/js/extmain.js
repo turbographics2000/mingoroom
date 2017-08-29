@@ -27,22 +27,22 @@ btnReload.onclick = btnReload2.onclick = function () {
     document.location.reload();
 }
 
-// chrome.runtime.sendMessage(extId, { installCheck: true }, res => {
-//     // インストールされていない場合は
-//     // res=undefined
-//     // になる
-//     if (res) {
-//         console.log('ext installed');
-//         step = 'extInstalled';
-         localStorage.setItem('step', step);
-//     } else {
-//         if (step === 'extNotInstalled') {
-//             welcomDialog.classList.remove('hide');
-//         } else if (step === 'installButtonClicked') {
-//             extNotInstalledDialog.classList.remove('hide');
-//         }
-//     }
-// });
+chrome.runtime.sendMessage(extId, { installCheck: true }, res => {
+    // インストールされていない場合は
+    // res=undefined
+    // になる
+    if (!res) {
+        console.log('ext installed');
+        step = 'extInstalled';
+        localStorage.setItem('step', step);
+    } else {
+        if (step === 'extNotInstalled') {
+            welcomDialog.classList.remove('hide');
+        } else if (step === 'installButtonClicked') {
+            extNotInstalledDialog.classList.remove('hide');
+        }
+    }
+});
 
 window.addEventListener('regAccount', evt => {
     connectedCheck(regTwitterScrName.value).then(_ => {
