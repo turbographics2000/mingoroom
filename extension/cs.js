@@ -259,14 +259,22 @@ function fmtTime(format, hour, minute) {
 function dialogShow(dialog) {
     elmShow(dialogMask);
     elmShow(dialog);
+    setCurrentDialog(dialog);
 }
 function dialogHide(dialog) {
     elmHide(dialogMask);
     elmHide(dialog);
+    setCurrentDialog(dialog);
 }
 function dialogChangeTo(dialog) {
     $('.dialog', elm => elmHide(dialog));
     elmShow(dialog);
+    setCurrentDialog(dialog);
+}
+function setCurrentDialog(dialog) {
+    currentDialog = dialog;
+    currentOKButton = dialog.querySelector('.ok-button');
+    currentCancelButtn = dialog.querySelector('.cancel-button');
 }
 function messageDialogShow(msg) {
     dlgMessage.textContent = msg;
@@ -780,9 +788,6 @@ function roomDialogShow(isView) {
 
         updateMemberList(currentRoomData.members);
         dialogShow(roomViewDialog);
-
-        currentDialog = roomViewDialog;
-        currentOKButton = currentCancelButton = btnRoomViewDialogClose;
     } else {
         roomStartDate.textContent = fmtDate('y/m/d', year, month, day);
         roomStartTime.textContent = fmtTime('h:m', hour, minute);
@@ -790,11 +795,8 @@ function roomDialogShow(isView) {
         regRoomCourse.value = 'tokyo';
         regRoomHole.value = '3';
         regRoomComment.value = comment;
-        dialogShow(roomDialog);
 
-        currentDialog = roomDialog;
-        currentOKButton = btnRegRoom;
-        currentCancelButton = btnRegRoomCancel;
+        dialogShow(roomDialog);
     }
 }
 
