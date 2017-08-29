@@ -980,7 +980,7 @@ window.addEventListener('regAccountSuccess', evt => {
     myAccountData = {
         twitterName: regTwitterScrName.value,
         mingolName: regMingolName.value,
-        accountId: mingolName + 'おし' + twitterName,
+        accountId: regMingolName.value + 'おし' + regTwitterScrName.value,
         avatar: myAvatar
     };
     accountAvatar.src = myAvatar;
