@@ -371,7 +371,7 @@ var debugRoomsSrc = [
         day: nowDay(),
         course: 'panta',
         hole: '9',
-        owner: objKeys(debugAccounts)[0],
+        owner: debugAccounts[objKeys(debugAccounts)[0]],
         no: '365365',
         members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
     },
@@ -382,7 +382,7 @@ var debugRoomsSrc = [
         day: nowDay(),
         course: 'tokyo',
         hole: '6',
-        owner: objKeys(debugAccounts)[1],
+        owner: debugAccounts[objKeys(debugAccounts)[1]],
         no: '123123',
         members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
     },
@@ -393,7 +393,7 @@ var debugRoomsSrc = [
         day: nowDay(),
         course: 'ocean',
         hole: '3',
-        owner: objKeys(debugAccounts)[2],
+        owner: debugAccounts[objKeys(debugAccounts)[2]],
         no: '898989',
         members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
     },
@@ -404,7 +404,7 @@ var debugRoomsSrc = [
         day: nowDay(),
         course: 'ocean',
         hole: '6',
-        owner: objKeys(debugAccounts)[3],
+        owner: debugAccounts[objKeys(debugAccounts)[3]],
         no: '012345',
         members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
     },
@@ -693,7 +693,7 @@ function updateRow(date, hour, minute) {
 
     var container = document.createDocumentFragment();
     roomIds.forEach(roomId => {
-        if (rooms_id[roomId].owner === myAccountData.accountId) myRoomCount++;
+        if (rooms_id[roomId].owner.accountId === myAccountData.accountId) myRoomCount++;
         appendRoom(rooms_id[roomId], container);
     });
     row.appendChild(container);
