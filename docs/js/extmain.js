@@ -12,6 +12,8 @@ var rooms_id = null;
 var peer = null;
 var dcs = {};
 
+step = 'extNotInstalled';
+
 function dispatchCustomEvent(eventName, detail) {
     var evt = new CustomEvent(eventName, { detail });
     window.dispatchEvent(evt);
