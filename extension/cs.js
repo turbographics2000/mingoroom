@@ -137,7 +137,7 @@ function stepBackDialogShow(stepNo) {
 getStrorage(['step', 'myAccountData', 'myRooms']).then(data => {
     if (data.step === 'complete') {
         if (data.myAccountData) {
-            myAccountData = val.myAccountData;
+            myAccountData = data.myAccountData;
             accountAvatar.src = myAccountData.avatar;
             elmShow(accountAvatar);
             appendTimetableRow(nowYear(), nowMonth(), nowDay());
