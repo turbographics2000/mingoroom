@@ -12,7 +12,9 @@ var rooms_id = null;
 var peer = null;
 var dcs = {};
 
-step = 'extNotInstalled';
+btnStorageClear.onclick = function() {
+    delete localStorage.step;
+}
 
 function dispatchCustomEvent(eventName, detail) {
     var evt = new CustomEvent(eventName, { detail });

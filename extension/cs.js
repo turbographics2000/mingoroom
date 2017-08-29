@@ -23,6 +23,9 @@ var skywayAPIKey = '5aeee120-69f8-4f6e-80d7-643f1eb7070d';
 var peer;
 var stats = {};
 
+btnStorageClear.onclick = function() {
+    chrome.storage.local.clear();
+}
 
 function setStorage(data) {
     return new Promise((resolve, reject) => {
