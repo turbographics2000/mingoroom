@@ -80,7 +80,7 @@ function stepNextDialogShow(stepNo) {
             classAdd(btnModeChange, 'opdesc-mode');
         } else if (stepNo === 9) {
             classRemove(btnModeChange, 'opdesc-mode');
-            accountId = objKeys(debugAccounts)[0];
+            myAccountData = debugAccounts[objKeys(debugAccounts)[0]];
             updateAllRow();
             btnModeChange.click();
         } else if (stepNo === 10) {
@@ -136,9 +136,11 @@ function stepBackDialogShow(stepNo) {
 
 getStrorage('step').then(({step}) => {
     if (step === 'complete') {
-        getStrorage('myAccountData').then(({accountData}) => {
-            if (accountData) {
-                myAccountData = accountData;
+        getStrorage('myAccountData').then(val => {
+            if (val.myAccountData) {
+                myAccountData = val.myAccountData;
+                accountAvatar.src = myAccountData.avatar;
+                elmShow(accountAvatar);
                 appendTimetableRow(nowYear(), nowMonth(), nowDay());
             } else {
                 btnGoToRegAccount.click();
@@ -445,7 +447,7 @@ window.onkeydown = function (evt) {
 }
 
 btnGoToRegAccount.onclick = function () {
-    chrome.storage.local.set({ step: 'complete' }, _ => {
+    saveStorage({ step: 'complete' }).then(_ => {
         clearRoomData();
         mingoroomContainer.innerHTML = '';
         appendTimetableRow(nowYear(), nowMonth(), nowDay());
@@ -479,7 +481,7 @@ btnRegRoom.onclick = function (evt) {
     data.title = regRoomTitle.value;
     data.roomId = data.roomId || UUID.generate();
     data.dt = data.dt || new Date(data.year, data.month, data.day, data.hour, data.minute);
-    data.owner = accountId;
+    data.owner = myAccountData.accountId;
     data.title = regRoomTitle.value;
     data.course = regRoomCourse.value;
     data.hole = regRoomHole.value;
@@ -518,7 +520,7 @@ btnModeChange.onclick = function () {
         modeChangeLabel.textContent = '削除';
         $('.create-room-button', elm => elmHide(elm));
         $('.timetable-roomcount', elm => elmHide(elm));
-        $('.room:not([data-owner="' + accountId + '"])', elm => elmHide(elm));
+        $('.room:not([data-owner="' + myAccountData.accountId + '"])', elm => elmHide(elm));
         $('.row[data-room-count="0"], .row[data-my-room-count="0"]', row => classAdd(row, 'empty'));
         $('.room', elm => classAdd(elm, 'delete-mode'));
         currentMode = 'delete';
@@ -676,14 +678,14 @@ function updateRow(date, hour, minute) {
     $('.room', elm => elm.remove(), window[rowId]);
     roomCount.textContent = roomIds.length;
     roomIds.sort((a, b) => {
-        if (rooms_id[a].members.includes(accountId)) return -1;
-        if (rooms_id[b].members.includes(accountId)) return 1;
+        if (rooms_id[a].members.includes(myAccountData.accountId)) return -1;
+        if (rooms_id[b].members.includes(myAccountData.accountId)) return 1;
         return rooms_id[a].create_datetime - rooms_id[b].create_datetime;
     });
 
     var container = document.createDocumentFragment();
     roomIds.forEach(roomId => {
-        if (rooms_id[roomId].owner === accountId) myRoomCount++;
+        if (rooms_id[roomId].owner === myAccountData.accountId) myRoomCount++;
         appendRoom(rooms_id[roomId], container);
     });
     row.appendChild(container);
@@ -747,7 +749,7 @@ function checkCreateRoomLimit(year, month, day, hour, minute) {
         var hourCnt = 0;
 
         objKeysEach(rooms_datetime[date][hour][minute], roomId => {
-            if (rooms_id[roomId].owner === accountId) {
+            if (rooms_id[roomId].owner === myAccountData.accountId) {
                 minuteCnt++;
             }
         });
@@ -869,7 +871,7 @@ function upsertRoomData(rooms, withUpdateRow = true) {
 
     rooms_id[roomId] = rooms_id[roomId] || data;
 
-    if (rooms_id[roomId].owner === accountId) {
+    if (rooms_id[roomId].owner === myAccountData.accountId) {
         myRooms[roomId] = data;
     }
 
