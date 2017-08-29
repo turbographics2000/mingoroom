@@ -325,7 +325,7 @@ button {
   z-index: 3;
   background: white;
 }
-.step-dialog {
+#welcomDialog, #extNotInstalledDialog, .step-dialog {
   z-index: 5;
 }
 
