@@ -575,4 +575,5 @@ button {
   width: 200px;
   margin: auto;
   border: 1px solid gray;
+  text-align: center;
 }
