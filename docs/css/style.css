@@ -572,6 +572,7 @@ button {
   right: 0;
   bottom: auto;
   height: 25px;
-  width: 100px;
+  width: 200px;
   margin: auto;
+  border: 1px solid gray;
 }
