@@ -563,3 +563,15 @@ button {
 .hide {
   display: none;
 }
+
+#btnStorageClear {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: auto;
+  height: 25px;
+  width: 100px;
+  margin: auto;
+}
