@@ -21,9 +21,10 @@ var MAX_PAR_MINUTE = 1;
 var MAX_PAR_HOUR = 3;
 var skywayAPIKey = '5aeee120-69f8-4f6e-80d7-643f1eb7070d';
 var peer;
+var stats = {};
 
 
-function saveStorage(data) {
+function setStorage(data) {
     return new Promise((resolve, reject) => {
         chrome.storage.local.set(data, _ => {
             resolve();
@@ -450,7 +451,7 @@ window.onkeydown = function (evt) {
 }
 
 btnGoToRegAccount.onclick = function () {
-    saveStorage({ step: 'complete' }).then(_ => {
+    setStorage({ step: 'complete' }).then(_ => {
         clearRoomData();
         mingoroomContainer.innerHTML = '';
         appendTimetableRow(nowYear(), nowMonth(), nowDay());
@@ -864,9 +865,9 @@ function upsertRoomData(data, withUpdateRow = true) {
 
     rooms_id[roomId] = rooms_id[roomId] || data;
 
-    if (rooms_id[roomId].owner === myAccountData.accountId) {
+    if (data.owner.accountId === myAccountData.accountId) {
         myRooms[roomId] = data;
-        saveStorage({ myRooms }).then(_ => console.log('save myRooms.'));
+        setStorage({ myRooms }).then(_ => console.log('save myRooms.'));
     }
 
     rooms_datetime[date] = rooms_datetime[date] || {};
@@ -984,7 +985,7 @@ window.addEventListener('regAccountSuccess', evt => {
     };
     accountAvatar.src = myAvatar;
     elmShow(accountAvatar);
-    saveStorage({ myAccountData }).then(_ => {
+    setStorage({ myAccountData }).then(_ => {
         dialogHide(accountDialog);
         elmShow(btnRegAccount);
         messageDialogShow('アカウントを登録しました。忘れずにTwitterの名前をもとに戻してください。');

@@ -20,7 +20,7 @@ function dispatchCustomEvent(eventName, detail) {
 btnExtInstall.onclick = btnExtInstall2.onclick = function () {
     step = 'installButtonClicked';
     localStorage.setItem('step', step);
-    var win = window.open('https://chrome.google.com/webstore/detail/gellpinfkckcbeebkhanmfkfgihelpfm/publish-delayed?hl=ja', '_blank');
+    var win = window.open('https://chrome.google.com/webstore/detail/gellpinfkckcbeebkhanmfkfgihelpfm', '_blank');
     win.focus();
 };
 
