@@ -134,18 +134,21 @@ function stepBackDialogShow(stepNo) {
     }
 }
 
-getStrorage('step').then(({step}) => {
-    if (step === 'complete') {
-        getStrorage('myAccountData').then(val => {
-            if (val.myAccountData) {
-                myAccountData = val.myAccountData;
-                accountAvatar.src = myAccountData.avatar;
-                elmShow(accountAvatar);
-                appendTimetableRow(nowYear(), nowMonth(), nowDay());
-            } else {
-                btnGoToRegAccount.click();
+getStrorage(['step', 'myAccountData', 'myRooms']).then(data => {
+    if (data.step === 'complete') {
+        if (data.myAccountData) {
+            myAccountData = val.myAccountData;
+            accountAvatar.src = myAccountData.avatar;
+            elmShow(accountAvatar);
+            appendTimetableRow(nowYear(), nowMonth(), nowDay());
+            if(data.myRooms) {
+                objKeysEach(data.myRooms, roomId => {
+                    upsertRoomData(data.myRooms[roomId]);
+                });
             }
-        });
+        } else {
+            btnGoToRegAccount.click();
+        }
     } else {
         tutorialMask.style.background = 'gray';
         elmShow(tutorialMask);
@@ -166,10 +169,10 @@ getStrorage('step').then(({step}) => {
 });
 
 function arrayEach(data, func) {
-    if(Array.isArray(data)) {
+    if (Array.isArray(data)) {
         arr = data;
     } else {
-        arr = [data];        
+        arr = [data];
     }
     arr.forEach(func);
 }
@@ -481,7 +484,7 @@ btnRegRoom.onclick = function (evt) {
     data.title = regRoomTitle.value;
     data.roomId = data.roomId || UUID.generate();
     data.dt = data.dt || new Date(data.year, data.month, data.day, data.hour, data.minute);
-    data.owner = myAccountData.accountId;
+    data.owner = myAccountData;
     data.title = regRoomTitle.value;
     data.course = regRoomCourse.value;
     data.hole = regRoomHole.value;
@@ -492,7 +495,6 @@ btnRegRoom.onclick = function (evt) {
 
     upsertRoomData(data);
     dialogHide(roomDialog);
-    checkCreateRoomLimit(data.year, zs2(data.month), zs2(data.day), zs2(data.hour), zs2(data.minute));
 };
 btnRegRoomCancel.onclick = function () {
     dialogHide(roomDialog);
@@ -629,6 +631,8 @@ function appendTimetableRow(year, month, day) {
                     day: +this.dataset.day,
                     hour: +this.dataset.hour,
                     minute: +this.dataset.minute,
+                    title: '',
+                    no: '',
                     members: []
                 };
                 roomDialogShow();
@@ -691,7 +695,6 @@ function updateRow(date, hour, minute) {
     row.appendChild(container);
 
     upsertDataset(row, { roomCount, myRoomCount });
-
 }
 
 function appendRoom(data, container) {
@@ -715,15 +718,15 @@ function appendRoom(data, container) {
     classAdd(roomTitle, 'room-title');
     classAdd(roomNo, 'room-no');
     classAdd(course, 'course');
-    classAdd(ownerAvatar, 'room-owner-avatar', data.owner);
-    
+    classAdd(ownerAvatar, 'room-owner-avatar', data.owner.accountId);
+
     roomTitle.textContent = data.title;
     roomNo.textContent = '#' + ('00000' + data.no).slice(-6);
     course.textContent = courses[data.course].short + ' ' + data.hole + 'Hole';
-    ownerAvatar.alt = ownerAvatar.title = '作成者：' + accounts[rooms_id[data.roomId].owner].mingolName + '(@' + accounts[rooms_id[data.roomId].owner].twitterScrName + ')';
-    ownerAvatar.src = accounts[data.owner].avatar;
+    ownerAvatar.alt = ownerAvatar.title = '作成者：' + data.owner.mingolName + '(@' + data.owner.twitterScrName + ')';
+    ownerAvatar.src = data.owner.avatar;
     memberCount.textContent = '参加予定：0';
-    
+
     upsertDataset(room, { owner: data.owner, course: data.course, hole: data.hole });
     room.onclick = function (evt) {
         var data = rooms_id[this.id];
@@ -737,34 +740,35 @@ function appendRoom(data, container) {
     };
 
     appendChild(roomNo, ownerAvatar);
-    appendChild(room, [roomTitle, course, memberCount, roomNo]);
+    appendChild(room, roomTitle, course, memberCount, roomNo);
     appendChild(row, room);
 }
 
-function checkCreateRoomLimit(year, month, day, hour, minute) {
-    objKeys(room_id, roomId => {
-        var date = fmtDate('ymd', year, month, day);
-        var rowId = 'row' + date + month + day;
-        var minuteCnt = 0;
-        var hourCnt = 0;
+function checkCreateRoomLimit({year, month, day, hour, minute}) {
+    var date = fmtDate('ymd', year, month, day);
+    hour = zs2(hour);
+    minute = zs2(minute);
+    var minuteCnt = 0;
+    var hourCnt = 0;
 
-        objKeysEach(rooms_datetime[date][hour][minute], roomId => {
-            if (rooms_id[roomId].owner === myAccountData.accountId) {
-                minuteCnt++;
-            }
-        });
-        objKeysEach(rooms_datetime[date][hour], minute => {
-            objKeysEach(rooms_datetime[date][hour][minute], roomId => {
-                hourCnt++;
-            });
-        })
-        if (minuteCnt > MAX_PAR_MINUTE) {
-            elmHide(window['btnCreateRoom' + date + hour + minute]);
-        }
-        if (hourCnt > MAX_PAR_HOUR) {
-            $('[id^="btnCreateRoom' + date + hour + '"]', elm => elmHide(elm));
+    objKeysEach(rooms_datetime[date][hour][minute], roomId => {
+        if (rooms_id[roomId].owner.accountId === myAccountData.accountId) {
+            minuteCnt++;
         }
     });
+    objKeysEach(rooms_datetime[date][hour], minute => {
+        objKeysEach(rooms_datetime[date][hour][minute], roomId => {
+            if (rooms_id[roomId].owner.accountId === myAccountData.accountId) {
+                hourCnt++;
+            }
+        });
+    });
+    if (minuteCnt >= MAX_PAR_MINUTE) {
+        elmHide(window['btnCreateRoom' + date + hour + minute]);
+    }
+    if (hourCnt >= MAX_PAR_HOUR) {
+        $('[id^="btnCreateRoom' + date + hour + '"]', elm => elmHide(elm));
+    }
 }
 
 function roomDialogShow(isView) {
@@ -793,43 +797,32 @@ function roomDialogShow(isView) {
     } else {
         roomStartDate.textContent = fmtDate('y/m/d', year, month, day);
         roomStartTime.textContent = fmtTime('h:m', hour, minute);
-        regRoomTitle.value = title;
+        regRoomTitle.value = '';
         regRoomCourse.value = 'tokyo';
         regRoomHole.value = '3';
-        regRoomComment.value = comment;
+        regRoomNo.value = '';
+        regRoomComment.value = '';
 
         dialogShow(roomDialog);
     }
-}
-
-function createRoom(evt) {f
-    //var minMinute = ((minDate.getMinutes() + 15) / 15 | 0) * 15;
-    roomStartDate.textContent = fmtDate('y/m/d', currentRoomData.year, currentRoomData.month, currentRoomData.day);
-    roomStartTime.textContent = fmtTime('h:m', currentRoomData.hour, currentRoomData.minute);
-    regCourseSelect.value = 'tokyo';
-    regHoleSelect.value = '3';
-    regRoomNo.value = '';
-    regRoomComment.value = '';
-
-    dialogShow(roomDialog);
 }
 
 function updateMember(data, isReserve) {
     var roomId = msg.reserveRoom.roomId;
     var accountId = msg.reserveRoom.accountId;
     var room = rooms_id[msg.reserveRoom.roomId];
-    if(!room.members.includes(msg.reserveRoom.accountId)) {
-        if(isReserve) {
+    if (!room.members.includes(msg.reserveRoom.accountId)) {
+        if (isReserve) {
             room.members.push(msg.reserveRoom.accountId);
         } else {
             var idx = room.members.indexOf(accountId);
-            if(idx !== -1) {
+            if (idx !== -1) {
                 room.members.splice(idx, 1);
             }
         }
         window[roomId]
-        if(isShowing(roomViewDialog) && currentRoomData.roomId === roomId) {
-            updateMemberList(room.members);                
+        if (isShowing(roomViewDialog) && currentRoomData.roomId === roomId) {
+            updateMemberList(room.members);
         }
     }
 }
@@ -862,7 +855,7 @@ function updateMemberList(members) {
     }
 }
 
-function upsertRoomData(rooms, withUpdateRow = true) {
+function upsertRoomData(data, withUpdateRow = true) {
     var roomId = data.roomId;
     var date = fmtDate('ymd', data.year, data.month, data.day);
     var hour = zs2(data.hour);
@@ -873,6 +866,7 @@ function upsertRoomData(rooms, withUpdateRow = true) {
 
     if (rooms_id[roomId].owner === myAccountData.accountId) {
         myRooms[roomId] = data;
+        saveStorage({ myRooms }).then(_ => console.log('save myRooms.'));
     }
 
     rooms_datetime[date] = rooms_datetime[date] || {};
@@ -883,9 +877,10 @@ function upsertRoomData(rooms, withUpdateRow = true) {
     rooms_owner[owner] = rooms_owner[owner] || {};
     rooms_owner[owner][roomId] = rooms_owner[owner][roomId] || data;
 
-    if(withUpdateRow) {
+    if (withUpdateRow) {
         updateRow(date, hour, minute);
     }
+    checkCreateRoomLimit(data);    
 }
 
 function deleteRoom(roomId, withUpdateRow = true) {
@@ -895,20 +890,20 @@ function deleteRoom(roomId, withUpdateRow = true) {
     var minute = zs2(data.minute);
     var owner = data.owner;
 
-    if(rooms_id[roomId]) {
+    if (rooms_id[roomId]) {
         delete rooms_id[roomId];
     }
-    if(rooms_datetime[date] && 
-        rooms_datetime[date][hour] && 
-        rooms_datetime[date][hour][minute] && 
+    if (rooms_datetime[date] &&
+        rooms_datetime[date][hour] &&
+        rooms_datetime[date][hour][minute] &&
         rooms_datetime[date][hour][minute][roomId]) {
         delete rooms_datetime[date][hour][minute][roomId];
     }
-    if(rooms_owner[owner] && rooms_owner[owner][roomId]) {
+    if (rooms_owner[owner] && rooms_owner[owner][roomId]) {
         delete rooms_owner[owner][roomId];
     }
 
-    if(withUpdateRow) {
+    if (withUpdateRow) {
         updateRow(date, hour, minute);
     }
 }
@@ -989,7 +984,7 @@ window.addEventListener('regAccountSuccess', evt => {
     };
     accountAvatar.src = myAvatar;
     elmShow(accountAvatar);
-    saveStorage({myAccountData}).then(_ => {
+    saveStorage({ myAccountData }).then(_ => {
         dialogHide(accountDialog);
         elmShow(btnRegAccount);
         messageDialogShow('アカウントを登録しました。忘れずにTwitterの名前をもとに戻してください。');
@@ -997,30 +992,30 @@ window.addEventListener('regAccountSuccess', evt => {
 });
 window.addEventListener('dc_msg', evt => {
     var msg = evt.detail;
-    if(msg.connectAccountId) {
+    if (msg.connectAccountId) {
         onlineAccounts[msg.coonecAccountId] = true;
         connectCount.textContent = objKeys(onlineAccounts).length;
     }
-    if(msg.disconnectAccountId) {
+    if (msg.disconnectAccountId) {
         delete onlineAccounts[msg.disconnectAccountId];
         connectCount.textContent = objKeys(onlineAccounts).length;
-    } 
-    if(msg.account) {
+    }
+    if (msg.account) {
         accounts[msg.account.accountId] = msg.account;
         connectCount.textContent = objKeys(accounts).length;
     }
-    if(msg.rooms) {
+    if (msg.rooms) {
         objKeysEach(msg.rooms, roomId => {
             upsertRoomData(msg.rooms[roomId]);
         });
     }
-    if(msg.deleteRoomId) {
+    if (msg.deleteRoomId) {
         deleteRoom(msg.deleteRoomId);
     }
-    if(msg.reserveRoom) {
+    if (msg.reserveRoom) {
         updateMember(msg.reserveRoom, true);
     }
-    if(msg.cancelRoom) {
+    if (msg.cancelRoom) {
         updateMember(msg.cancelRoom);
     }
 });

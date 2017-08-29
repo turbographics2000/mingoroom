@@ -1,5 +1,5 @@
 db.version(1).stores({
-    rooms: 'id, *owner, *datetime, course, holes, no, desc',
+    rooms: '++id, *owner, *year, *month, *day, *hour, *minute, course, hole, no, desc',
     reserve: '*roomid, *userid',
     users: 'twitterid, mingolname, avatar'
 });
