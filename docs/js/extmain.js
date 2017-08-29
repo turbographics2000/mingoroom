@@ -41,6 +41,7 @@ chrome.runtime.sendMessage(extId, { installCheck: true }, res => {
         localStorage.setItem('step', step);
     } else {
         if (step === 'extNotInstalled') {
+            tutorialMask.classList.remove('hide');
             welcomDialog.classList.remove('hide');
         } else if (step === 'installButtonClicked') {
             extNotInstalledDialog.classList.remove('hide');
