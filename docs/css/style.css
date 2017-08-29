@@ -578,7 +578,8 @@ button {
   height: 25px;
   width: 120px;
   margin: auto;
-  border: 1px solid gray;
+  border: 1px solid black;
   text-align: center;
   cursor: pointer;
+  background: white;
 }
