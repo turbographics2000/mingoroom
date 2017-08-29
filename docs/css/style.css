@@ -393,7 +393,7 @@ button {
   cursor: pointer;
 }
 
-#btnExtInstall {
+#btnExtInstall, #btnExtInstall2 {
   width: 180px;
 }
 
