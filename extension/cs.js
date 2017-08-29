@@ -669,7 +669,7 @@ function applyMaxRoomCount() {
 function updateAllRow() {
     objKeysEach(rooms_datetime, date => {
         objKeysEach(rooms_datetime[date], hour => {
-            objKeysEach(rooms_datetime[date], minute => {
+            objKeysEach(rooms_datetime[date][hour], minute => {
                 updateRow(date, hour, minute);
             });
         });
