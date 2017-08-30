@@ -429,7 +429,6 @@ function createDebugRoom(year, month, day, hour, minute) {
             };
             Object.assign(data, debugRoomsSrc[r]);
             upsertRoomData(data, false);
-            data.owner = debugRoomsSrc[r].owner.accountId;
         }
     }
 }
@@ -732,7 +731,7 @@ function appendRoom(data, container) {
     ownerAvatar.src = data.owner.avatar;
     memberCount.textContent = '参加予定：0';
 
-    upsertDataset(room, { owner: data.owner, course: data.course, hole: data.hole });
+    upsertDataset(room, { owner: data.owner.accountId, course: data.course, hole: data.hole });
     room.onclick = function (evt) {
         var data = rooms_id[this.id];
         if (currentMode === 'add') {
