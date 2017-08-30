@@ -14,6 +14,7 @@ var dcs = {};
 
 btnStorageClear.onclick = function() {
     delete localStorage.step;
+    console.log('localStorage.step cleared.');    
 }
 
 function dispatchCustomEvent(eventName, detail) {

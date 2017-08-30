@@ -25,6 +25,7 @@ var stats = {};
 
 btnStorageClear.onclick = function () {
     chrome.storage.local.clear();
+    console.log('chrome.storage cleared.');
 }
 
 function setStorage(data) {
