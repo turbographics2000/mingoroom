@@ -565,10 +565,10 @@ button:active, div[id^="btn"]:active {
 }
 
 #messageDialog {
-  height: 100px;
+  height: 120px;
 }
 #dlgMessage {
-  text-align: center;
+  /*text-align: center;*/
 }
 
 .hide {
