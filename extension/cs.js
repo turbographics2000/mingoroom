@@ -139,8 +139,8 @@ function stepBackDialogShow(stepNo) {
 
 getStrorage(['step', 'myAccountData', 'myRooms']).then(data => {
     if (data.step === 'complete') {
-        myRooms = data.myRooms;
-        if (myRooms) {
+        if (data.myRooms) {
+            myRooms = data.myRooms;
             objKeysEach(myRooms, roomId => {
                 upsertRoomData(myRooms[roomId]);
             });
