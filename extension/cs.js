@@ -992,8 +992,8 @@ function validateAccountKey() {
 window.addEventListener('regAccountSuccess', evt => {
     var isStart = !myAccountData;
     myAccountData = {
-        twitterName: regTwitterScrName.value,
         mingolName: regMingolName.value,
+        twitterScrName: regTwitterScrName.value,
         avatar: myAvatar
     };
     regMingolName.value = '';
