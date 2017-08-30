@@ -91,9 +91,9 @@ window.addEventListener('connectPeer', evt => {
             })
         });
     });
-    peer.on('connection', con => {
-        console.log('dc connect.[' + con.id + ']');
-        dc = con;
+    peer.on('connection', dc => {
+        console.log('dc connect.[' + dc.peer + ']');
+        dcs[dc.peer] = dc;
         dispatchCustomEvent('dc_msg', { connectTwitterScrName: dc.peer });
         dc.on('open', _ => {
             dc.send(generateDCOpenMessage());
@@ -109,10 +109,15 @@ window.addEventListener('connectPeer', evt => {
 });
 
 window.addEventListener('send', evt => {
-    var data = evt.detail;
-    if(dc) {
-        var msg = JSON.stringify(data);
-        dc.send(msg);
+    var data = evt.detail.data;
+    var msg = JSON.stringify(data);
+
+    if(evt.detail.to && dcs[evt.detail.to]) {
+        dcs[evt.detail.to].send(msg);
+    } else {
+        Object.keys(dcs, peerId => {
+            dcs[peerId].send(msg);
+        });
     }
 })
 
