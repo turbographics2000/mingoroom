@@ -104,6 +104,9 @@ window.addEventListener('connectPeer', evt => {
         });
         dc.send(msg);
     });
+    peer.on('error', err => {
+        console.log('peer error.', err);
+    })
 });
 
 function connectedCheck(twitterScrName) {
