@@ -833,7 +833,7 @@ function updateMember(data, isReserve) {
 
 function updateMemberList(members) {
     memberList.innerHTML = '';
-    viewRoomMemberCount.textContent = members.length + '人';
+    viewRoomMemberCount.textContent = members.length;
     if (members) {
         members.forEach(memberId => {
             var accountData = accounts[memberId];
