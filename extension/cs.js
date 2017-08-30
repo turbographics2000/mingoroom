@@ -103,10 +103,8 @@ function stepBackDialogShow(stepNo) {
     dialogChangeTo(stepDialogs[stepNo]);
     if (stepNo < 3) {
         tutorialMask.style.background = 'gray';
+        $('.step-dialog', elm => classRemove(elm, 'opdesc-mode'));        
     } else {
-        $('.step-dialog', elm => classAdd(elm, 'opdesc-mode'));
-        accountAvatar.src = 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_a.png';
-        tutorialMask.style.background = 'rgba(0,0,0,0.1)';
         if (stepNo === 3) {
             mingoroomContainer.innerHTML = '';
             clearRoomData();
