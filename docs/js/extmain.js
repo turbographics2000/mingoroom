@@ -43,7 +43,7 @@ chrome.runtime.sendMessage(extId, { installCheck: true }, res => {
         tutorialMask.style.background = 'gray';
         tutorialMask.classList.remove('hide');
         if (step === 'extNotInstalled') {
-            welcomDialog.classList.remove('hide');
+            startDialog.classList.remove('hide');
         } else if (step === 'installButtonClicked') {
             extNotInstalledDialog.classList.remove('hide');
         }
