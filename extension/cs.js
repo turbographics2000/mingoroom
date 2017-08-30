@@ -853,7 +853,7 @@ function updateMemberList(members) {
             memberMingolName.textContent = accountData.mingolName;
             memberTwitterScrName.textContent = '(@' + accountData.twitterScrName + ')';
 
-            appendChild(member, [memberAvatar, memberMingolName, memberTwitterScrName]);
+            appendChild(member, memberAvatar, memberMingolName, memberTwitterScrName);
             appendChild(memberList, member);
         });
     }
