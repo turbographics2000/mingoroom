@@ -12,10 +12,10 @@ var rooms_id = null;
 var peer = null;
 var dcs = {};
 
-btnStorageClear.onclick = function() {
+btnStorageClear.add('click', evt => {
     delete localStorage.step;
     console.log('localStorage.step cleared.');    
-}
+});
 
 function dispatchCustomEvent(eventName, detail) {
     var evt = new CustomEvent(eventName, { detail });
