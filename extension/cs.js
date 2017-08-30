@@ -316,51 +316,61 @@ var courses = {
 // debugData
 var debugAccounts = {
     'あいうえおおしAAAAAAAAAAAAAAAAAAAA': {
+        accountId: 'あいうえおおしAAAAAAAAAAAAAAAAAAAA',
         avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_a.png',
         mingolName: 'あいうえお',
         twitterScrName: 'AAAAAAAAAAAAAAAAAAAA'
     },
     'かきくけこおしBBBBBBBBBBBBBBBBBBBB': {
+        accountId: 'かきくけこおしBBBBBBBBBBBBBBBBBBBB',
         avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_k.png',
         mingolName: 'かきくけこ',
         twitterScrName: 'BBBBBBBBBBBBBBBBBBBB'
     },
     'さしすせそおしCCCCCCCCCCCCCCCCCCCC': {
+        accountId: 'さしすせそおしCCCCCCCCCCCCCCCCCCCC',
         avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_s.png',
         mingolName: 'さしすせそ',
         twitterScrName: 'CCCCCCCCCCCCCCCCCCCC'
     },
     'たちつてとおしDDDDDDDDDDDDDDDDDDDD': {
+        accountId: 'たちつてとおしDDDDDDDDDDDDDDDDDDDD',
         avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_t.png',
         mingolName: 'たちつてと',
         twitterScrName: 'DDDDDDDDDDDDDDDDDDDD'
     },
     'なにぬねのおしEEEEEEEEEEEEEEEEEEEE': {
+        accountId: 'なにぬねのおしEEEEEEEEEEEEEEEEEEEE',
         avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_n.png',
         mingolName: 'なにぬねの',
         twitterScrName: 'EEEEEEEEEEEEEEEEEEEE'
     },
     'はひふへほおしFFFFFFFFFFFFFFFFFFFF': {
+        accountId: 'はひふへほおしFFFFFFFFFFFFFFFFFFFF',
         avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_h.png',
         mingolName: 'はひふへほ',
         twitterScrName: 'FFFFFFFFFFFFFFFFFFFF'
     },
     'まみむめもおしGGGGGGGGGGGGGGGGGGGG': {
+        accountId: 'まみむめもおしGGGGGGGGGGGGGGGGGGGG',
         avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_m.png',
         mingolName: 'まみむめも',
         twitterScrName: 'GGGGGGGGGGGGGGGGGGGG'
     },
     'やゆよおしHHHHHHHHHHHHHHHHHHHH': {
+        accountId: 'やゆよおしHHHHHHHHHHHHHHHHHHHH',
         avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_y.png',
         mingolName: 'やゆよ',
         twitterScrName: 'HHHHHHHHHHHHHHHHHHHH'
     },
     'らりるれろおしIIIIIIIIIIIIIIIIIIII': {
+        accountId: 'らりるれろおしIIIIIIIIIIIIIIIIIIII',
         avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_r.png',
         mingolName: 'らりるれろ',
         twitterScrName: 'IIIIIIIIIIIIIIIIIIII'
     },
     'わをんおしJJJJJJJJJJJJJJJJJJJJ': {
+        accountId: 'わをんおしJJJJJJJJJJJJJJJJJJJJ',
         avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_w.png',
         mingolName: 'わをん',
         twitterScrName: 'JJJJJJJJJJJJJJJJJJJJ'
@@ -872,7 +882,7 @@ function upsertRoomData(data, withUpdateRow = true) {
 
     rooms_id[roomId] = rooms_id[roomId] || data;
 
-    if (data.owner.accountId === myAccountData.accountId) {
+    if (owner.accountId === myAccountData.accountId) {
         myRooms[roomId] = data;
         setStorage({ myRooms }).then(_ => console.log('save myRooms.'));
     }
