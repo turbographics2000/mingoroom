@@ -59,7 +59,7 @@ function stepNextDialogShow(stepNo) {
         var year = nowYear();
         var month = nowMonth();
         var day = nowDay();
-        tutorialMask.style.background = 'rgba(0,0,0,0.1)';
+        tutorialMask.style.background = 'rgba(0,0,0,0.03)';
         if (stepNo === 3) {
             elmShow(accountAvatar);
             appendTimetableRow(year, month, day);
