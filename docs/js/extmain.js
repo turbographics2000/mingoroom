@@ -17,7 +17,7 @@ btnStorageClear.add('click', evt => {
     console.log('localStorage.step cleared.');    
 });
 
-function dispatchCustomEvent(eventName, detail) {
+function dispatchCustomEvent(eventName, detail = null) {
     var evt = new CustomEvent(eventName, { detail });
     window.dispatchEvent(evt);
 }
@@ -53,8 +53,7 @@ chrome.runtime.sendMessage(extId, { installCheck: true }, res => {
 
 window.addEventListener('regAccount', evt => {
     connectedCheck(regTwitterScrName.value).then(_ => {
-        var cevt = new CustomEvent('regAccountSuccess', { detail: null });
-        window.dispatchEvent(cevt);
+        dispatchCustomEvent('regAccountSuccess');
     }).catch(err => {
         if (err === 'connected') {
             messageDialogShow('他の端末で @' + regTwitterScrName.value + ' ですでに接続しています。この端末で @' + regTwitterScrName.value + ' で登録したい場合は、いったん他の端末で開いている「みんなでゴルフ待合所(仮題)」のページを閉じてから登録を行ってください。');
@@ -66,9 +65,9 @@ window.addEventListener('regAccount', evt => {
 
 window.addEventListener('connectedCheck', evt => {
     connectedCheck(evt.detail.twitterScrName).then(_ => {
-        dispatchCustomEvent('connectedCheckPass', null);
+        dispatchCustomEvent('connectedCheckPass');
     }).catch(_ => {
-        dispatchCustomEvent('connectedCheckFail', null);
+        dispatchCustomEvent('connectedCheckFail');
     });
 });
 

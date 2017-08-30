@@ -42,7 +42,7 @@ function getStrorage(key) {
         });
     });
 }
-function dispatchCustomEvent(eventName, detail) {
+function dispatchCustomEvent(eventName, detail = null) {
     var evt = new CustomEvent(eventName, { detail });
     window.dispatchEvent(evt);
 }
@@ -963,7 +963,7 @@ function createRegAccountKey() {
 
 function regAccount() {
     validateAccountKey().then(_ => {
-        dispatchCustomEvent('regAccount', null);
+        dispatchCustomEvent('regAccount');
     }).catch(err => {
         regAccountErrorMessage.textContent = err;
         elmShow(btnRegAccount);
@@ -1005,6 +1005,7 @@ function validateAccountKey() {
 }
 
 window.addEventListener('regAccountSuccess', evt => {
+    var isStart = !myAccountData;
     myAccountData = {
         twitterName: regTwitterScrName.value,
         mingolName: regMingolName.value,
@@ -1017,6 +1018,9 @@ window.addEventListener('regAccountSuccess', evt => {
         dialogHide(accountDialog);
         elmShow(btnRegAccount);
         messageDialogShow('アカウントを登録しました。忘れずにTwitterの名前をもとに戻してください。');
+        if(isStart) {
+            dispatchCustomEvent('connectedCheck', myAccountData);
+        }
     });
 });
 window.addEventListener('dc_msg', evt => {
