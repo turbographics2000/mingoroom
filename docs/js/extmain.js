@@ -76,11 +76,13 @@ window.addEventListener('connectPeer', evt => {
 
     peer = new Peer(myAccountData.accountId, { key: skywayAPIKey });
     peer.on('open', list => {
+        console.log('peer open.');
         peer.listAllPeers(list => {
             list = list.filter(id => !id.startsWith('anonymous') && id !== myAccountData.accountId);
             list.forEach(id => {
                 var dc = peer.connect(id);
                 dc.on('open', _ => {
+                    console.log('dc open.');
                     dc.on('data', data => {
                         var msg = JSON.parse(data);
                         dispatchCustomEvent('dc_msg', { detail: msg });
@@ -90,6 +92,7 @@ window.addEventListener('connectPeer', evt => {
         });
     });
     peer.on('connection', con => {
+        console.log('dc connect.[' + con.id + ']');
         dc = con;
         dispatchCustomEvent('dc_msg', { connectAccountId: dc.peer });
         dc.on('close', _ => {
@@ -127,5 +130,4 @@ function connectedCheck(twitterScrName) {
         });
     })
 }
-
 

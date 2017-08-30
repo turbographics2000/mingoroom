@@ -164,8 +164,6 @@ getStrorage(['step', 'myAccountData', 'myRooms']).then(data => {
 });
 
 window.addEventListener('connectedCheckPass', evt => {
-    myAccountData = {};
-    Object.assign(myAccountData, evt.detail);
     accountAvatar.src = myAccountData.avatar;
     elmShow(accountAvatar);
     appendTimetableRow(nowYear(), nowMonth(), nowDay());
@@ -174,6 +172,7 @@ window.addEventListener('connectedCheckPass', evt => {
             upsertRoomData(data.myRooms[roomId]);
         });
     }
+    dispatchCustomEvent('connectPeer', myAccountData);
 });
 window.addEventListener('connectedCheckFail', evt => {
     messageDialogShow('他の端末ですでに接続されています。この端末で接続するには他の端末で「みんなでゴルフ待合所 (仮題)」ページを閉じてください。');
