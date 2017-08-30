@@ -12,7 +12,7 @@ var rooms_id = null;
 var peer = null;
 var dcs = {};
 
-btnStorageClear.add('click', evt => {
+btnStorageClear.addEventListener('click', evt => {
     delete localStorage.step;
     console.log('localStorage.step cleared.');    
 });
