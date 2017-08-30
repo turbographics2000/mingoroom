@@ -140,7 +140,14 @@ function stepBackDialogShow(stepNo) {
 
 getStrorage(['step', 'myAccountData', 'myRooms']).then(data => {
     if (data.step === 'complete') {
+        myRooms = data.myRooms;
+        if (myRooms) {
+            objKeysEach(myRooms, roomId => {
+                upsertRoomData(myRooms[roomId]);
+            });
+        }    
         if (data.myAccountData) {
+            myAccountData = data.myAccountData;
             dispatchCustomEvent('connectedCheck', myAccountData);
         } else {
             btnGoToRegAccount.click();
@@ -168,14 +175,10 @@ window.addEventListener('connectedCheckPass', evt => {
     accountAvatar.src = myAccountData.avatar;
     elmShow(accountAvatar);
     appendTimetableRow(nowYear(), nowMonth(), nowDay());
-    if (data.myRooms) {
-        objKeysEach(data.myRooms, roomId => {
-            upsertRoomData(data.myRooms[roomId]);
-        });
-    }
     dispatchCustomEvent('connectPeer', myAccountData);
 });
 window.addEventListener('connectedCheckFail', evt => {
+    myAccountData = null;
     messageDialogShow('他の端末ですでに接続されています。この端末で接続するには他の端末で「みんなでゴルフ待合所 (仮題)」ページを閉じてください。');
 });
 
