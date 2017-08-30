@@ -85,7 +85,7 @@ window.addEventListener('connectPeer', evt => {
                     console.log('dc open.');
                     dc.on('data', data => {
                         var msg = JSON.parse(data);
-                        dispatchCustomEvent('dc_msg', { detail: msg });
+                        dispatchCustomEvent('dc_msg', msg);
                     });
                 });
             })
