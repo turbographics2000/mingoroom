@@ -3,9 +3,9 @@ var extId = 'ioaancmfccbkoknfeibefmdahkpiincg';
 //var extId = 'ioaancmfccbkoknfeibefmdahkpiinch';
 var skywayAPIKey = '5aeee120-69f8-4f6e-80d7-643f1eb7070d';
 var myAccountData = {
-    accountId: null,
     mingolName: null,
-    twitterScrName: null
+    twitterScrName: null,
+    avatar
 };
 var myRooms = null;
 var rooms_id = null;
@@ -74,11 +74,11 @@ window.addEventListener('connectedCheck', evt => {
 window.addEventListener('connectPeer', evt => {
     Object.assign(myAccountData, evt.detail);
 
-    peer = new Peer(myAccountData.accountId, { key: skywayAPIKey });
+    peer = new Peer(myAccountData.twitterScrName, { key: skywayAPIKey });
     peer.on('open', list => {
         console.log('peer open.');
         peer.listAllPeers(list => {
-            list = list.filter(id => !id.startsWith('anonymous') && id !== myAccountData.accountId);
+            list = list.filter(id => !id.startsWith('anonymous') && id !== myAccountData.twitterScrName);
             list.forEach(id => {
                 var dc = peer.connect(id);
                 dc.on('open', _ => {
@@ -94,9 +94,9 @@ window.addEventListener('connectPeer', evt => {
     peer.on('connection', con => {
         console.log('dc connect.[' + con.id + ']');
         dc = con;
-        dispatchCustomEvent('dc_msg', { connectAccountId: dc.peer });
+        dispatchCustomEvent('dc_msg', { connectTwitterScrName: dc.peer });
         dc.on('close', _ => {
-            dispatchCustomEvent('dc_msg', { disconnectAccountId: dc.peer });
+            dispatchCustomEvent('dc_msg', { disconnectTwitterScrName: dc.peer });
         });
         var msg = JSON.stringify({
             account: myAccountData,

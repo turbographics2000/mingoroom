@@ -1,5 +1,4 @@
 var myAccountData = {
-    accountId: null,
     mingolName: null,
     twitterScrName: null,
     avatar: null
@@ -303,15 +302,6 @@ function messageDialogShow(msg) {
     dlgMessage.textContent = msg;
     dialogShow(messageDialog);
 }
-function accountDataFromAccountId(accountId) {
-    var names = accountId.split('おし');
-    return {
-        accountId: accountId,
-        mingolName: names[0],
-        twitterScrName: names[1]
-    };
-}
-
 
 var courses = {
     tokyo: { normal: '東京グランドゴルフガーデン', short: '東京' },
@@ -325,62 +315,52 @@ var courses = {
 
 // debugData
 var debugAccounts = {
-    'あいうえおおしAAAAAAAAAAAAAAAAAAAA': {
-        accountId: 'あいうえおおしAAAAAAAAAAAAAAAAAAAA',
+    'AAAAAAAAAAAAAAAAAAAA': {
         avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_a.png',
         mingolName: 'あいうえお',
         twitterScrName: 'AAAAAAAAAAAAAAAAAAAA'
     },
-    'かきくけこおしBBBBBBBBBBBBBBBBBBBB': {
-        accountId: 'かきくけこおしBBBBBBBBBBBBBBBBBBBB',
+    'BBBBBBBBBBBBBBBBBBBB': {
         avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_k.png',
         mingolName: 'かきくけこ',
         twitterScrName: 'BBBBBBBBBBBBBBBBBBBB'
     },
-    'さしすせそおしCCCCCCCCCCCCCCCCCCCC': {
-        accountId: 'さしすせそおしCCCCCCCCCCCCCCCCCCCC',
+    'CCCCCCCCCCCCCCCCCCCC': {
         avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_s.png',
         mingolName: 'さしすせそ',
         twitterScrName: 'CCCCCCCCCCCCCCCCCCCC'
     },
-    'たちつてとおしDDDDDDDDDDDDDDDDDDDD': {
-        accountId: 'たちつてとおしDDDDDDDDDDDDDDDDDDDD',
+    'DDDDDDDDDDDDDDDDDDDD': {
         avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_t.png',
         mingolName: 'たちつてと',
         twitterScrName: 'DDDDDDDDDDDDDDDDDDDD'
     },
-    'なにぬねのおしEEEEEEEEEEEEEEEEEEEE': {
-        accountId: 'なにぬねのおしEEEEEEEEEEEEEEEEEEEE',
+    'EEEEEEEEEEEEEEEEEEEE': {
         avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_n.png',
         mingolName: 'なにぬねの',
         twitterScrName: 'EEEEEEEEEEEEEEEEEEEE'
     },
-    'はひふへほおしFFFFFFFFFFFFFFFFFFFF': {
-        accountId: 'はひふへほおしFFFFFFFFFFFFFFFFFFFF',
+    'FFFFFFFFFFFFFFFFFFFF': {
         avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_h.png',
         mingolName: 'はひふへほ',
         twitterScrName: 'FFFFFFFFFFFFFFFFFFFF'
     },
-    'まみむめもおしGGGGGGGGGGGGGGGGGGGG': {
-        accountId: 'まみむめもおしGGGGGGGGGGGGGGGGGGGG',
+    'GGGGGGGGGGGGGGGGGGGG': {
         avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_m.png',
         mingolName: 'まみむめも',
         twitterScrName: 'GGGGGGGGGGGGGGGGGGGG'
     },
-    'やゆよおしHHHHHHHHHHHHHHHHHHHH': {
-        accountId: 'やゆよおしHHHHHHHHHHHHHHHHHHHH',
+    'HHHHHHHHHHHHHHHHHHHH': {
         avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_y.png',
         mingolName: 'やゆよ',
         twitterScrName: 'HHHHHHHHHHHHHHHHHHHH'
     },
-    'らりるれろおしIIIIIIIIIIIIIIIIIIII': {
-        accountId: 'らりるれろおしIIIIIIIIIIIIIIIIIIII',
+    'IIIIIIIIIIIIIIIIIIII': {
         avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_r.png',
         mingolName: 'らりるれろ',
         twitterScrName: 'IIIIIIIIIIIIIIIIIIII'
     },
-    'わをんおしJJJJJJJJJJJJJJJJJJJJ': {
-        accountId: 'わをんおしJJJJJJJJJJJJJJJJJJJJ',
+    'JJJJJJJJJJJJJJJJJJJJ': {
         avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_w.png',
         mingolName: 'わをん',
         twitterScrName: 'JJJJJJJJJJJJJJJJJJJJ'
@@ -557,7 +537,7 @@ btnModeChange.onclick = function () {
         modeChangeLabel.textContent = '削除';
         $('.create-room-button', elm => elmHide(elm));
         $('.timetable-roomcount', elm => elmHide(elm));
-        $('.room:not([data-owner="' + myAccountData.accountId + '"])', elm => elmHide(elm));
+        $('.room:not([data-owner="' + myAccountData.twitterScrName + '"])', elm => elmHide(elm));
         $('.row[data-room-count="0"], .row[data-my-room-count="0"]', row => classAdd(row, 'empty'));
         $('.room', elm => classAdd(elm, 'delete-mode'));
         currentMode = 'delete';
@@ -717,14 +697,14 @@ function updateRow(date, hour, minute) {
     $('.room', elm => elm.remove(), window[rowId]);
     roomCount.textContent = roomIds.length;
     roomIds.sort((a, b) => {
-        if (rooms_id[a].members.includes(myAccountData.accountId)) return -1;
-        if (rooms_id[b].members.includes(myAccountData.accountId)) return 1;
+        if (rooms_id[a].members.includes(myAccountData.twitterScrName)) return -1;
+        if (rooms_id[b].members.includes(myAccountData.twitterScrName)) return 1;
         return rooms_id[a].create_datetime - rooms_id[b].create_datetime;
     });
 
     var container = document.createDocumentFragment();
     roomIds.forEach(roomId => {
-        if (rooms_id[roomId].owner.accountId === myAccountData.accountId) myRoomCount++;
+        if (rooms_id[roomId].owner.twitterScrName === myAccountData.twitterScrName) myRoomCount++;
         appendRoom(rooms_id[roomId], container);
     });
     row.appendChild(container);
@@ -753,7 +733,7 @@ function appendRoom(data, container) {
     classAdd(roomTitle, 'room-title');
     classAdd(roomNo, 'room-no');
     classAdd(course, 'course');
-    classAdd(ownerAvatar, 'room-owner-avatar', data.owner.accountId);
+    classAdd(ownerAvatar, 'room-owner-avatar', data.owner.twitterScrName);
 
     roomTitle.textContent = data.title;
     roomNo.textContent = '#' + ('00000' + data.no).slice(-6);
@@ -762,7 +742,7 @@ function appendRoom(data, container) {
     ownerAvatar.src = data.owner.avatar;
     memberCount.textContent = '参加予定：0';
 
-    upsertDataset(room, { owner: data.owner.accountId, course: data.course, hole: data.hole });
+    upsertDataset(room, { owner: data.owner.twitterScrName, course: data.course, hole: data.hole });
     room.onclick = function (evt) {
         var data = rooms_id[this.id];
         if (myRooms[this.id]) {
@@ -792,13 +772,13 @@ function checkCreateRoomLimit({ year, month, day, hour, minute }) {
     var hourCnt = 0;
 
     objKeysEach(rooms_datetime[date][hour][minute], roomId => {
-        if (rooms_id[roomId].owner.accountId === myAccountData.accountId) {
+        if (rooms_id[roomId].owner.twitterScrName === myAccountData.twitterScrName) {
             minuteCnt++;
         }
     });
     objKeysEach(rooms_datetime[date][hour], minute => {
         objKeysEach(rooms_datetime[date][hour][minute], roomId => {
-            if (rooms_id[roomId].owner.accountId === myAccountData.accountId) {
+            if (rooms_id[roomId].owner.twitterScrName === myAccountData.twitterScrName) {
                 hourCnt++;
             }
         });
@@ -849,21 +829,16 @@ function roomDialogShow(isView) {
 
 function updateMember(data, isReserve) {
     var roomId = msg.reserveRoom.roomId;
-    var accountId = msg.reserveRoom.accountId;
+    var twitterScrName = msg.reserveRoom.twitterScrName;
     var room = rooms_id[msg.reserveRoom.roomId];
-    if (!room.members.includes(msg.reserveRoom.accountId)) {
-        if (isReserve) {
-            room.members.push(msg.reserveRoom.accountId);
-        } else {
-            var idx = room.members.indexOf(accountId);
-            if (idx !== -1) {
-                room.members.splice(idx, 1);
-            }
-        }
-        window[roomId]
-        if (isShowing(roomViewDialog) && currentRoomData.roomId === roomId) {
-            updateMemberList(room.members);
-        }
+    var idx = room.members.indexOf(twitterScrName);
+    if (idx === -1 && isReserve) {
+        room.members.push(twitterScrName);
+    } else if(idx !== -1 && !isReserve) {
+        room.members.splice(idx, 1);
+    }
+    if (isShowing(roomViewDialog) && currentRoomData.roomId === roomId) {
+        updateMemberList(room.members);
     }
 }
 
@@ -904,7 +879,7 @@ function upsertRoomData(data, withUpdateRow = true) {
 
     rooms_id[roomId] = rooms_id[roomId] || data;
 
-    if (owner.accountId === myAccountData.accountId) {
+    if (owner.twitterScrName === myAccountData.twitterScrName) {
         myRooms[roomId] = data;
         setStorage({ myRooms }).then(_ => console.log('save myRooms.'));
     }
@@ -1019,7 +994,6 @@ window.addEventListener('regAccountSuccess', evt => {
     myAccountData = {
         twitterName: regTwitterScrName.value,
         mingolName: regMingolName.value,
-        accountId: regMingolName.value + 'おし' + regTwitterScrName.value,
         avatar: myAvatar
     };
     regMingolName.value = '';
@@ -1037,16 +1011,16 @@ window.addEventListener('regAccountSuccess', evt => {
 });
 window.addEventListener('dc_msg', evt => {
     var msg = evt.detail;
-    if (msg.connectAccountId) {
-        onlineAccounts[msg.coonecAccountId] = true;
+    if (msg.connectTwitterSrcName) {
+        onlineAccounts[msg.connectTwitterSrcName] = true;
         connectCount.textContent = objKeys(onlineAccounts).length;
     }
-    if (msg.disconnectAccountId) {
-        delete onlineAccounts[msg.disconnectAccountId];
+    if (msg.disconnectTwitterSrcName) {
+        delete onlineAccounts[msg.disconnectTwitterSrcName];
         connectCount.textContent = objKeys(onlineAccounts).length;
     }
     if (msg.account) {
-        accounts[msg.account.accountId] = msg.account;
+        accounts[msg.account.twitterScrName] = msg.account;
         connectCount.textContent = objKeys(accounts).length;
     }
     if (msg.rooms) {
