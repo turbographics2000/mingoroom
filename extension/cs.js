@@ -104,7 +104,7 @@ function stepBackDialogShow(stepNo) {
     dialogChangeTo(stepDialogs[stepNo]);
     if (stepNo < 3) {
         tutorialMask.style.background = 'gray';
-        $('.step-dialog', elm => classRemove(elm, 'opdesc-mode'));        
+        $('.step-dialog', elm => classRemove(elm, 'opdesc-mode'));
         elmHide(accountAvatar);
         mingoroomContainer.innerHTML = '';
     } else {
@@ -474,7 +474,14 @@ window.onkeydown = function (evt) {
     }
 }
 
+accountAvatar.onclick = function(evt) {
+    upsertDataset(btnRegAccount, { type: 'changeAccount' });
+    createRegAccountKey();
+    dialogShow(accountDialog);
+};
+
 btnGoToRegAccount.onclick = function () {
+    upsertDataset(btnRegAccount, { type: 'step' });
     setStorage({ step: 'complete' }).then(_ => {
         clearRoomData();
         mingoroomContainer.innerHTML = '';
@@ -755,7 +762,7 @@ function appendRoom(data, container) {
     upsertDataset(room, { owner: data.owner.accountId, course: data.course, hole: data.hole });
     room.onclick = function (evt) {
         var data = rooms_id[this.id];
-        if(myRooms[this.id]) {
+        if (myRooms[this.id]) {
             elmHide(btnReserveRoom);
         } else {
             elmShow(btnReserveRoom);
@@ -963,6 +970,8 @@ function createRegAccountKey() {
 
 function regAccount() {
     validateAccountKey().then(_ => {
+        regMingolName.value = '';
+        regTwitterScrName.value = '';
         dispatchCustomEvent('regAccount');
     }).catch(err => {
         regAccountErrorMessage.textContent = err;
@@ -1018,7 +1027,7 @@ window.addEventListener('regAccountSuccess', evt => {
         dialogHide(accountDialog);
         elmShow(btnRegAccount);
         messageDialogShow('アカウントを登録しました。忘れずにTwitterの名前をもとに戻してください。');
-        if(isStart) {
+        if (btnRegAccount.dataset.type === 'step') {
             dispatchCustomEvent('connectedCheck', myAccountData);
         }
     });
