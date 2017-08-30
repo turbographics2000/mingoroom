@@ -108,6 +108,14 @@ window.addEventListener('connectPeer', evt => {
     })
 });
 
+window.addEventListener('send', evt => {
+    var data = evt.detail;
+    if(dc) {
+        var msg = JSON.stringify(data);
+        dc.send(msg);
+    }
+})
+
 function generateDCOpenMessage(){
     return JSON.stringify({
         from: myAccountData.twitterScrName,

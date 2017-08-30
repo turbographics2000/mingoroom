@@ -895,6 +895,7 @@ function upsertRoomData(data, withUpdateRow = true) {
     if (withUpdateRow) {
         updateRow(date, hour, minute);
     }
+    dispatchCustomEvent('send', {[roomId]: data});
     checkCreateRoomLimit(data);
 }
 
