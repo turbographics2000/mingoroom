@@ -973,8 +973,6 @@ function createRegAccountKey() {
 
 function regAccount() {
     validateAccountKey().then(_ => {
-        regMingolName.value = '';
-        regTwitterScrName.value = '';
         dispatchCustomEvent('regAccount');
     }).catch(err => {
         regAccountErrorMessage.textContent = err;
@@ -1024,6 +1022,8 @@ window.addEventListener('regAccountSuccess', evt => {
         accountId: regMingolName.value + 'おし' + regTwitterScrName.value,
         avatar: myAvatar
     };
+    regMingolName.value = '';
+    regTwitterScrName.value = '';
     accountAvatar.src = myAvatar;
     elmShow(accountAvatar);
     setStorage({ myAccountData }).then(_ => {
