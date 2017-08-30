@@ -5,7 +5,7 @@ var skywayAPIKey = '5aeee120-69f8-4f6e-80d7-643f1eb7070d';
 var myAccountData = {
     mingolName: null,
     twitterScrName: null,
-    avatar
+    avatar: null
 };
 var myRooms = null;
 var rooms_id = null;
