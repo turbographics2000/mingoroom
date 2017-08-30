@@ -117,8 +117,7 @@ function connectedCheck(twitterScrName) {
             anonymousPeer.listAllPeers(list => {  // エラーになってもコールバックされる(引数の値は[](要素数0の配列))
                 anonymousPeer.destroy();
                 if (list.filter(peerId => !peerId.startsWith('anonymous')).some(peerId => {
-                    // 'おし'はみんゴルの名前に使用できない
-                    return twitterScrName === peerId.split('おし')[1];
+                    return peerId === twitterScrName;
                 })) {
                     // 接続あり
                     reject('connected');
