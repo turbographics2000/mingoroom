@@ -1020,10 +1020,12 @@ window.addEventListener('dc_msg', evt => {
         connectCount.textContent = objKeys(onlineAccounts).length;
     }
     if (msg.account) {
+        console.log('receive accountData from "' + msg.from + '"', msg.account);
         accounts[msg.account.twitterScrName] = msg.account;
         connectCount.textContent = objKeys(accounts).length;
     }
     if (msg.rooms) {
+        console.log('receive rooms from "' + msg.from + '"', msg.rooms);
         objKeysEach(msg.rooms, roomId => {
             upsertRoomData(msg.rooms[roomId]);
         });

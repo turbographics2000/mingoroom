@@ -99,6 +99,7 @@ window.addEventListener('connectPeer', evt => {
             dispatchCustomEvent('dc_msg', { disconnectTwitterScrName: dc.peer });
         });
         var msg = JSON.stringify({
+            from: myAccountData.twitterScrName,
             account: myAccountData,
             rooms: myRooms ? myRooms : null
         });
