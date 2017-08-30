@@ -95,20 +95,26 @@ window.addEventListener('connectPeer', evt => {
         console.log('dc connect.[' + con.id + ']');
         dc = con;
         dispatchCustomEvent('dc_msg', { connectTwitterScrName: dc.peer });
+        dc.on('open', _ => {
+            dc.send(generateDCOpenMessage());
+        });
         dc.on('close', _ => {
             dispatchCustomEvent('dc_msg', { disconnectTwitterScrName: dc.peer });
         });
-        var msg = JSON.stringify({
-            from: myAccountData.twitterScrName,
-            account: myAccountData,
-            rooms: myRooms ? myRooms : null
-        });
-        dc.send(msg);
+        dc.send(generateDCOpenMessage());
     });
     peer.on('error', err => {
         console.log('peer error.', err);
     })
 });
+
+function generateDCOpenMessage(){
+    return JSON.stringify({
+        from: myAccountData.twitterScrName,
+        account: myAccountData,
+        rooms: myRooms ? myRooms : null
+    });
+}
 
 function connectedCheck(twitterScrName) {
     return new Promise((resolve, reject) => {
