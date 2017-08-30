@@ -33,6 +33,9 @@ button {
   background: white;
   box-shadow: 2px 2px 1px 0px gray;  
 }
+button:active, div[id^="btn"]:active {
+  background-color: rgb(200,200,200);
+}
 
 #startDialog, #welcomDialog, #extNotInstalledDialog {
   height: 250px;
