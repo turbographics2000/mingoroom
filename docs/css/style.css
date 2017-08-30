@@ -333,7 +333,7 @@ button {
   z-index: 3;
   background: white;
 }
-#welcomDialog, #extNotInstalledDialog, .step-dialog {
+#startDialog, #extNotInstalledDialog, .step-dialog {
   z-index: 5;
 }
 
