@@ -140,15 +140,7 @@ function stepBackDialogShow(stepNo) {
 getStrorage(['step', 'myAccountData', 'myRooms']).then(data => {
     if (data.step === 'complete') {
         if (data.myAccountData) {
-            myAccountData = data.myAccountData;
-            accountAvatar.src = myAccountData.avatar;
-            elmShow(accountAvatar);
-            appendTimetableRow(nowYear(), nowMonth(), nowDay());
-            if (data.myRooms) {
-                objKeysEach(data.myRooms, roomId => {
-                    upsertRoomData(data.myRooms[roomId]);
-                });
-            }
+            dispatchCustomEvent('connectedCheck', myAccountData);
         } else {
             btnGoToRegAccount.click();
         }
@@ -169,6 +161,22 @@ getStrorage(['step', 'myAccountData', 'myRooms']).then(data => {
             }
         });
     }
+});
+
+window.addEventListener('connectedCheckPass', evt => {
+    myAccountData = {};
+    Object.assign(myAccountData, evt.detail);
+    accountAvatar.src = myAccountData.avatar;
+    elmShow(accountAvatar);
+    appendTimetableRow(nowYear(), nowMonth(), nowDay());
+    if (data.myRooms) {
+        objKeysEach(data.myRooms, roomId => {
+            upsertRoomData(data.myRooms[roomId]);
+        });
+    }
+});
+window.addEventListener('connectedCheckFail', evt => {
+    messageDialogShow('他の端末ですでに接続されています。この端末で接続するには他の端末で「みんなでゴルフ待合所 (仮題)」ページを閉じてください。');
 });
 
 function arrayEach(data, func) {
@@ -955,8 +963,7 @@ function createRegAccountKey() {
 
 function regAccount() {
     validateAccountKey().then(_ => {
-        var evt = new CustomEvent('regAccount', { detail: null });
-        window.dispatchEvent(evt);
+        dispatchCustomEvent('regAccount', null);
     }).catch(err => {
         regAccountErrorMessage.textContent = err;
         elmShow(btnRegAccount);
