@@ -428,8 +428,8 @@ function createDebugRoom(year, month, day, hour, minute) {
                 create_datetime: Date.now()
             };
             Object.assign(data, debugRoomsSrc[r]);
-            data.owner = debugRoomsSrc[r].owner.accountId;
             upsertRoomData(data, false);
+            data.owner = debugRoomsSrc[r].owner.accountId;
         }
     }
 }
