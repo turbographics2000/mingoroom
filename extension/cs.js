@@ -23,7 +23,7 @@ var skywayAPIKey = '5aeee120-69f8-4f6e-80d7-643f1eb7070d';
 var peer;
 var stats = {};
 
-btnStorageClear.onclick = function() {
+btnStorageClear.onclick = function () {
     chrome.storage.local.clear();
 }
 
@@ -145,7 +145,7 @@ getStrorage(['step', 'myAccountData', 'myRooms']).then(data => {
             accountAvatar.src = myAccountData.avatar;
             elmShow(accountAvatar);
             appendTimetableRow(nowYear(), nowMonth(), nowDay());
-            if(data.myRooms) {
+            if (data.myRooms) {
                 objKeysEach(data.myRooms, roomId => {
                     upsertRoomData(data.myRooms[roomId]);
                 });
@@ -208,8 +208,12 @@ function elmHide(elm) {
 function appendChild(parent, ...child) {
     arrayEach(child, elm => parent.appendChild(elm));
 }
-function objKeys(obj) {
-    return Object.keys(obj);
+function objKeys(obj, idx = null) {
+    if (idx !== null) {
+        return Object.keys(obj)[idx];
+    } else {
+        return Object.keys(obj);
+    }
 }
 function objKeysEach(obj, func) {
     objKeys(obj).forEach(func);
@@ -371,7 +375,7 @@ var debugRoomsSrc = [
         day: nowDay(),
         course: 'panta',
         hole: '9',
-        owner: debugAccounts[objKeys(debugAccounts)[0]],
+        owner: debugAccounts[objKeys(debugAccounts, 0)],
         no: '365365',
         members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
     },
@@ -382,7 +386,7 @@ var debugRoomsSrc = [
         day: nowDay(),
         course: 'tokyo',
         hole: '6',
-        owner: debugAccounts[objKeys(debugAccounts)[1]],
+        owner: debugAccounts[objKeys(debugAccounts, 1)],
         no: '123123',
         members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
     },
@@ -393,7 +397,7 @@ var debugRoomsSrc = [
         day: nowDay(),
         course: 'ocean',
         hole: '3',
-        owner: debugAccounts[objKeys(debugAccounts)[2]],
+        owner: debugAccounts[objKeys(debugAccounts, 2)],
         no: '898989',
         members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
     },
@@ -404,7 +408,7 @@ var debugRoomsSrc = [
         day: nowDay(),
         course: 'ocean',
         hole: '6',
-        owner: debugAccounts[objKeys(debugAccounts)[3]],
+        owner: debugAccounts[objKeys(debugAccounts, 3)],
         no: '012345',
         members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
     },
@@ -748,7 +752,7 @@ function appendRoom(data, container) {
     appendChild(row, room);
 }
 
-function checkCreateRoomLimit({year, month, day, hour, minute}) {
+function checkCreateRoomLimit({ year, month, day, hour, minute }) {
     var date = fmtDate('ymd', year, month, day);
     hour = zs2(hour);
     minute = zs2(minute);
@@ -884,7 +888,7 @@ function upsertRoomData(data, withUpdateRow = true) {
     if (withUpdateRow) {
         updateRow(date, hour, minute);
     }
-    checkCreateRoomLimit(data);    
+    checkCreateRoomLimit(data);
 }
 
 function deleteRoom(roomId, withUpdateRow = true) {
