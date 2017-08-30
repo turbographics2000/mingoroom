@@ -104,11 +104,12 @@ function stepBackDialogShow(stepNo) {
     if (stepNo < 3) {
         tutorialMask.style.background = 'gray';
         $('.step-dialog', elm => classRemove(elm, 'opdesc-mode'));        
+        elmHide(accountAvatar);
+        mingoroomContainer.innerHTML = '';
     } else {
         if (stepNo === 3) {
-            mingoroomContainer.innerHTML = '';
             clearRoomData();
-            elmShow(accountAvatar);
+            mingoroomContainer.innerHTML = '';
             appendTimetableRow(nowYear(), nowMonth(), nowDay());
         } else if (stepNo === 4) {
             dialogHide(roomViewDialog);
@@ -746,6 +747,11 @@ function appendRoom(data, container) {
     upsertDataset(room, { owner: data.owner.accountId, course: data.course, hole: data.hole });
     room.onclick = function (evt) {
         var data = rooms_id[this.id];
+        if(myRooms[this.id]) {
+            elmHide(btnReserveRoom);
+        } else {
+            elmShow(btnReserveRoom);
+        }
         if (currentMode === 'add') {
             currentRoomData = {};
             Object.assign(currentRoomData, data);
