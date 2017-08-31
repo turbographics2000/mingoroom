@@ -142,7 +142,6 @@ function connectPeer() {
     });
 }
 
-
 function dcSetup(dc) {
     console.log('dc connect.[peer:' + dc.peer + ']');
     dispatchCustomEvent('dcConnect');

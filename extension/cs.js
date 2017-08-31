@@ -1008,7 +1008,7 @@ window.addEventListener('regAccountSuccess', evt => {
         elmShow(btnRegAccount);
         messageDialogShow('アカウントを登録しました。忘れずにTwitterの名前をもとに戻してください。');
         if (btnRegAccount.dataset.type === 'step') {
-            dispatchCustomEvent('connectedCheck', myAccountData);
+            dispatchCustomEvent('connect', myAccountData);
         }
     });
 });
