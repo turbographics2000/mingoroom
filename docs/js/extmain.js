@@ -2,15 +2,11 @@ var step = localStorage.getItem('step') || 'extNotInstalled';
 var extId = 'ioaancmfccbkoknfeibefmdahkpiincg';
 //var extId = 'ioaancmfccbkoknfeibefmdahkpiinch';
 var skywayAPIKey = '5aeee120-69f8-4f6e-80d7-643f1eb7070d';
-var myAccountData = {
-    mingolName: null,
-    twitterScrName: null,
-    avatar: null
-};
-var myRooms = null;
-var rooms_id = null;
-var peer = null;
+var calls = {};
 var dcs = {};
+var myAccountData = null;
+var myRooms = null;
+var myStream = null;
 
 btnStorageClear.addEventListener('click', evt => {
     delete localStorage.step;
@@ -33,7 +29,7 @@ btnReload.onclick = btnReload2.onclick = function () {
 }
 
 chrome.runtime.sendMessage(extId, { installCheck: true }, res => {
-    // インストールされていない場合は
+    // 拡張機能がインストールされていない場合は
     // res=undefined
     // になる
     if (res) {
@@ -63,49 +59,14 @@ window.addEventListener('regAccount', evt => {
     });
 });
 
-window.addEventListener('connectedCheck', evt => {
+window.addEventListener('connect', evt => {
+    myAccountData = evt.detail.myAccountData;
+    myRooms = evt.detail.myRooms;
     connectedCheck(evt.detail.twitterScrName).then(_ => {
-        dispatchCustomEvent('connectedCheckPass');
-    }).catch(_ => {
-        dispatchCustomEvent('connectedCheckFail');
+        connectPeer();
+    }).catch(err => {
+        dispatchCustomEvent('connectedCheckFail', err);
     });
-});
-
-window.addEventListener('connectPeer', evt => {
-    Object.assign(myAccountData, evt.detail);
-
-    peer = new Peer(myAccountData.twitterScrName, { key: skywayAPIKey });
-    peer.on('open', list => {
-        console.log('peer open.');
-        peer.listAllPeers(list => {
-            list = list.filter(id => !id.startsWith('anonymous') && id !== myAccountData.twitterScrName);
-            list.forEach(id => {
-                var dc = peer.connect(id);
-                dc.on('open', _ => {
-                    console.log('dc open.');
-                    dc.on('data', data => {
-                        var msg = JSON.parse(data);
-                        dispatchCustomEvent('dc_msg', msg);
-                    });
-                });
-            })
-        });
-    });
-    peer.on('connection', dc => {
-        console.log('dc connect.[' + dc.peer + ']');
-        dcs[dc.peer] = dc;
-        dispatchCustomEvent('dc_msg', { connectTwitterScrName: dc.peer });
-        dc.on('open', _ => {
-            dc.send(generateDCOpenMessage());
-        });
-        dc.on('close', _ => {
-            dispatchCustomEvent('dc_msg', { disconnectTwitterScrName: dc.peer });
-        });
-        dc.send(generateDCOpenMessage());
-    });
-    peer.on('error', err => {
-        console.log('peer error.', err);
-    })
 });
 
 window.addEventListener('send', evt => {
@@ -140,7 +101,7 @@ function connectedCheck(twitterScrName) {
                     return peerId === twitterScrName;
                 })) {
                     // 接続あり
-                    reject('connected');
+                    reject('他の端末ですでに接続されています。この端末で接続するには他の端末で「みんなでゴルフ待合所 (仮題)」ページを閉じてください。');
                 } else {
                     // 接続なし
                     resolve();
@@ -153,3 +114,49 @@ function connectedCheck(twitterScrName) {
     })
 }
 
+function connectPeer() {
+    peer = new Peer(myAccountData.twitterScrName, { key: skywayAPIKey });
+    peer.on('open', list => {
+        console.log('peer open.');
+        dispatchCustomEvent('peerOpen');
+        peer.listAllPeers(list => {
+            list = list.filter(id => !id.startsWith('anonymous') && id !== myAccountData.twitterScrName);
+            list.forEach(id => {
+                var dc = peer.connect(id);
+                dc.on('open', _ => {
+                    console.log('dc open.');
+                    dc.on('data', data => {
+                        var msg = JSON.parse(data);
+                        dispatchCustomEvent('dc_msg', msg);
+                    });
+                });
+            })
+        });
+    });
+    peer.on('connection', dc => {
+        console.log('dc connect.[peer:' + dc.peer + ']');
+        dispatchCustomEvent('dcConnect');
+        dcs[dc.peer] = dc;
+        dispatchCustomEvent('dc_msg', { connectTwitterScrName: dc.peer });
+        dc.on('open', _ => {
+            console.log('dc open. [peer:' + dc.peer + ']');
+            dispatchEvent('dcOpen');
+            dc.send(generateDCOpenMessage());
+        });
+        dc.on('close', _ => {
+            console.log('dc close. [peer:' + dc.peer + ']');
+            dispatchCustomEvent('dc_msg', { disconnectTwitterScrName: dc.peer });
+        });
+        dc.send(generateDCOpenMessage());
+    });
+    peer.on('call', call => {
+        console.log('on call. [peer:' + call.peer + ']');
+        call.answer(myStream);
+        call.on('stream', stream => {
+            // TODO
+        });
+    });
+    peer.on('error', err => {
+        console.log('peer error.', err);
+    });
+}

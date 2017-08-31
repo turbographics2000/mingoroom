@@ -45,6 +45,9 @@ function dispatchCustomEvent(eventName, detail = null) {
     var evt = new CustomEvent(eventName, { detail });
     window.dispatchEvent(evt);
 }
+function sendData(data, to = null) {
+    dispatchCustomEvent('send', { data, to });
+}
 
 function stepNextDialogShow(stepNo) {
     elmShow(tutorialMask);
@@ -144,10 +147,10 @@ getStrorage(['step', 'myAccountData', 'myRooms']).then(data => {
             objKeysEach(myRooms, roomId => {
                 upsertRoomData(myRooms[roomId]);
             });
-        }    
+        }
         if (data.myAccountData) {
             myAccountData = data.myAccountData;
-            dispatchCustomEvent('connectedCheck', myAccountData);
+            dispatchCustomEvent('connect', {myAccountData, myRooms});
         } else {
             btnGoToRegAccount.click();
         }
@@ -170,15 +173,14 @@ getStrorage(['step', 'myAccountData', 'myRooms']).then(data => {
     }
 });
 
-window.addEventListener('connectedCheckPass', evt => {
+window.addEventListener('connectedCheckFail', evt => {
+    messageDialogShow(evt.detail);
+});
+
+window.addEventListener('peerOpen', evt => {
     accountAvatar.src = myAccountData.avatar;
     elmShow(accountAvatar);
     appendTimetableRow(nowYear(), nowMonth(), nowDay());
-    dispatchCustomEvent('connectPeer', myAccountData);
-});
-window.addEventListener('connectedCheckFail', evt => {
-    myAccountData = null;
-    messageDialogShow('他の端末ですでに接続されています。この端末で接続するには他の端末で「みんなでゴルフ待合所 (仮題)」ページを閉じてください。');
 });
 
 function arrayEach(data, func) {
@@ -457,7 +459,7 @@ window.onkeydown = function (evt) {
     }
 }
 
-accountAvatar.onclick = function(evt) {
+accountAvatar.onclick = function (evt) {
     upsertDataset(btnRegAccount, { type: 'changeAccount' });
     createRegAccountKey();
     dialogShow(accountDialog);
@@ -834,7 +836,7 @@ function updateMember(data, isReserve) {
     var idx = room.members.indexOf(twitterScrName);
     if (idx === -1 && isReserve) {
         room.members.push(twitterScrName);
-    } else if(idx !== -1 && !isReserve) {
+    } else if (idx !== -1 && !isReserve) {
         room.members.splice(idx, 1);
     }
     if (isShowing(roomViewDialog) && currentRoomData.roomId === roomId) {
@@ -895,7 +897,7 @@ function upsertRoomData(data, withUpdateRow = true) {
     if (withUpdateRow) {
         updateRow(date, hour, minute);
     }
-    dispatchCustomEvent('send',{data: {[roomId]: data}});
+    dispatchCustomEvent('send', { data: { [roomId]: data } });
     checkCreateRoomLimit(data);
 }
 
