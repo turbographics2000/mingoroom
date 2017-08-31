@@ -152,6 +152,10 @@ function dcSetup(dc) {
         dispatchCustomEvent('dcOpen');
         dc.send(generateDCOpenMessage());
     });
+    dc.on('data', data => {
+        var msg = JSON.parse(msg);
+        dispatchCustomEvent('dc_msg', msg);
+    })
     dc.on('close', _ => {
         console.log('dc close. [peer:' + dc.peer + ']');
         dispatchCustomEvent('dc_msg', { disconnectTwitterScrName: dc.peer });
