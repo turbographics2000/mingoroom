@@ -183,9 +183,6 @@ window.addEventListener('connectedCheckFail', evt => {
 });
 
 window.addEventListener('peerOpen', evt => {
-    accountAvatar.src = myAccountData.avatar;
-    elmShow(accountAvatar);
-    appendTimetableRow(nowYear(), nowMonth(), nowDay());
 });
 
 function arrayEach(data, func) {
@@ -621,6 +618,10 @@ function appendTimetableRow(year, month, day) {
 
     for (var hour = startHour; hour < 24; hour++) {
         for (var minute = hour === startHour ? startMinute : 0; minute < 60; minute += 10) {
+            var ymdhm = fmt('ymdhm', year, month, day, hour, minute);
+            var rowId = 'row' + ymdhm;
+            if(window[rowId]) continue;
+
             var row = document.createElement('div');
             var rowHeader = document.createElement('div');
             var rowTime = document.createElement('div');
@@ -629,9 +630,8 @@ function appendTimetableRow(year, month, day) {
             var roomCountLabel = document.createElement('span');
             var btnCreateRoom = document.createElement('div');
             var btnDelete = document.createElement('div');
-            var ymdhm = fmt('ymdhm', year, month, day, hour, minute);
 
-            row.id = 'row' + ymdhm;
+            row.id = rowId;
             btnCreateRoom.id = 'btnCreateRoom' + ymdhm;
             // row.style.width = ((maxRoomCount * 208) + 50 + 80) + 'px';
             roomCount.id = row.id + 'RoomCount';
@@ -1016,6 +1016,10 @@ window.addEventListener('regAccountSuccess', evt => {
         messageDialogShow('アカウントを登録しました。忘れずにTwitterの名前をもとに戻してください。');
         if (btnRegAccount.dataset.type === 'step') {
             dispatchCustomEvent('connect', { myAccountData, myRooms });
+            accountAvatar.src = myAccountData.avatar;
+            elmShow(accountAvatar);
+            mingoroomContainer.innerHTML = '';
+            appendTimetableRow(nowYear(), nowMonth(), nowDay());        
         }
     });
 });
