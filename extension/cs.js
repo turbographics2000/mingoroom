@@ -142,20 +142,20 @@ function stepBackDialogShow(stepNo) {
 
 getStrorage(['step', 'myAccountData', 'myRooms']).then(data => {
     if (data.step === 'complete') {
-        if (data.myRooms) {
-            myRooms = data.myRooms;
-
-            // debug
-            // myRooms = {};
-            // setStorage({ myRooms });
-
-            objKeysEach(myRooms, roomId => {
-                upsertRoomData(myRooms[roomId]);
-            });
-        }
         if (data.myAccountData) {
             myAccountData = data.myAccountData;
             appendTimetableRow(nowYear(), nowMonth(), nowDay());
+            if (data.myRooms) {
+                myRooms = data.myRooms;
+
+                // debug
+                // myRooms = {};
+                // setStorage({ myRooms });
+
+                objKeysEach(myRooms, roomId => {
+                    upsertRoomData(myRooms[roomId]);
+                });
+            }
             dispatchCustomEvent('connect', { myAccountData, myRooms });
         } else {
             btnGoToRegAccount.click();
@@ -621,7 +621,7 @@ function appendTimetableRow(year, month, day) {
         for (var minute = hour === startHour ? startMinute : 0; minute < 60; minute += 10) {
             var ymdhm = fmt('ymdhm', year, month, day, hour, minute);
             var rowId = 'row' + ymdhm;
-            if(window[rowId]) continue;
+            if (window[rowId]) continue;
 
             var row = document.createElement('div');
             var rowHeader = document.createElement('div');
@@ -1020,7 +1020,7 @@ window.addEventListener('regAccountSuccess', evt => {
             accountAvatar.src = myAccountData.avatar;
             elmShow(accountAvatar);
             mingoroomContainer.innerHTML = '';
-            appendTimetableRow(nowYear(), nowMonth(), nowDay());        
+            appendTimetableRow(nowYear(), nowMonth(), nowDay());
         }
     });
 });
