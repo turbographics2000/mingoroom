@@ -883,6 +883,7 @@ function upsertRoomData(data, withUpdateRow = true) {
 
     if (owner.twitterScrName === myAccountData.twitterScrName) {
         myRooms[roomId] = data;
+        dispatchCustomEvent('send', { rooms: { [roomId]: data } });
         setStorage({ myRooms }).then(_ => console.log('save myRooms.'));
     }
 
@@ -897,7 +898,6 @@ function upsertRoomData(data, withUpdateRow = true) {
     if (withUpdateRow) {
         updateRow(date, hour, minute);
     }
-    dispatchCustomEvent('send', { rooms: { [roomId]: data } });
     checkCreateRoomLimit(data);
 }
 
