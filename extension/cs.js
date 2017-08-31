@@ -148,7 +148,7 @@ getStrorage(['step', 'myAccountData', 'myRooms']).then(data => {
             myRooms = data.myRooms;
             objKeysEach(myRooms, roomId => {
                 upsertRoomData(myRooms[roomId], true, false);
-            });        
+            });
             dispatchCustomEvent('connect', { myAccountData, myRooms });
         } else {
             btnGoToRegAccount.click();
@@ -179,6 +179,7 @@ window.addEventListener('connectedCheckFail', evt => {
 window.addEventListener('peerOpen', evt => {
 });
 window.addEventListener('dcOpen', evt => {
+    dispatchCustomEvent('send', { rooms: myRooms });
 });
 
 function arrayEach(data, func) {
@@ -696,6 +697,7 @@ function updateRow(date, hour, minute) {
     var rowId = 'row' + date + fmtTime('hm', +hour, +minute);
     var row = window[rowId];
     if (!row) return;
+
     var roomCount = window[rowId + 'RoomCount'];
     var roomIds = objKeys(rooms_datetime[date][hour][minute]);
     var myRoomCount = 0;
@@ -712,6 +714,7 @@ function updateRow(date, hour, minute) {
         if (rooms_id[roomId].owner.twitterScrName === myAccountData.twitterScrName) myRoomCount++;
         appendRoom(rooms_id[roomId], container);
     });
+    row.innerHTML = '';
     row.appendChild(container);
 
     upsertDataset(row, { roomCount, myRoomCount });
@@ -886,7 +889,7 @@ function upsertRoomData(data, withUpdateRow = true, send = true) {
 
     if (owner.twitterScrName === myAccountData.twitterScrName) {
         myRooms[roomId] = data;
-        if(send) {
+        if (send) {
             dispatchCustomEvent('send', { rooms: { [roomId]: data } });
         }
         setStorage({ myRooms }).then(_ => console.log('save myRooms.'));
