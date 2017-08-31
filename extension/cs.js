@@ -757,8 +757,10 @@ function appendRoom(data, container) {
         var data = rooms_id[this.id];
         if (myRooms[this.id]) {
             elmHide(btnReserveRoom);
+            elmShow(btnRoomEdit);
         } else {
             elmShow(btnReserveRoom);
+            elmHide(btnRoomEdit);
         }
         if (currentMode === 'add') {
             currentRoomData = {};
