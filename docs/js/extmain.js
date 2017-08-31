@@ -153,7 +153,7 @@ function dcSetup(dc) {
         dc.send(generateDCOpenMessage());
     });
     dc.on('data', data => {
-        var msg = JSON.parse(msg);
+        var msg = JSON.parse(data);
         dispatchCustomEvent('dc_msg', msg);
     })
     dc.on('close', _ => {
