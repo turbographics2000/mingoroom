@@ -145,17 +145,10 @@ getStrorage(['step', 'myAccountData', 'myRooms']).then(data => {
         if (data.myAccountData) {
             myAccountData = data.myAccountData;
             appendTimetableRow(nowYear(), nowMonth(), nowDay());
-            if (data.myRooms) {
-                myRooms = data.myRooms;
-
-                // debug
-                // myRooms = {};
-                // setStorage({ myRooms });
-
-                objKeysEach(myRooms, roomId => {
-                    upsertRoomData(myRooms[roomId]);
-                });
-            }
+            myRooms = data.myRooms;
+            objKeysEach(myRooms, roomId => {
+                upsertRoomData(myRooms[roomId], true, false);
+            });        
             dispatchCustomEvent('connect', { myAccountData, myRooms });
         } else {
             btnGoToRegAccount.click();
@@ -184,6 +177,8 @@ window.addEventListener('connectedCheckFail', evt => {
 });
 
 window.addEventListener('peerOpen', evt => {
+});
+window.addEventListener('dcOpen', evt => {
 });
 
 function arrayEach(data, func) {
@@ -880,7 +875,7 @@ function updateMemberList(members) {
     }
 }
 
-function upsertRoomData(data, withUpdateRow = true) {
+function upsertRoomData(data, withUpdateRow = true, send = true) {
     var roomId = data.roomId;
     var date = fmtDate('ymd', data.year, data.month, data.day);
     var hour = zs2(data.hour);
@@ -891,7 +886,9 @@ function upsertRoomData(data, withUpdateRow = true) {
 
     if (owner.twitterScrName === myAccountData.twitterScrName) {
         myRooms[roomId] = data;
-        dispatchCustomEvent('send', { rooms: { [roomId]: data } });
+        if(send) {
+            dispatchCustomEvent('send', { rooms: { [roomId]: data } });
+        }
         setStorage({ myRooms }).then(_ => console.log('save myRooms.'));
     }
 
