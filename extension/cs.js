@@ -147,7 +147,7 @@ getStrorage(['step', 'myAccountData', 'myRooms']).then(data => {
 
             // debug
             myRooms = null;
-            setStorage({myRooms});
+            setStorage({ myRooms });
 
             objKeysEach(myRooms, roomId => {
                 upsertRoomData(myRooms[roomId]);
@@ -225,6 +225,7 @@ function appendChild(parent, ...child) {
     arrayEach(child, elm => parent.appendChild(elm));
 }
 function objKeys(obj, idx = null) {
+    if (!obj) return;
     if (idx !== null) {
         return Object.keys(obj)[idx];
     } else {
@@ -232,6 +233,7 @@ function objKeys(obj, idx = null) {
     }
 }
 function objKeysEach(obj, func) {
+    if (!obj) return;
     objKeys(obj).forEach(func);
 }
 function upsertDataset(elm, dataset) {
