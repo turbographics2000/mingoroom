@@ -140,7 +140,7 @@ function connectPeer() {
         dispatchCustomEvent('dc_msg', { connectTwitterScrName: dc.peer });
         dc.on('open', _ => {
             console.log('dc open. [peer:' + dc.peer + ']');
-            dispatchEvent('dcOpen');
+            dispatchCustomEvent('dcOpen');
             dc.send(generateDCOpenMessage());
         });
         dc.on('close', _ => {
