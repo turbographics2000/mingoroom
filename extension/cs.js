@@ -146,7 +146,7 @@ getStrorage(['step', 'myAccountData', 'myRooms']).then(data => {
             myRooms = data.myRooms;
 
             // debug
-            myRooms = null;
+            myRooms = {};
             setStorage({ myRooms });
 
             objKeysEach(myRooms, roomId => {
