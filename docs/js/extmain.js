@@ -123,30 +123,12 @@ function connectPeer() {
             list = list.filter(id => !id.startsWith('anonymous') && id !== myAccountData.twitterScrName);
             list.forEach(id => {
                 var dc = peer.connect(id);
-                dc.on('open', _ => {
-                    console.log('dc open.');
-                    dc.on('data', data => {
-                        var msg = JSON.parse(data);
-                        dispatchCustomEvent('dc_msg', msg);
-                    });
-                });
+                dcSetup(dc);
             })
         });
     });
     peer.on('connection', dc => {
-        console.log('dc connect.[peer:' + dc.peer + ']');
-        dispatchCustomEvent('dcConnect');
-        dcs[dc.peer] = dc;
-        dispatchCustomEvent('dc_msg', { connectTwitterScrName: dc.peer });
-        dc.on('open', _ => {
-            console.log('dc open. [peer:' + dc.peer + ']');
-            dispatchCustomEvent('dcOpen');
-            dc.send(generateDCOpenMessage());
-        });
-        dc.on('close', _ => {
-            console.log('dc close. [peer:' + dc.peer + ']');
-            dispatchCustomEvent('dc_msg', { disconnectTwitterScrName: dc.peer });
-        });
+        dcSetup(dc);
     });
     peer.on('call', call => {
         console.log('on call. [peer:' + call.peer + ']');
@@ -157,5 +139,22 @@ function connectPeer() {
     });
     peer.on('error', err => {
         console.log('peer error.', err);
+    });
+}
+
+
+function dcSetup(dc) {
+    console.log('dc connect.[peer:' + dc.peer + ']');
+    dispatchCustomEvent('dcConnect');
+    dcs[dc.peer] = dc;
+    dispatchCustomEvent('dc_msg', { connectTwitterScrName: dc.peer });
+    dc.on('open', _ => {
+        console.log('dc open. [peer:' + dc.peer + ']');
+        dispatchCustomEvent('dcOpen');
+        dc.send(generateDCOpenMessage());
+    });
+    dc.on('close', _ => {
+        console.log('dc close. [peer:' + dc.peer + ']');
+        dispatchCustomEvent('dc_msg', { disconnectTwitterScrName: dc.peer });
     });
 }
