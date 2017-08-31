@@ -150,7 +150,7 @@ getStrorage(['step', 'myAccountData', 'myRooms']).then(data => {
         }
         if (data.myAccountData) {
             myAccountData = data.myAccountData;
-            dispatchCustomEvent('connect', {myAccountData, myRooms});
+            dispatchCustomEvent('connect', { myAccountData, myRooms });
         } else {
             btnGoToRegAccount.click();
         }
@@ -1008,7 +1008,7 @@ window.addEventListener('regAccountSuccess', evt => {
         elmShow(btnRegAccount);
         messageDialogShow('アカウントを登録しました。忘れずにTwitterの名前をもとに戻してください。');
         if (btnRegAccount.dataset.type === 'step') {
-            dispatchCustomEvent('connect', myAccountData);
+            dispatchCustomEvent('connect', { myAccountData, myRooms });
         }
     });
 });
