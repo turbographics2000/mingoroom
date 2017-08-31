@@ -144,6 +144,11 @@ getStrorage(['step', 'myAccountData', 'myRooms']).then(data => {
     if (data.step === 'complete') {
         if (data.myRooms) {
             myRooms = data.myRooms;
+
+            // debug
+            myRooms = null;
+            setStorage({myRooms});
+
             objKeysEach(myRooms, roomId => {
                 upsertRoomData(myRooms[roomId]);
             });
