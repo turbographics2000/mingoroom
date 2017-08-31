@@ -537,7 +537,7 @@ button:active, div[id^="btn"]:active {
   top: auto;
 }
 
-#btnReserveRoom{
+/*#btnReserveRoom{
   font-size: 16px;
   float: right;
   position: absolute;
@@ -545,7 +545,7 @@ button:active, div[id^="btn"]:active {
   right: 0;
   top: 0;
   width: auto;
-}
+}*/
 
 #btnGoToRegAccount {
   width: 150px;
