@@ -71,6 +71,7 @@ window.addEventListener('connect', evt => {
 
 window.addEventListener('send', evt => {
     var data = evt.detail;
+    data.from = myAccountData.twitterScrName;
     var msg = JSON.stringify(data);
 
     if (evt.detail.to && dcs[evt.detail.to]) {
@@ -145,9 +146,9 @@ function connectPeer() {
 function dcSetup(dc) {
     console.log('dc connect.[peer:' + dc.peer + ']');
     dispatchCustomEvent('dcConnect');
-    dcs[dc.peer] = dc;
     dispatchCustomEvent('dc_msg', { connectTwitterScrName: dc.peer });
     dc.on('open', _ => {
+        dcs[dc.peer] = dc;
         console.log('dc open. [peer:' + dc.peer + ']');
         dispatchCustomEvent('dcOpen');
         dc.send(generateDCOpenMessage());
