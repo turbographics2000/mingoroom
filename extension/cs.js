@@ -1028,6 +1028,11 @@ window.addEventListener('regAccountSuccess', evt => {
 });
 window.addEventListener('dc_msg', evt => {
     var msg = evt.detail;
+    if (msg.account) {
+        console.log('receive accountData from "' + msg.from + '"', msg.account);
+        accounts[msg.account.twitterScrName] = msg.account;
+        connectCount.textContent = objKeys(accounts).length;
+    }
     if (msg.connectTwitterSrcName) {
         onlineAccounts[msg.connectTwitterSrcName] = true;
         connectCount.textContent = objKeys(onlineAccounts).length;
@@ -1035,11 +1040,6 @@ window.addEventListener('dc_msg', evt => {
     if (msg.disconnectTwitterSrcName) {
         delete onlineAccounts[msg.disconnectTwitterSrcName];
         connectCount.textContent = objKeys(onlineAccounts).length;
-    }
-    if (msg.account) {
-        console.log('receive accountData from "' + msg.from + '"', msg.account);
-        accounts[msg.account.twitterScrName] = msg.account;
-        connectCount.textContent = objKeys(accounts).length;
     }
     if (msg.rooms) {
         console.log('receive rooms from "' + msg.from + '"', msg.rooms);
