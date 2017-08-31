@@ -155,6 +155,7 @@ getStrorage(['step', 'myAccountData', 'myRooms']).then(data => {
         }
         if (data.myAccountData) {
             myAccountData = data.myAccountData;
+            appendTimetableRow(nowYer(), nowMonth(), nowDay());
             dispatchCustomEvent('connect', { myAccountData, myRooms });
         } else {
             btnGoToRegAccount.click();
