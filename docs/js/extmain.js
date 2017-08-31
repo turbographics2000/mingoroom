@@ -10,7 +10,7 @@ var myStream = null;
 
 btnStorageClear.addEventListener('click', evt => {
     delete localStorage.step;
-    console.log('localStorage.step cleared.');    
+    console.log('localStorage.step cleared.');
 });
 
 function dispatchCustomEvent(eventName, detail = null) {
@@ -73,7 +73,7 @@ window.addEventListener('send', evt => {
     var data = evt.detail.data;
     var msg = JSON.stringify(data);
 
-    if(evt.detail.to && dcs[evt.detail.to]) {
+    if (evt.detail.to && dcs[evt.detail.to]) {
         dcs[evt.detail.to].send(msg);
     } else {
         Object.keys(dcs, peerId => {
@@ -82,7 +82,7 @@ window.addEventListener('send', evt => {
     }
 })
 
-function generateDCOpenMessage(){
+function generateDCOpenMessage() {
     return JSON.stringify({
         from: myAccountData.twitterScrName,
         account: myAccountData,
@@ -147,7 +147,6 @@ function connectPeer() {
             console.log('dc close. [peer:' + dc.peer + ']');
             dispatchCustomEvent('dc_msg', { disconnectTwitterScrName: dc.peer });
         });
-        dc.send(generateDCOpenMessage());
     });
     peer.on('call', call => {
         console.log('on call. [peer:' + call.peer + ']');
