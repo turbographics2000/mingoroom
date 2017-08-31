@@ -514,6 +514,7 @@ btnRegRoom.onclick = function (evt) {
 
     upsertRoomData(data);
     dialogHide(roomDialog);
+    setStorage({ myRooms }).then(_ => console.log('save myRooms.'));
 };
 btnRegRoomCancel.onclick = function () {
     dialogHide(roomDialog);
@@ -721,7 +722,7 @@ function updateRow(date, hour, minute) {
 }
 
 function appendRoom(data, container) {
-    if(window[data.roomId]) return;
+    if (window[data.roomId]) return;
 
     var date = fmtDate('ymd', data.year, data.month, data.day);
     var time = fmtTime('hm', data.hour, data.minute);
@@ -814,6 +815,7 @@ function roomDialogShow(isView) {
     var course = currentRoomData.course;
     var hole = currentRoomData.hole;
     var comment = currentRoomData.comment || '';
+    var owner = currentRoomData.owner;
 
     if (isView) {
         viewRoomTitle.textContent = title;
@@ -822,6 +824,8 @@ function roomDialogShow(isView) {
             courses[course].short,
             hole + 'hole'
         ].join(' ');
+        ownerAvatar.src = owner.avatar;
+        ownerName.textContent = owner.mingolName + '(' + owner.twitterScrName + ')';
         viewRoomComment.textContent = comment;
 
         updateMemberList(currentRoomData.members);
@@ -896,7 +900,6 @@ function upsertRoomData(data, withUpdateRow = true, send = true) {
         if (send) {
             dispatchCustomEvent('send', { rooms: { [roomId]: data } });
         }
-        setStorage({ myRooms }).then(_ => console.log('save myRooms.'));
     }
 
     rooms_datetime[date] = rooms_datetime[date] || {};
