@@ -76,7 +76,7 @@ window.addEventListener('send', evt => {
     if (evt.detail.to && dcs[evt.detail.to]) {
         dcs[evt.detail.to].send(msg);
     } else {
-        Object.keys(dcs, peerId => {
+        Object.keys(dcs).forEach(peerId => {
             dcs[peerId].send(msg);
         });
     }
