@@ -404,6 +404,10 @@ button:active, div[id^="btn"]:active {
   cursor: pointer;
 }
 
+#accountKeyDisp {
+  display: inline-block;
+}
+
 #btnExtInstall, #btnExtInstall2, #btnReload, #btnReload2 {
   width: 180px;
 }
@@ -416,11 +420,6 @@ button:active, div[id^="btn"]:active {
   width: 100%;
 }
 
-#accountKeyDisp {
-  display: inline-block;
-}
-
-
 #regRoomNo {
   width: 100px;
 }
@@ -431,6 +430,9 @@ button:active, div[id^="btn"]:active {
 
 #viewRoomSummary {
   text-align:center;
+}
+.owner-container {
+  float:right;
 }
 #viewRoomComment{
   height:50px;
