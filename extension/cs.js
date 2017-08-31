@@ -714,13 +714,14 @@ function updateRow(date, hour, minute) {
         if (rooms_id[roomId].owner.twitterScrName === myAccountData.twitterScrName) myRoomCount++;
         appendRoom(rooms_id[roomId], container);
     });
-    row.innerHTML = '';
     row.appendChild(container);
 
     upsertDataset(row, { roomCount, myRoomCount });
 }
 
 function appendRoom(data, container) {
+    if(window[data.roomId]) return;
+    
     var date = fmtDate('ymd', data.year, data.month, data.day);
     var time = fmtTime('hm', data.hour, data.minute);
     var row = container || window['row' + date + time];
