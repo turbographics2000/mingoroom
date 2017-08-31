@@ -432,7 +432,6 @@ button:active, div[id^="btn"]:active {
   text-align:center;
 }
 .owner-container {
-  float:right;
 }
 #ownerAvatar {
   width: 24px;
