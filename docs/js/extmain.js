@@ -70,7 +70,7 @@ window.addEventListener('connect', evt => {
 });
 
 window.addEventListener('send', evt => {
-    var data = evt.detail.data;
+    var data = evt.detail;
     var msg = JSON.stringify(data);
 
     if (evt.detail.to && dcs[evt.detail.to]) {
