@@ -179,6 +179,7 @@ window.addEventListener('connectedCheckFail', evt => {
 window.addEventListener('peerOpen', evt => {
 });
 window.addEventListener('dcOpen', evt => {
+    console.log('cs.js dcOpen');
     dispatchCustomEvent('send', { rooms: myRooms });
 });
 
@@ -721,7 +722,7 @@ function updateRow(date, hour, minute) {
 
 function appendRoom(data, container) {
     if(window[data.roomId]) return;
-    
+
     var date = fmtDate('ymd', data.year, data.month, data.day);
     var time = fmtTime('hm', data.hour, data.minute);
     var row = container || window['row' + date + time];
