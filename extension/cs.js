@@ -146,9 +146,7 @@ getStrorage(['step', 'myAccountData', 'myRooms']).then(data => {
             myAccountData = data.myAccountData;
             appendTimetableRow(nowYear(), nowMonth(), nowDay());
             myRooms = data.myRooms;
-            objKeysEach(myRooms, roomId => {
-                upsertRoomData(myRooms[roomId], true, false);
-            });
+            deleteOldMyRoom();            
             dispatchCustomEvent('connect', { myAccountData, myRooms });
         } else {
             btnGoToRegAccount.click();
@@ -938,6 +936,40 @@ function deleteRoom(roomId, withUpdateRow = true) {
 
     if (withUpdateRow) {
         updateRow(date, hour, minute);
+    }
+}
+
+function deleteOldMyRoom() {
+    var year = nowYear();
+    var month = nowMonth();
+    var day = nowDay();
+    var startHour = nowHour();
+    var startMinute = ((nowMinute() + 9) / 10 | 0) * 10;
+    var myRoomArray = [];
+
+    objKeysEach(myRooms, roomId => {
+        myRoomArray.push(myRooms[roomId]);
+    });
+    myRoomArray.sort((a, b) => {
+        var aDate = new Date(a.year, a.month, a.day, a.hour, a.minute);
+        var bDate = new Date(b.year, b.month, b.day, b.hour, b.minute);
+        return aDate.getTime() - bDate.getTime();
+    });
+
+    var idx = 0;
+    for (var l = myRoomArray.length; idx < l; idx++) {
+        if (year === myRoomArray[i].year &&
+            month === myRoomArray[i].month &&
+            day === myRoomArray[i].day &&
+            hour === myRoomArray[i].hour &&
+            minute === myRoomArray[i].minute) {
+            break;
+        }
+    }
+    myRoomArray.splice(i, idx);
+    myRooms = {};
+    for(var i = 0, l = myRoomArray.length; i < l; i++) {
+        upsertRoomData(data, false, false);
     }
 }
 
