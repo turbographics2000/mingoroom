@@ -943,8 +943,8 @@ function deleteOldMyRoom() {
     var year = nowYear();
     var month = nowMonth();
     var day = nowDay();
-    var startHour = nowHour();
-    var startMinute = ((nowMinute() + 9) / 10 | 0) * 10;
+    var hour = nowHour();
+    var minute = ((nowMinute() + 9) / 10 | 0) * 10;
     var myRoomArray = [];
 
     objKeysEach(myRooms, roomId => {
