@@ -27,20 +27,21 @@ btnStorageClear.addEventListener('click', evt => {
     console.log('chrome.storage cleared.');
 });
 
-function setStorage(data) {
+function saveStorage(data) {
     return new Promise((resolve, reject) => {
         chrome.storage.local.set(data, _ => {
             resolve();
         });
     });
 }
-function getStrorage(key) {
+function loadStorage(key) {
     return new Promise((resolve, reject) => {
         chrome.storage.local.get(key, val => {
             resolve(val);
         });
     });
 }
+
 function dispatchCustomEvent(eventName, detail = null) {
     var evt = new CustomEvent(eventName, { detail });
     window.dispatchEvent(evt);
@@ -140,7 +141,7 @@ function stepBackDialogShow(stepNo) {
     }
 }
 
-getStrorage(['step', 'myAccountData', 'myRooms']).then(data => {
+loadStorage(['step', 'myAccountData', 'myRooms']).then(data => {
     if (data.step === 'complete') {
         if (data.myAccountData) {
             myAccountData = data.myAccountData;
@@ -467,7 +468,7 @@ accountAvatar.onclick = function (evt) {
 
 btnGoToRegAccount.onclick = function () {
     upsertDataset(btnRegAccount, { type: 'step' });
-    setStorage({ step: 'complete' }).then(_ => {
+    saveStorage({ step: 'complete' }).then(_ => {
         clearRoomData();
         mingoroomContainer.innerHTML = '';
         appendTimetableRow(nowYear(), nowMonth(), nowDay());
@@ -512,7 +513,7 @@ btnRegRoom.onclick = function (evt) {
 
     upsertRoomData(data);
     dialogHide(roomDialog);
-    setStorage({ myRooms }).then(_ => console.log('save myRooms.'));
+    saveStorage({ myRooms }).then(_ => console.log('save myRooms.'));
 };
 btnRegRoomCancel.onclick = function () {
     dialogHide(roomDialog);
@@ -1050,7 +1051,7 @@ window.addEventListener('regAccountSuccess', evt => {
     regTwitterScrName.value = '';
     accountAvatar.src = myAvatar;
     elmShow(accountAvatar);
-    setStorage({ myAccountData }).then(_ => {
+    saveStorage({ myAccountData }).then(_ => {
         dialogHide(accountDialog);
         elmShow(btnRegAccount);
         messageDialogShow('アカウントを登録しました。忘れずにTwitterの名前をもとに戻してください。');
