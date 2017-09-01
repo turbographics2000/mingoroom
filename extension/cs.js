@@ -958,11 +958,11 @@ function deleteOldMyRoom() {
 
     var idx = 0;
     for (var l = myRoomArray.length; idx < l; idx++) {
-        if (year === myRoomArray[i].year &&
-            month === myRoomArray[i].month &&
-            day === myRoomArray[i].day &&
-            hour === myRoomArray[i].hour &&
-            minute === myRoomArray[i].minute) {
+        if (year === myRoomArray[idx].year &&
+            month === myRoomArray[idx].month &&
+            day === myRoomArray[idx].day &&
+            hour === myRoomArray[idx].hour &&
+            minute === myRoomArray[idx].minute) {
             break;
         }
     }
