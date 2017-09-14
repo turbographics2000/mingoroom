@@ -295,22 +295,25 @@
     </div>
 
     <div id="chatScreen" class="hide">
-        <div class="chat-left-area">
+        <div class="chat-stream-area">
+            <div id="roomTitle">
+                <img id="chatRoomOwnerAvatar">
+                <span id="chatRoomTitle"></span>
+            </div>
+            <div id="chatStreamContainer"></div>
         </div>
-        <div clas="chat-center-area">
+        <div clas="text-chat-area">
             <div id="chatHeader"></div>
             <div id="textChatDisplay"></div>
-            <div class="chat-box">
+            <div class="chat-input-area">
                 <textarea></textarea>
             </div>
         </div>
-        <div class="chat-right-area">
-        </div>
-    </div>
     <div id="connectCountContainer" class=""><span>接続数：</span><span id="connectCount"></span></div>
 
     <div id="btnStorageClear">storage clear</div>
     <script src="js/peer.min.js"></script>
+    <script src="ext/common.js"></script>
     <script src="js/extmain.js"></script>
 </body>
 

@@ -27,29 +27,6 @@ btnStorageClear.addEventListener('click', evt => {
     console.log('chrome.storage cleared.');
 });
 
-function saveStorage(data) {
-    return new Promise((resolve, reject) => {
-        chrome.storage.local.set(data, _ => {
-            resolve();
-        });
-    });
-}
-function loadStorage(key) {
-    return new Promise((resolve, reject) => {
-        chrome.storage.local.get(key, val => {
-            resolve(val);
-        });
-    });
-}
-
-function dispatchCustomEvent(eventName, detail = null) {
-    var evt = new CustomEvent(eventName, { detail });
-    window.dispatchEvent(evt);
-}
-function sendData(data, to = null) {
-    dispatchCustomEvent('send', { data, to });
-}
-
 function stepNextDialogShow(stepNo) {
     elmShow(tutorialMask);
     var stepDialogs = document.querySelectorAll('.step-dialog');
@@ -182,129 +159,7 @@ window.addEventListener('dcOpen', evt => {
     dispatchCustomEvent('send', { rooms: myRooms });
 });
 
-function arrayEach(data, func) {
-    if (Array.isArray(data)) {
-        arr = data;
-    } else {
-        arr = [data];
-    }
-    arr.forEach(func);
-}
-function $(selector, func, parent) {
-    (parent || document).querySelectorAll(selector).forEach(func);
-};
-function classAdd(elm, ...cls) {
-    if (!elm || !(elm instanceof HTMLElement)) return;
-    elm.classList.add(...cls);
-}
-function classRemove(elm, ...cls) {
-    if (!elm || !(elm instanceof HTMLElement)) return;
-    elm.classList.remove(...cls);
-}
-function hasClass(elm, cls) {
-    return elm.classList.contains(cls);
-}
-function isShowing(elm) {
-    return !hasClass(elm, 'hide');
-}
-function elmShow(elm) {
-    if (!elm || !(elm instanceof HTMLElement)) return;
-    classRemove(elm, 'hide');
-}
-function elmHide(elm) {
-    if (!elm || !(elm instanceof HTMLElement)) return;
-    classAdd(elm, 'hide');
-}
-function appendChild(parent, ...child) {
-    arrayEach(child, elm => parent.appendChild(elm));
-}
-function objKeys(obj, idx = null) {
-    if (!obj) return;
-    if (idx !== null) {
-        return Object.keys(obj)[idx];
-    } else {
-        return Object.keys(obj);
-    }
-}
-function objKeysEach(obj, func) {
-    if (!obj) return;
-    objKeys(obj).forEach(func);
-}
-function upsertDataset(elm, dataset) {
-    objKeysEach(dataset, key => elm.dataset[key] = dataset[key]);
-}
-function deleteDataset(elm, keys) {
-    arrayEach(keys, key => delete elm.datase[key]);
-}
-function nowYear() {
-    return (new Date()).getFullYear();
-}
-function nowMonth() {
-    return (new Date()).getMonth() + 1;
-}
-function nowDay() {
-    return (new Date()).getDate();
-}
-function nowHour() {
-    return (new Date()).getHours();
-}
-function nowMinute() {
-    return (new Date()).getMinutes();
-}
-function zs2(val) {
-    return ('0' + (+val)).slice(-2);
-}
-function zs4(val) {
-    return ('000' + (+val)).slice(-4);
-}
-function fmt(format, year, month, day, hour, minute) {
-    switch (format) {
-        case 'y/m/d h:m':
-            return fmtDate('y/m/d', year, month, day) + ' ' + fmtTime('h:m', hour, minute);
-        case 'ymdhm':
-            return fmtDate('ymd', year, month, day) + fmtTime('hm', hour, minute);
-    }
-}
-function fmtDate(format, year, month, day) {
-    switch (format) {
-        case 'y/m/d':
-            return [year, zs2(month), zs2(day)].join('/');
-        case 'ymd':
-            return year + zs2(month) + zs2(day);
-    }
-}
-function fmtTime(format, hour, minute) {
-    switch (format) {
-        case 'h:m':
-            return [zs2(hour), zs2(minute)].join(':');
-        case 'hm':
-            return zs2(hour) + zs2(minute);
-    }
-}
-function dialogShow(dialog) {
-    elmShow(dialogMask);
-    elmShow(dialog);
-    setCurrentDialog(dialog);
-}
-function dialogHide(dialog) {
-    elmHide(dialogMask);
-    elmHide(dialog);
-    setCurrentDialog(dialog);
-}
-function dialogChangeTo(dialog) {
-    $('.dialog', elm => elmHide(dialog));
-    elmShow(dialog);
-    setCurrentDialog(dialog);
-}
-function setCurrentDialog(dialog) {
-    currentDialog = dialog;
-    currentOKButton = dialog.querySelector('.ok-button');
-    currentCancelButtn = dialog.querySelector('.cancel-button');
-}
-function messageDialogShow(msg) {
-    dlgMessage.textContent = msg;
-    dialogShow(messageDialog);
-}
+
 
 var courses = {
     tokyo: { normal: '東京グランドゴルフガーデン', short: '東京' },
@@ -378,7 +233,7 @@ var debugRoomsSrc = [
         day: nowDay(),
         course: 'panta',
         hole: '9',
-        owner: debugAccounts[objKeys(debugAccounts, 0)],
+        owner: objKeys(debugAccounts, 0),
         no: '365365',
         members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
     },
@@ -389,7 +244,7 @@ var debugRoomsSrc = [
         day: nowDay(),
         course: 'tokyo',
         hole: '6',
-        owner: debugAccounts[objKeys(debugAccounts, 1)],
+        owner: objKeys(debugAccounts, 1),
         no: '123123',
         members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
     },
@@ -400,7 +255,7 @@ var debugRoomsSrc = [
         day: nowDay(),
         course: 'ocean',
         hole: '3',
-        owner: debugAccounts[objKeys(debugAccounts, 2)],
+        owner: objKeys(debugAccounts, 2),
         no: '898989',
         members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
     },
@@ -411,7 +266,7 @@ var debugRoomsSrc = [
         day: nowDay(),
         course: 'ocean',
         hole: '6',
-        owner: debugAccounts[objKeys(debugAccounts, 3)],
+        owner: objKeys(debugAccounts, 3),
         no: '012345',
         members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
     },
@@ -502,7 +357,7 @@ btnRegRoom.onclick = function (evt) {
     data.title = regRoomTitle.value;
     data.roomId = data.roomId || UUID.generate();
     data.dt = data.dt || new Date(data.year, data.month, data.day, data.hour, data.minute);
-    data.owner = myAccountData;
+    data.owner = myAccountData.twitterScrName;
     data.title = regRoomTitle.value;
     data.course = regRoomCourse.value;
     data.hole = regRoomHole.value;
@@ -705,14 +560,20 @@ function updateRow(date, hour, minute) {
     $('.room', elm => elm.remove(), window[rowId]);
     roomCount.textContent = roomIds.length;
     roomIds.sort((a, b) => {
-        if (rooms_id[a].members.includes(myAccountData.twitterScrName)) return -1;
-        if (rooms_id[b].members.includes(myAccountData.twitterScrName)) return 1;
+        if (rooms_id[a].members.includes(myAccountData.twitterScrName)) {
+            return -1;
+        }
+        if (rooms_id[b].members.includes(myAccountData.twitterScrName)) {
+            return 1;
+        }
         return rooms_id[a].create_datetime - rooms_id[b].create_datetime;
     });
 
     var container = document.createDocumentFragment();
     roomIds.forEach(roomId => {
-        if (rooms_id[roomId].owner.twitterScrName === myAccountData.twitterScrName) myRoomCount++;
+        if (rooms_id[roomId].owner === myAccountData.twitterScrName) {
+            myRoomCount++;
+        }
         appendRoom(rooms_id[roomId], container);
     });
     row.appendChild(container);
@@ -743,7 +604,7 @@ function appendRoom(data, container) {
     classAdd(roomTitle, 'room-title');
     classAdd(roomNo, 'room-no');
     classAdd(course, 'course');
-    classAdd(ownerAvatar, 'room-owner-avatar', data.owner.twitterScrName);
+    classAdd(ownerAvatar, 'room-owner-avatar', data.owner);
 
     roomTitle.textContent = data.title;
     roomNo.textContent = '#' + ('00000' + data.no).slice(-6);
