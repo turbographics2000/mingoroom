@@ -605,8 +605,8 @@ button:active, div[id^="btn"]:active {
   z-index: 10;
 }
 
-.chat-left-area, .chat-right-area {
-  width: calc((100% - 200px) / 2);
+.stream-area {
+  width: calc(100% - 200px);
   height: 100%;
 }
 .chat-center-area {
