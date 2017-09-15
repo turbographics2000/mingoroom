@@ -18,7 +18,9 @@ body * {
   position: relative;
   box-sizing: border-box;
 }
-
+.center {
+  text-align: center;
+}
 .bold {
   font-weight: bold;
 }
