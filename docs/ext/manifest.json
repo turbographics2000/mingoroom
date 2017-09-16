@@ -12,6 +12,7 @@
                 "uuid.js",
                 "peer.min.js",
                 "common.js",
+                "demodata.js",
                 "cs.js"
             ]
         }

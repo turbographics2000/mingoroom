@@ -1,3 +1,12 @@
+
+var courses = {
+    tokyo: { normal: '東京グランドゴルフガーデン', short: '東京' },
+    scotish: { normal: 'スコティッシュクラシック', short: 'スコティッシュ' },
+    ocean: { normal: 'オーシャンラグーンリゾード', short: 'オーシャン' },
+    kafu: { normal: '華風カントリー倶楽部', short: '華風' },
+    panta: { normal: 'パンターノカントリークラブ', short: 'パンタ' },
+    acro: { normal: 'アクロポリスレガシー', short: 'アクロ' }
+};
 var myAccountData = {
     mingolName: null,
     twitterScrName: null,
@@ -45,8 +54,8 @@ function stepNextDialogShow(stepNo) {
             elmShow(accountAvatar);
             appendTimetableRow(year, month, day);
         } else if (stepNo === 4) {
-            accounts = debugAccounts;
-            createDebugRoom(year, month, day);
+            accounts = demoAccounts;
+            createDemoRoom(year, month, day);
             getMaxRoomCount();
             applyMaxRoomCount();
             updateAllRow();
@@ -65,7 +74,7 @@ function stepNextDialogShow(stepNo) {
             classAdd(btnModeChange, 'opdesc-mode');
         } else if (stepNo === 9) {
             classRemove(btnModeChange, 'opdesc-mode');
-            myAccountData = debugAccounts[objKeys(debugAccounts)[0]];
+            myAccountData = demoAccounts[objKeys(demoAccounts)[0]];
             updateAllRow();
             btnModeChange.click();
         } else if (stepNo === 10) {
@@ -159,120 +168,7 @@ window.addEventListener('dcOpen', evt => {
     dispatchCustomEvent('send', { rooms: myRooms });
 });
 
-
-
-var courses = {
-    tokyo: { normal: '東京グランドゴルフガーデン', short: '東京' },
-    scotish: { normal: 'スコティッシュクラシック', short: 'スコティッシュ' },
-    ocean: { normal: 'オーシャンラグーンリゾード', short: 'オーシャン' },
-    kafu: { normal: '華風カントリー倶楽部', short: '華風' },
-    panta: { normal: 'パンターノカントリークラブ', short: 'パンタ' },
-    acro: { normal: 'アクロポリスレガシー', short: 'アクロ' }
-}
-
-
-// debugData
-var debugAccounts = {
-    'AAAAAAAAAAAAAAAAAAAA': {
-        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_a.png',
-        mingolName: 'あいうえお',
-        twitterScrName: 'AAAAAAAAAAAAAAAAAAAA'
-    },
-    'BBBBBBBBBBBBBBBBBBBB': {
-        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_k.png',
-        mingolName: 'かきくけこ',
-        twitterScrName: 'BBBBBBBBBBBBBBBBBBBB'
-    },
-    'CCCCCCCCCCCCCCCCCCCC': {
-        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_s.png',
-        mingolName: 'さしすせそ',
-        twitterScrName: 'CCCCCCCCCCCCCCCCCCCC'
-    },
-    'DDDDDDDDDDDDDDDDDDDD': {
-        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_t.png',
-        mingolName: 'たちつてと',
-        twitterScrName: 'DDDDDDDDDDDDDDDDDDDD'
-    },
-    'EEEEEEEEEEEEEEEEEEEE': {
-        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_n.png',
-        mingolName: 'なにぬねの',
-        twitterScrName: 'EEEEEEEEEEEEEEEEEEEE'
-    },
-    'FFFFFFFFFFFFFFFFFFFF': {
-        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_h.png',
-        mingolName: 'はひふへほ',
-        twitterScrName: 'FFFFFFFFFFFFFFFFFFFF'
-    },
-    'GGGGGGGGGGGGGGGGGGGG': {
-        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_m.png',
-        mingolName: 'まみむめも',
-        twitterScrName: 'GGGGGGGGGGGGGGGGGGGG'
-    },
-    'HHHHHHHHHHHHHHHHHHHH': {
-        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_y.png',
-        mingolName: 'やゆよ',
-        twitterScrName: 'HHHHHHHHHHHHHHHHHHHH'
-    },
-    'IIIIIIIIIIIIIIIIIIII': {
-        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_r.png',
-        mingolName: 'らりるれろ',
-        twitterScrName: 'IIIIIIIIIIIIIIIIIIII'
-    },
-    'JJJJJJJJJJJJJJJJJJJJ': {
-        avatar: 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_w.png',
-        mingolName: 'わをん',
-        twitterScrName: 'JJJJJJJJJJJJJJJJJJJJ'
-    }
-};
-
-var debugRoomsSrc = [
-    {
-        title: '残暑お見舞い大会',
-        year: nowYear(),
-        month: nowMonth(),
-        day: nowDay(),
-        course: 'panta',
-        hole: '9',
-        owner: objKeys(debugAccounts, 0),
-        no: '365365',
-        members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
-    },
-    {
-        title: '延長戦',
-        year: nowYear(),
-        month: nowMonth(),
-        day: nowDay(),
-        course: 'tokyo',
-        hole: '6',
-        owner: objKeys(debugAccounts, 1),
-        no: '123123',
-        members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
-    },
-    {
-        title: 'SRギア縛り大会',
-        year: nowYear(),
-        month: nowMonth(),
-        day: nowDay(),
-        course: 'ocean',
-        hole: '3',
-        owner: objKeys(debugAccounts, 2),
-        no: '898989',
-        members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
-    },
-    {
-        title: 'パター縛り大会',
-        year: nowYear(),
-        month: nowMonth(),
-        day: nowDay(),
-        course: 'ocean',
-        hole: '6',
-        owner: objKeys(debugAccounts, 3),
-        no: '012345',
-        members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
-    },
-];
-
-function createDebugRoom(year, month, day, hour, minute) {
+function createDemoRoom(year, month, day, hour, minute) {
     for (var i = 0; i < 144; i++) {
         var hour = i / 6 | 0;
         var minute = (i % 6) * 10;
@@ -289,18 +185,18 @@ function createDebugRoom(year, month, day, hour, minute) {
                 comment: '待合室コメント',
                 create_datetime: Date.now()
             };
-            Object.assign(data, debugRoomsSrc[r]);
+            Object.assign(data, demoRoomsSrc[r]);
             upsertRoomData(data, false);
         }
     }
 }
 
-function appendDebugRoom() {
+function appendDemoRoom() {
     objKeysEach(room_id, roomId => appendRoom(rooms_id[roomId]));
 }
 
-// accounts = debugAccounts;
-// createDebugRoom();
+// accounts = demoAccounts;
+// createDemoRoom();
 // getMaxRoomCount();
 // appendTimetableRow(2017, 8, 20);
 // updateAllRow();
