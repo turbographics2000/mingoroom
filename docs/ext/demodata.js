@@ -59,9 +59,9 @@ var demoRoomsSrc = [
         day: nowDay(),
         course: 'panta',
         hole: '9',
-        owner: objKeys(debugAccounts, 0),
+        owner: objKeys(demoAccounts, 0),
         no: '365365',
-        members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
+        members: objKeys(demoAccounts).slice(4, 5 + Math.random() * 5 | 0)
     },
     {
         title: '延長戦',
@@ -70,9 +70,9 @@ var demoRoomsSrc = [
         day: nowDay(),
         course: 'tokyo',
         hole: '6',
-        owner: objKeys(debugAccounts, 1),
+        owner: objKeys(demoAccounts, 1),
         no: '123123',
-        members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
+        members: objKeys(demoAccounts).slice(4, 5 + Math.random() * 5 | 0)
     },
     {
         title: 'SRギア縛り大会',
@@ -81,9 +81,9 @@ var demoRoomsSrc = [
         day: nowDay(),
         course: 'ocean',
         hole: '3',
-        owner: objKeys(debugAccounts, 2),
+        owner: objKeys(demoAccounts, 2),
         no: '898989',
-        members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
+        members: objKeys(demoAccounts).slice(4, 5 + Math.random() * 5 | 0)
     },
     {
         title: 'パター縛り大会',
@@ -92,9 +92,9 @@ var demoRoomsSrc = [
         day: nowDay(),
         course: 'ocean',
         hole: '6',
-        owner: objKeys(debugAccounts, 3),
+        owner: objKeys(demoAccounts, 3),
         no: '012345',
-        members: objKeys(debugAccounts).slice(4, 5 + Math.random() * 5 | 0)
+        members: objKeys(demoAccounts).slice(4, 5 + Math.random() * 5 | 0)
     },
 ];
 
