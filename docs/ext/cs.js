@@ -580,8 +580,8 @@ function roomDialogShow(isView) {
             courses[course].short,
             hole + 'hole'
         ].join(' ');
-        ownerAvatar.src = owner.avatar;
-        ownerName.textContent = owner.mingolName + '(' + owner.twitterScrName + ')';
+        ownerAvatar.src = accounts[owner].avatar;
+        ownerName.textContent = accounts[owner].mingolName + '(' + accounts[owner].twitterScrName + ')';
         viewRoomComment.textContent = comment;
 
         updateMemberList(currentRoomData.members);
