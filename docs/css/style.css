@@ -441,6 +441,7 @@ button:active, div[id^="btn"]:active {
   margin-left: 10px;
   vertical-align: top;
   line-height: 35px;
+  display: inline-block;
 }
 #roomViewComment{
   height:50px;
