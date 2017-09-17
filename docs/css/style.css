@@ -430,7 +430,7 @@ button:active, div[id^="btn"]:active {
   background: #fcc;
 }
 
-#viewRoomSummary {
+#roomViewSummary {
   text-align:center;
 }
 .owner-container {
@@ -439,7 +439,7 @@ button:active, div[id^="btn"]:active {
   width: 24px;
   height: 24px;
 }
-#viewRoomComment{
+#roomViewComment{
   height:50px;
 }
 .membercount-container {
