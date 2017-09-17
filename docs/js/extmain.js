@@ -44,7 +44,6 @@ chrome.runtime.sendMessage(extId, { installCheck: true }, res => {
         } else if (step === 'installButtonClicked') {
             extNotInstalledDialog.classList.remove('hide');
         } else {
-            localStorage.setItem('step', 'extNotInstalled');
             startDialog.classList.remove('hide');
         }
     }
