@@ -574,15 +574,15 @@ function roomDialogShow(isView) {
     var owner = currentRoomData.owner;
 
     if (isView) {
-        viewRoomTitle.textContent = title;
-        viewRoomSummary.textContent = [
+        roomViewTitle.textContent = title;
+        roomViewSummary.textContent = [
             fmt('y/m/d h:m', year, month, day, hour, minute),
             courses[course].short,
             hole + 'hole'
         ].join(' ');
-        ownerAvatar.src = accounts[owner].avatar;
-        ownerName.textContent = accounts[owner].mingolName + '(@' + accounts[owner].twitterScrName + ')';
-        viewRoomComment.textContent = comment;
+        roomViewOwnerAvatar.src = accounts[owner].avatar;
+        roomViewOwnerAvatar.alt = roomViewOwnerAvatar.title = accounts[owner].mingolName + '(@' + accounts[owner].twitterScrName + ')';
+        roomViewComment.textContent = comment;
 
         updateMemberList(currentRoomData.members);
         dialogShow(roomViewDialog);
@@ -616,7 +616,7 @@ function updateMember(data, isReserve) {
 
 function updateMemberList(members) {
     memberList.innerHTML = '';
-    viewRoomMemberCount.textContent = members.length;
+    roomViewMemberCount.textContent = members.length;
     if (members) {
         members.forEach(memberId => {
             var accountData = accounts[memberId];
