@@ -1,6 +1,6 @@
 var step = localStorage.getItem('step') || 'extNotInstalled';
 var extId = 'ioaancmfccbkoknfeibefmdahkpiincg';
-//var extId = 'ioaancmfccbkoknfeibefmdahkpiinch';
+var extId = 'fjjpbnopihgndnipomdccbbbfghjkjnm';
 var skywayAPIKey = '5aeee120-69f8-4f6e-80d7-643f1eb7070d';
 var calls = {};
 var dcs = {};
@@ -44,6 +44,7 @@ chrome.runtime.sendMessage(extId, { installCheck: true }, res => {
         } else if (step === 'installButtonClicked') {
             extNotInstalledDialog.classList.remove('hide');
         } else {
+            localStorage.setItem('step', 'extNotInstalled');
             startDialog.classList.remove('hide');
         }
     }
