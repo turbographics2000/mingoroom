@@ -506,7 +506,7 @@ function appendRoom(data, container) {
     roomNo.textContent = '#' + ('00000' + data.no).slice(-6);
     course.textContent = courses[data.course].short + ' ' + data.hole + 'Hole';
     ownerAvatar.alt = ownerAvatar.title = '作成者：' + data.owner.mingolName + '(@' + data.owner.twitterScrName + ')';
-    ownerAvatar.src = data.owner.avatar;
+    ownerAvatar.src = accounts[data.owner].avatar;
     memberCount.textContent = '参加予定：0';
 
     upsertDataset(room, { owner: data.owner.twitterScrName, course: data.course, hole: data.hole });
