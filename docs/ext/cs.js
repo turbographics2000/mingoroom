@@ -592,7 +592,7 @@ function roomDialogShow(isView) {
         roomViewSummary.textContent = [
             fmt('y/m/d h:m', year, month, day, hour, minute),
             courses[course].short,
-            hole + 'hole'
+            hole + 'Hole'
         ].join(' ');
         roomViewOwnerAvatar.src = accounts[owner].avatar;
         roomViewOwnerAvatar.alt = roomViewOwnerAvatar.title = accounts[owner].mingolName + '(@' + accounts[owner].twitterScrName + ')';
