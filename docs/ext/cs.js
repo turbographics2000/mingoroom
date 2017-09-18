@@ -320,7 +320,7 @@ btnRegAccount.onclick = function () {
     }
     regAccount();
 };
-btnRoomReserve.onclick = function() {
+btnReserveRoom.onclick = function() {
 
 };
 function requireInput() {
