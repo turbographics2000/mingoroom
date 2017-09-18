@@ -398,7 +398,7 @@ function appendTimetableRow(year, month, day) {
             classAdd(row, 'row');
             classAdd(rowHeader, 'rowheader');
             classAdd(rowTime, 'timetable-time');
-            classAdd(roomCount, 'timetable-roomcount');
+            classAdd(roomCountContainer, 'timetable-roomcount');
             classAdd(btnCreateRoom, 'create-room-button');
             if (currentMode === 'delete') {
                 elmHide(btnCreateRoom);
