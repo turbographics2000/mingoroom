@@ -278,6 +278,9 @@ btnRoomEdit.onclick = function () {
 btnRoomViewDialogClose.onclick = function () {
     dialogHide(roomViewDialog);
 };
+btnReserveList.onclick = function() {
+    
+};
 btnModeChange.onclick = function () {
     if (this.classList.contains('delete-mode')) {
         classRemove(this, 'delete-mode');
@@ -627,7 +630,7 @@ function updateMember(data, isReserve) {
 
 function updateMemberList(members) {
     memberList.innerHTML = '';
-    roomViewMemberCount.textContent = members.length;
+    memberCount.textContent = members.length;
     if (members) {
         members.forEach(memberId => {
             var accountData = accounts[memberId];
