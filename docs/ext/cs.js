@@ -523,7 +523,7 @@ function appendRoom(data, container) {
     ownerAvatar.src = accounts[data.owner].avatar;
     memberCount.textContent = '参加予定：0';
 
-    upsertDataset(room, { owner: data.owner.twitterScrName, course: data.course, hole: data.hole });
+    upsertDataset(room, { owner: data.owner, course: data.course, hole: data.hole });
     room.onclick = function (evt) {
         var data = rooms_id[this.id];
         if (myRooms[this.id]) {
