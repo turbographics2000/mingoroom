@@ -261,21 +261,23 @@
         <div class="dialog-row">
             <div id="roomViewComment">コメント</div>
         </div>
-        <div class="dialog-row">
-            <div class="dialog-comment-title">参加予定
-                <div class="membercount-container">
-                    <span id="roomViewMemberCount"></span>
-                    <span>人</span>
-                </div>
-            </div>
-            <!--<div id="memberList"></div>-->
-            <div id="btnRoomEdit" class="hide">編集</div>
-        </div>
         <div class="button-container">
             <button id="btnReserveRoom">参加予定登録</button>
             <button id="btnReserveList">参加予定者</button>
             <button id="btnRoomEdit">編集</button>
             <button id="btnRoomViewDialogClose" class="ok-button">閉じる</button>
+        </div>
+    </div>
+    <div id="memberListDialog" class="dialog hide">
+        <div class="dialog-row">
+                <div class="dialog-comment-title">参加予定
+                    <div class="membercount-container">
+                        <span id="roomViewMemberCount"></span>
+                        <span>人</span>
+                    </div>
+                </div>
+                <div id="memberList"></div>
+            </div>
         </div>
     </div>
     <div id="messageDialog" class="dialog hide">
