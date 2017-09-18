@@ -449,6 +449,9 @@ button:active, div[id^="btn"]:active {
 .membercount-container {
   float:right;
 }
+#btnRoomReserveList {
+  width: 130px;
+}
 
 #memberList {
   height: 170px;

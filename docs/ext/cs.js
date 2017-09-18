@@ -14,6 +14,7 @@ var myAccountData = {
 };
 var accounts = {};
 var onlineAccounts = {};
+var myFriends = [];
 var myRooms = {};
 var rooms_id = {};
 var rooms_datetime = {};
@@ -127,12 +128,13 @@ function stepBackDialogShow(stepNo) {
     }
 }
 
-loadStorage(['step', 'myAccountData', 'myRooms']).then(data => {
+loadStorage(['step', 'myAccountData', 'myRooms', 'myFriends']).then(data => {
     if (data.step === 'complete') {
         if (data.myAccountData) {
             myAccountData = data.myAccountData;
             appendTimetableRow(nowYear(), nowMonth(), nowDay());
             myRooms = data.myRooms;
+            myFriends = data.myFriends || {};
             deleteOldMyRoom();            
             dispatchCustomEvent('connect', { myAccountData, myRooms });
         } else {
@@ -315,6 +317,9 @@ btnRegAccount.onclick = function () {
     }
     regAccount();
 };
+btnRoomReserve.onclick = function() {
+
+};
 function requireInput() {
     if (this.value) {
         classAdd(this, 'hasvalue');
@@ -460,6 +465,12 @@ function updateRow(date, hour, minute) {
             return -1;
         }
         if (rooms_id[b].members.includes(myAccountData.twitterScrName)) {
+            return 1;
+        }
+        if(myFriends.includes(rooms_id[a].owner)) {
+            return -1;
+        }
+        if(myFriends.includes(rooms_id[b].owner)) {
             return 1;
         }
         return rooms_id[a].create_datetime - rooms_id[b].create_datetime;
