@@ -415,7 +415,7 @@ button:active, div[id^="btn"]:active {
 }
 
 #roomDialog {
-  transform: translateX(50%);
+  transform: translateX(-50%);
 }
 #roomDialog .dialog-row {
   text-align: center;
