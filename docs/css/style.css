@@ -429,6 +429,9 @@ button:active, div[id^="btn"]:active {
   border: 1px solid gray;
   background: #fcc;
 }
+#regRoomHole {
+  vertical-align: top;
+}
 
 #roomViewSummary {
   text-align:center;

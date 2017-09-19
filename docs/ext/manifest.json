@@ -13,6 +13,7 @@
                 "peer.min.js",
                 "common.js",
                 "demodata.js",
+                "marked.js",
                 "cs.js"
             ]
         }

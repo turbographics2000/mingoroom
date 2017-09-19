@@ -132,6 +132,10 @@ loadStorage(['step', 'myAccountData', 'myRooms', 'myFriends']).then(data => {
     if (data.step === 'complete') {
         if (data.myAccountData) {
             myAccountData = data.myAccountData;
+            if(myAccountData) {
+                accountAvatar.src = myAccountData.avatar;
+                elmShow(accountAvatar);
+            }
             appendTimetableRow(nowYear(), nowMonth(), nowDay());
             myRooms = data.myRooms;
             myFriends = data.myFriends || {};
