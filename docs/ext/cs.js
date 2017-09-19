@@ -421,6 +421,8 @@ function appendTimetableRow(year, month, day) {
                     members: []
                 };
                 roomDialogShow();
+                classAdd(roomViewDialog, 'preview');
+                dialogShow(roomViewDialog);    
             }
 
             appendChild(roomCountContainer, roomCount, roomCountLabel);

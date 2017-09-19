@@ -414,6 +414,9 @@ button:active, div[id^="btn"]:active {
   width: 180px;
 }
 
+#roomDialog {
+  transform: translateX(50%);
+}
 #roomDialog .dialog-row {
   text-align: center;
 }
@@ -433,6 +436,9 @@ button:active, div[id^="btn"]:active {
   vertical-align: top;
 }
 
+#roomView.preview {
+  transform: translateX(50%);
+}
 #roomViewSummary {
   text-align:center;
 }

@@ -245,7 +245,7 @@
             </div>
         </div>
         <div class="dialog-comment-title">コメント (最大200文字)</div>
-        <textarea id="regRoomComment" style="width:100%;height: 100px;" maxlength="200" rows="10" cols="30"></textarea>
+        <textarea id="regRoomComment" style="width:100%;height: 100px;" rows="10" cols="30"></textarea>
         <div class="button-container">
             <button id="btnRegRoom" class="ok-button">登録</button>
             <button id="btnRegRoomCancel" class="cancel-button">キャンセル</button>
@@ -255,13 +255,15 @@
         <div class="dialog-header">
             <img id="roomViewOwnerAvatar">
             <div id="roomViewTitle"></div>
-            <button id="btnRoomEdit">編集</button>            
+            <button id="btnRoomEdit">編集</button>
         </div>
         <div class="dialog-row">
             <div id="roomViewSummary"></div>
         </div>
-        <div class="dialog-row">
-            <div id="roomViewComment">コメント</div>
+        <div class="roomview-scroller">
+            <div class="dialog-row">
+                <div id="roomViewComment"></div>
+            </div>
         </div>
         <div class="button-container">
             <button id="btnReserveRoom">参加予定登録</button>
@@ -271,15 +273,15 @@
     </div>
     <div id="memberListDialog" class="dialog hide">
         <div class="dialog-row">
-                <div class="dialog-comment-title">参加予定
-                    <div class="membercount-container">
-                        <span id="memberCount"></span>
-                        <span>人</span>
-                    </div>
+            <div class="dialog-comment-title">参加予定
+                <div class="membercount-container">
+                    <span id="memberCount"></span>
+                    <span>人</span>
                 </div>
-                <div id="memberList"></div>
             </div>
+            <div id="memberList"></div>
         </div>
+    </div>
     </div>
     <div id="messageDialog" class="dialog hide">
         <div id="dlgMessage"></div>
@@ -308,12 +310,12 @@
                 <textarea></textarea>
             </div>
         </div>
-    <div id="connectCountContainer" class=""><span>接続数：</span><span id="connectCount"></span></div>
+        <div id="connectCountContainer" class=""><span>接続数：</span><span id="connectCount"></span></div>
 
-    <div id="btnStorageClear">storage clear</div>
-    <script src="js/peer.min.js"></script>
-    <script src="ext/common.js"></script>
-    <script src="js/extmain.js"></script>
+        <div id="btnStorageClear">storage clear</div>
+        <script src="js/peer.min.js"></script>
+        <script src="ext/common.js"></script>
+        <script src="js/extmain.js"></script>
 </body>
 
 </html>
