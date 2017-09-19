@@ -436,7 +436,7 @@ button:active, div[id^="btn"]:active {
   vertical-align: top;
 }
 
-#roomView.preview {
+#roomViewDialog.preview {
   transform: translateX(50%);
 }
 #roomViewSummary {
