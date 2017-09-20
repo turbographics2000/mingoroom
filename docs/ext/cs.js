@@ -327,6 +327,12 @@ btnRegAccount.onclick = function () {
 btnReserveRoom.onclick = function() {
 
 };
+
+
+regRoomComment.oninput = function() {
+    roomViewComment.innnerHTML = marked(this.value);
+}
+
 function requireInput() {
     if (this.value) {
         classAdd(this, 'hasvalue');
