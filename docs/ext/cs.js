@@ -330,7 +330,7 @@ btnReserveRoom.onclick = function() {
 
 
 regRoomComment.oninput = function() {
-    roomViewComment.innnerHTML = marked(this.value);
+    roomViewComment.innerHTML = marked(this.value);
 }
 
 function requireInput() {
