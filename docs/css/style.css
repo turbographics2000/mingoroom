@@ -428,7 +428,10 @@ button:active, div[id^="btn"]:active {
   font-size: 28px;
 }
 #btnRoomEdit i {
+  width:30px;
+  height:30px;
   padding: 0;
+  vertical-align: middle;
 }
   
 #regRoomTitle {
