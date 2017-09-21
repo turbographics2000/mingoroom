@@ -426,11 +426,11 @@ button:active, div[id^="btn"]:active {
   height: 30px;
   line-height: 30px;
   font-size: 28px;
+  padding: 0;
 }
 #btnRoomEdit i {
   width:30px;
   height:30px;
-  padding: 0;
   vertical-align: middle;
 }
   
