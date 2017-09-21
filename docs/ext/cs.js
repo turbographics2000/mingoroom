@@ -439,6 +439,8 @@ function appendTimetableRow(year, month, day) {
                     hour: +this.dataset.hour,
                     minute: +this.dataset.minute,
                     title: '',
+                    course: 'tokyo',
+                    hole: '3',
                     no: '',
                     members: []
                 };
