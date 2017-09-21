@@ -454,6 +454,7 @@ button:active, div[id^="btn"]:active {
 }
 #roomViewComment{
   height:300px;
+  border: 1px solid black;
 }
 .membercount-container {
   float:right;
