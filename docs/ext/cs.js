@@ -210,6 +210,7 @@ function appendDemoRoom() {
 //accountAvatar.src = accounts[accountId].avatar;
 
 window.onkeydown = function (evt) {
+    if(evt.srcElement instanceof HTMLTextAreaElement) return;
     if (evt.keyCode === 13) { // Enter
         currentOKButton.onclick.call(currentOKButton);
     } else if (evt.keyCode === 27) { // Esc

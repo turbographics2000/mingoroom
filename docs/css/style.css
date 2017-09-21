@@ -453,7 +453,7 @@ button:active, div[id^="btn"]:active {
   display: inline-block;
 }
 #roomViewComment{
-  height:50px;
+  height:300px;
 }
 .membercount-container {
   float:right;
