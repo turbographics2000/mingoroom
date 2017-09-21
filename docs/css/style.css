@@ -420,7 +420,17 @@ button:active, div[id^="btn"]:active {
 #roomDialog .dialog-row {
   text-align: center;
 }
-
+#btnRoomEdit {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 28px;
+}
+#btnRoomEdit i {
+  padding: 0;
+}
+  
 #regRoomTitle {
   width: 100%;
 }
