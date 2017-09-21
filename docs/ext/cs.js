@@ -16,6 +16,8 @@ var accounts = {};
 var onlineAccounts = {};
 var myFriends = [];
 var myRooms = {};
+var myRoomTemplates = {};
+var roomTemplates = {};
 var rooms_id = {};
 var rooms_datetime = {};
 var rooms_owner = {};
@@ -886,6 +888,9 @@ window.addEventListener('dc_msg', evt => {
         objKeysEach(msg.rooms, roomId => {
             upsertRoomData(msg.rooms[roomId]);
         });
+    }
+    if(msg.roomTemplates) {
+        Object.assign(roomTemplates, msg.roomTemplates);
     }
     if (msg.deleteRoomId) {
         deleteRoom(msg.deleteRoomId);
