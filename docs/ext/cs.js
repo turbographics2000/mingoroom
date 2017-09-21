@@ -329,7 +329,22 @@ btnReserveRoom.onclick = function() {
 
 };
 
+regRoomTitle.oninput = function() {
+    roomViewTitle.value = this.value;
+}
+regRoomCourse.onchange = regRoomHole.onchange = function(evt) {
+    var year = currentRoomData.year;
+    var month = currentRoomData.month;
+    var day = currentRoomData.day;
+    var hour = currentRoomData.hour;
+    var minute = currentRoomData.minute;
 
+    roomViewSummary.textContent = [
+        fmt('y/m/d h:m', year, month, day, hour, minute),
+        courses[regRoomCourse.value].short,
+        regRoomHole.value + 'Hole'
+    ].join(' ');
+}
 regRoomComment.oninput = function() {
     roomViewComment.innerHTML = marked(this.value);
 }
@@ -600,13 +615,14 @@ function roomDialogShow(isView) {
     var comment = currentRoomData.comment || '';
     var owner = currentRoomData.owner;
 
+    roomViewSummary.textContent = [
+        fmt('y/m/d h:m', year, month, day, hour, minute),
+        courses[course].short,
+        hole + 'Hole'
+    ].join(' ');
+    
     if (isView) {
         roomViewTitle.textContent = title;
-        roomViewSummary.textContent = [
-            fmt('y/m/d h:m', year, month, day, hour, minute),
-            courses[course].short,
-            hole + 'Hole'
-        ].join(' ');
         roomViewOwnerAvatar.src = accounts[owner].avatar;
         roomViewOwnerAvatar.alt = roomViewOwnerAvatar.title = accounts[owner].mingolName + '(@' + accounts[owner].twitterScrName + ')';
         roomViewComment.textContent = comment;
