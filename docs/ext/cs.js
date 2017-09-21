@@ -209,14 +209,14 @@ function appendDemoRoom() {
 
 //accountAvatar.src = accounts[accountId].avatar;
 
-// window.onkeydown = function (evt) {
-//     if(evt.srcElement instanceof HTMLTextAreaElement) return;
-//     if (evt.keyCode === 13) { // Enter
-//         currentOKButton.onclick.call(currentOKButton);
-//     } else if (evt.keyCode === 27) { // Esc
-//         currentCancelButton.onclick.call(currentCancelButton);
-//     }
-// }
+window.onkeydown = function (evt) {
+    if(evt.srcElement instanceof HTMLTextAreaElement) return;
+    if (evt.keyCode === 13) { // Enter
+        currentOKButton.onclick.call(currentOKButton);
+    } else if (evt.keyCode === 27) { // Esc
+        currentCancelButton.onclick.call(currentCancelButton);
+    }
+}
 
 accountAvatar.onclick = function (evt) {
     upsertDataset(btnRegAccount, { type: 'changeAccount' });
@@ -329,10 +329,6 @@ btnReserveRoom.onclick = function() {
 
 };
 
-regRoomTitle.addEventListener('input', function() {
-    console.log('hoge')
-    roomViewTitle.value = this.value;
-});
 regRoomCourse.onchange = regRoomHole.onchange = function(evt) {
     var year = currentRoomData.year;
     var month = currentRoomData.month;
@@ -359,6 +355,9 @@ function requireInput() {
 }
 $('input.require', elm => {
     elm.oninput = requireInput;
+    if(elm.id === 'regRoomTitle') {
+        roomViewTitle.value = elm.value;
+    }
 });
 
 filterCourse.onchange = filterHole.onchange = function () {
