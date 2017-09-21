@@ -330,6 +330,7 @@ btnReserveRoom.onclick = function() {
 };
 
 regRoomTitle.oninput = function() {
+    console.log('hoge')
     roomViewTitle.value = this.value;
 }
 regRoomCourse.onchange = regRoomHole.onchange = function(evt) {
