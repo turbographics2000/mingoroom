@@ -353,7 +353,7 @@ function requireInput() {
         classRemove(this, 'hasvalue');
     }
     if(this.id === 'regRoomTitle') {
-        roomViewTitle.value = this.value;
+        roomViewTitle.textContent = this.value;
     }
 }
 $('input.require', elm => {
