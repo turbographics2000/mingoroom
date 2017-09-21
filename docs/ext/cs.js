@@ -352,12 +352,12 @@ function requireInput() {
     } else {
         classRemove(this, 'hasvalue');
     }
+    if(this.id === 'regRoomTitle') {
+        roomViewTitle.value = elm.value;
+    }
 }
 $('input.require', elm => {
     elm.oninput = requireInput;
-    if(elm.id === 'regRoomTitle') {
-        roomViewTitle.value = elm.value;
-    }
 });
 
 filterCourse.onchange = filterHole.onchange = function () {
