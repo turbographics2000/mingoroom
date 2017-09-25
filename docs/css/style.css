@@ -489,6 +489,12 @@ button:active, div[id^="btn"]:active {
 #roomViewComment h1, #roomViewComment h2, #roomViewComment h3, #roomViewComment h4{
   text-align: left;
 }
+#roomViewComment table {
+  border-collapse: collapse;
+}
+#roomViewComment table td {
+  border: 1px solid;
+}
 .membercount-container {
   float:right;
 }
