@@ -453,6 +453,14 @@ button:active, div[id^="btn"]:active {
   width: 100%;
   height: calc(100% - 320px);
 }
+.tempatesave-container * {
+  vertical-align: middle;
+  margin: 10px;
+}
+#btnRegTemplate {
+  width: 30px;
+  height: 30px;
+}
 #roomViewDialog.preview {
   transform: translateX(50%);
 }
