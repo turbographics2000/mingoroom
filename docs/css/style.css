@@ -483,6 +483,7 @@ button:active, div[id^="btn"]:active {
 .roomview-scroller {
   height: calc(100% - 130px);
   border: 1px solid black;
+  overflow-y: auto;
 }
 #roomViewComment{
 }
