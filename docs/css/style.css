@@ -485,7 +485,8 @@ button:active, div[id^="btn"]:active {
   border: 1px solid black;
   overflow-y: auto;
 }
-#roomViewComment{
+#roomViewComment h1, #roomViewComment h2, #roomViewComment h3, #roomViewComment h4{
+  text-align: left;
 }
 .membercount-container {
   float:right;
