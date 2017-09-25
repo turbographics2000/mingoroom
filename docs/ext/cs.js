@@ -345,7 +345,7 @@ regRoomCourse.onchange = regRoomHole.onchange = function(evt) {
     ].join(' ');
 }
 regRoomComment.oninput = function() {
-    roomViewComment.innerHTML = marked(this.value.replace(/\r\n/g, '  '));
+    roomViewComment.innerHTML = marked(this.value.replace(/\n/g, '  '));
 }
 
 function requireInput() {
