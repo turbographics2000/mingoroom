@@ -495,6 +495,7 @@ button:active, div[id^="btn"]:active {
 }
 #roomViewComment table td {
   border: 1px solid;
+  padding: 4px;
 }
 .membercount-container {
   float:right;
