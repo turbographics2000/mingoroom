@@ -484,6 +484,7 @@ button:active, div[id^="btn"]:active {
   height: calc(100% - 130px);
   border: 1px solid black;
   overflow-y: auto;
+  padding: 10px;
 }
 #roomViewComment h1, #roomViewComment h2, #roomViewComment h3, #roomViewComment h4{
   text-align: left;
