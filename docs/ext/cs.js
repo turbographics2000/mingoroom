@@ -444,7 +444,8 @@ function appendTimetableRow(year, month, day) {
                     course: 'tokyo',
                     hole: '3',
                     no: '',
-                    members: []
+                    members: [],
+                    owner: myAccountData.twitterScrName
                 };
                 roomDialogShow();
                 classAdd(roomViewDialog, 'preview');
