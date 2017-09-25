@@ -135,6 +135,7 @@ loadStorage(['step', 'myAccountData', 'myRooms', 'myFriends']).then(data => {
         if (data.myAccountData) {
             myAccountData = data.myAccountData;
             if(myAccountData) {
+                accounts[myAccountData.twitterScrName] = myAccountData;
                 accountAvatar.src = myAccountData.avatar;
                 elmShow(accountAvatar);
             }
