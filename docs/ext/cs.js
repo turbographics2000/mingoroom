@@ -621,7 +621,7 @@ function roomDialogShow(isView) {
     var comment = currentRoomData.comment || '';
     var owner = currentRoomData.owner;
 
-    roomViewOwnerAvatar.src = accounts[onwer].avatar;
+    roomViewOwnerAvatar.src = accounts[owner].avatar;
     roomViewSummary.textContent = [
         fmt('y/m/d h:m', year, month, day, hour, minute),
         courses[course].short,
