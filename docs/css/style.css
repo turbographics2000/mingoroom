@@ -481,7 +481,7 @@ button:active, div[id^="btn"]:active {
   display: inline-block;
 }
 .roomview-scroller {
-  height: calc(100% - 60px);
+  height: calc(100% - 130px);
   border: 1px solid black;
 }
 #roomViewComment{
