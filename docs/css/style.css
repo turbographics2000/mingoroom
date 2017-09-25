@@ -446,8 +446,8 @@ button:active, div[id^="btn"]:active {
   border: 1px solid gray;
   background: #fcc;
 }
-#regRoomHole {
-  vertical-align: top;
+#regRoomCourse, #regRoomHole {
+  vertical-align: middle;
 }
 #regRoomComment {
   width: 100%;
@@ -460,6 +460,9 @@ button:active, div[id^="btn"]:active {
 #btnRegTemplate {
   width: 30px;
   height: 30px;
+}
+#roomViewDialog {
+  height: calc(100% - 60px);
 }
 #roomViewDialog.preview {
   transform: translateX(50%);
@@ -477,9 +480,11 @@ button:active, div[id^="btn"]:active {
   line-height: 35px;
   display: inline-block;
 }
-#roomViewComment{
-  height:300px;
+.roomview-scroller {
+  height: calc(100% - 60px);
   border: 1px solid black;
+}
+#roomViewComment{
 }
 .membercount-container {
   float:right;
