@@ -488,7 +488,7 @@ button:active, div[id^="btn"]:active {
 }
 #roomViewComment h1, #roomViewComment h2, #roomViewComment h3, #roomViewComment h4{
   text-align: left;
-  margin-bottom: 0.5em;
+  margin-bottom: 0;
 }
 #roomViewComment table {
   border-collapse: collapse;
