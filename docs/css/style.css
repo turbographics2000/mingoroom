@@ -449,7 +449,10 @@ button:active, div[id^="btn"]:active {
 #regRoomHole {
   vertical-align: top;
 }
-
+#regRoomComment {
+  width: 100%;
+  height: calc(100% - 320px);
+}
 #roomViewDialog.preview {
   transform: translateX(50%);
 }
