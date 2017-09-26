@@ -40,7 +40,7 @@ btnStorageClear.addEventListener('click', evt => {
 });
 
 function stepNextDialogShow(stepNo) {
-    elmShow(tutorialMask);
+    tutorialMask.show();
     var stepDialogs = document.querySelectorAll('.step-dialog');
     stepDialogs.forEach(dialog => dialogHide(dialog));
     dialogChangeTo(stepDialogs[stepNo]);
@@ -54,7 +54,7 @@ function stepNextDialogShow(stepNo) {
         var day = nowDay();
         tutorialMask.style.background = 'rgba(0,0,0,0.01)';
         if (stepNo === 3) {
-            elmShow(accountAvatar);
+            accountAvatar.show();
             appendTimetableRow(year, month, day);
         } else if (stepNo === 4) {
             accounts = demoAccounts;
@@ -90,14 +90,14 @@ function stepNextDialogShow(stepNo) {
 }
 
 function stepBackDialogShow(stepNo) {
-    elmShow(tutorialMask);
+    tutorialMask.show();
     var stepDialogs = document.querySelectorAll('.step-dialog');
     stepDialogs.forEach(dialog => dialogHide(dialog));
     dialogChangeTo(stepDialogs[stepNo]);
     if (stepNo < 3) {
         tutorialMask.style.background = 'gray';
         $('.step-dialog', elm => classRemove(elm, 'opdesc-mode'));
-        elmHide(accountAvatar);
+        accountAvatar.hide();
         mingoroomContainer.innerHTML = '';
     } else {
         if (stepNo === 3) {
@@ -137,7 +137,7 @@ loadStorage(['step', 'myAccountData', 'myRooms', 'myFriends']).then(data => {
             if(myAccountData) {
                 accounts[myAccountData.twitterScrName] = myAccountData;
                 accountAvatar.src = myAccountData.avatar;
-                elmShow(accountAvatar);
+                accountAvatar.show();
             }
             appendTimetableRow(nowYear(), nowMonth(), nowDay());
             myRooms = data.myRooms;
@@ -149,7 +149,7 @@ loadStorage(['step', 'myAccountData', 'myRooms', 'myFriends']).then(data => {
         }
     } else {
         tutorialMask.style.background = 'gray';
-        elmShow(tutorialMask);
+        tutorialMask.show();
         dialogChangeTo(step0Dialog);
         $('.step-button', btn => {
             btn.onclick = function () {
@@ -235,7 +235,7 @@ btnGoToRegAccount.onclick = function () {
         appendTimetableRow(nowYear(), nowMonth(), nowDay());
         //appendTimetableRow(nowYear(), nowMonth(), nowDay() + 1);
         $('.dialog', elm => dialogHide(elm));
-        elmHide(tutorialMask);
+        tutorialMask.hide();
         createRegAccountKey();
         dialogShow(accountDialog);
     });
@@ -293,19 +293,19 @@ btnModeChange.onclick = function () {
     if (this.classList.contains('delete-mode')) {
         classRemove(this, 'delete-mode');
         modeChangeLabel.textContent = 'ノーマル';
-        $('.create-room-button', elm => elmShow(elm));
-        $('.timetable-roomcount', elm => elmShow(elm));
+        $('.create-room-button', elm => elm.show());
+        $('.timetable-roomcount', elm => elm.show());
         $('.row[data-room-count="0"], .row[data-my-room-count="0"]', row => classRemove(row, 'empty'));
         $('.room', elm => classRemove(elm, 'delete-mode'));
         filterCourse.onchange.call(filterCourse);
-        //elmShow(filterMask);
+        //filterMask.show();
         currentMode = 'add';
     } else {
         classAdd(this, 'delete-mode');
         modeChangeLabel.textContent = '削除';
-        $('.create-room-button', elm => elmHide(elm));
-        $('.timetable-roomcount', elm => elmHide(elm));
-        $('.room:not([data-owner="' + myAccountData.twitterScrName + '"])', elm => elmHide(elm));
+        $('.create-room-button', elm => elm.hide());
+        $('.timetable-roomcount', elm => elm.hide());
+        $('.room:not([data-owner="' + myAccountData.twitterScrName + '"])', elm => elm.hide());
         $('.row[data-room-count="0"], .row[data-my-room-count="0"]', row => classAdd(row, 'empty'));
         $('.room', elm => classAdd(elm, 'delete-mode'));
         currentMode = 'delete';
@@ -313,16 +313,16 @@ btnModeChange.onclick = function () {
     //document.querySelector('div[data-owner="gtk2kおしgtk2k"]');
 };
 btnRegAccount.onclick = function () {
-    elmHide(btnRegAccount);
+    btnRegAccount.hide();
     if (!regMingolName.value) {
         regMingolName.focus();
-        elmShow(btnRegAccount);
+        btnRegAccount.show();
         regAccountErrorMessage.textContent = 'みんゴル名を入力してください。'
         return;
     }
     if (!regTwitterScrName.value) {
         regTwitterScrName.focus();
-        elmShow(btnRegAccount);
+        btnRegAccount.show();
         regAccountErrorMessage.textContent = 'Twitterのスクリーンネームを入力してください。'
         return;
     }
@@ -365,7 +365,7 @@ $('input.require', elm => {
 
 filterCourse.onchange = filterHole.onchange = function () {
     var filter = '';
-    $('.room', elm => elmShow(elm));
+    $('.room', elm => elm.show());
     if (filterCourse.value !== 'all') {
         filter += '.room:not([data-course="' + filterCourse.value + '"])';
     }
@@ -373,7 +373,7 @@ filterCourse.onchange = filterHole.onchange = function () {
         filter += (filter ? ',' : '') + '.room:not([data-hole="' + filterHole.value + '"])';
     }
     if (filter) {
-        $(filter, elm => elmHide(elm));
+        $(filter, elm => elm.hide());
     }
 };
 
@@ -430,7 +430,7 @@ function appendTimetableRow(year, month, day) {
             classAdd(roomCountContainer, 'timetable-roomcount');
             classAdd(btnCreateRoom, 'create-room-button');
             if (currentMode === 'delete') {
-                elmHide(btnCreateRoom);
+                btnCreateRoom.hide();
             }
 
             upsertDataset(btnCreateRoom, { roomCount: 0, year, month, day, hour, minute });
@@ -561,11 +561,11 @@ function appendRoom(data, container) {
     room.onclick = function (evt) {
         var data = rooms_id[this.id];
         if (myRooms[this.id]) {
-            elmHide(btnReserveRoom);
-            elmShow(btnRoomEdit);
+            btnReserveRoom.hide();
+            btnRoomEdit.show();
         } else {
-            elmShow(btnReserveRoom);
-            elmHide(btnRoomEdit);
+            btnReserveRoom.show();
+            btnRoomEdit.hide();
         }
         if (currentMode === 'add') {
             currentRoomData = {};
@@ -601,10 +601,10 @@ function checkCreateRoomLimit({ year, month, day, hour, minute }) {
         });
     });
     if (minuteCnt >= MAX_PAR_MINUTE) {
-        elmHide(window['btnCreateRoom' + date + hour + minute]);
+        window['btnCreateRoom' + date + hour + minute].hide();
     }
     if (hourCnt >= MAX_PAR_HOUR) {
-        $('[id^="btnCreateRoom' + date + hour + '"]', elm => elmHide(elm));
+        $('[id^="btnCreateRoom' + date + hour + '"]', elm => elm.hide());
     }
 }
 
@@ -629,6 +629,9 @@ function roomDialogShow(isView) {
     ].join(' ');
     
     if (isView) {
+        lblPreview.hide();
+        [btnReserveRoom, btnReserveList, btnRoomViewDialogClose].show();
+
         roomViewTitle.textContent = title;
         roomViewOwnerAvatar.src = accounts[owner].avatar;
         roomViewOwnerAvatar.alt = roomViewOwnerAvatar.title = accounts[owner].mingolName + '(@' + accounts[owner].twitterScrName + ')';
@@ -637,6 +640,9 @@ function roomDialogShow(isView) {
         updateMemberList(currentRoomData.members);
         dialogShow(roomViewDialog);
     } else {
+        [btnReserveRoom, btnReserveList, btnRoomViewDialogClose].hide();
+        lblPreview.show();
+
         roomStartDate.textContent = fmtDate('y/m/d', year, month, day);
         roomStartTime.textContent = fmtTime('h:m', hour, minute);
         regRoomTitle.value = '';
@@ -809,7 +815,7 @@ function regAccount() {
         dispatchCustomEvent('regAccount');
     }).catch(err => {
         regAccountErrorMessage.textContent = err;
-        elmShow(btnRegAccount);
+        btnRegAccount.show();
     });
 }
 
@@ -857,15 +863,15 @@ window.addEventListener('regAccountSuccess', evt => {
     regMingolName.value = '';
     regTwitterScrName.value = '';
     accountAvatar.src = myAvatar;
-    elmShow(accountAvatar);
+    accountAvatar.show();
     saveStorage({ myAccountData }).then(_ => {
         dialogHide(accountDialog);
-        elmShow(btnRegAccount);
+        btnRegAccount.show();
         messageDialogShow('アカウントを登録しました。忘れずにTwitterの名前をもとに戻してください。');
         if (btnRegAccount.dataset.type === 'step') {
             dispatchCustomEvent('connect', { myAccountData, myRooms });
             accountAvatar.src = myAccountData.avatar;
-            elmShow(accountAvatar);
+            accountAvatar.show();
             mingoroomContainer.innerHTML = '';
             appendTimetableRow(nowYear(), nowMonth(), nowDay());
         }

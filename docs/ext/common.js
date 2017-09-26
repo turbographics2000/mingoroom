@@ -47,12 +47,24 @@ function isShowing(elm) {
     return !hasClass(elm, 'hide');
 }
 function elmShow(elm) {
-    if (!elm || !(elm instanceof HTMLElement)) return;
-    classRemove(elm, 'hide');
+    if(elm) {
+        let elms = null;
+        if(elm instanceof HTMLElement) elms = [elm];
+        elms.forEach(elm => {
+            elm.show();
+        })
+    }
 }
 function elmHide(elm) {
-    if (!elm || !(elm instanceof HTMLElement)) return;
-    classAdd(elm, 'hide');
+    if(elm) {
+        let elms = null;
+        if(elm instanceof HTMLElement) elms = [elm];
+        if(Array.isArray(elms) || elms instanceof NodeList || elms instanceof HTMLCollection) {
+            elms.forEach(elm => {
+                classAdd(elm, 'hide');
+            });
+        }
+    }
 }
 function appendChild(parent, ...child) {
     arrayEach(child, elm => parent.appendChild(elm));
@@ -144,3 +156,47 @@ function messageDialogShow(msg) {
     dlgMessage.textContent = msg;
     dialogShow(messageDialog);
 }
+
+
+HTMLElement.prototype.hasClass = function(cls) {
+    return this.classList.contains(cls);
+};
+HTMLElement.prototype.isShowing = function() {
+    return !this.hasClass('hide');
+};
+Array.prototype.classAdd = NodeList.prototype.classAdd = HTMLCollection.prototype.classAdd = HTMLElement.prototype.classAdd = function(classies) {
+    if(!classies) return;
+    if(Array.isArray(this)) {
+        for(var i = 0, l = this.length; i < l; i++) {
+            if(!(this[i] instanceof HTMLElement)) return; 
+        }
+    }
+    if(!Array.isArray(classies)) classies = [classies];
+    var elms = this instanceof HTMLElement ? [this] : this;
+    classies.forEach(cls => {
+        elms.forEach(elm => {
+            elm.classList.add(cls);
+        });
+    });
+};
+Array.prototype.classRemove = NodeList.prototype.classRemove = HTMLCollection.prototype.classRemove = HTMLElement.prototype.classRemove = function(classies) {
+    if(!classies) return;
+    if(Array.isArray(this)) {
+        for(var i = 0, l = this.length; i < l; i++) {
+            if(!(this[i] instanceof HTMLElement)) return; 
+        }
+    }
+    if(!Array.isArray(classies)) classies = [classies];
+    var elms = this instanceof HTMLElement ? [this] : this;
+    classies.forEach(cls => {
+        elms.forEach(elm => {
+            elm.classList.remove(cls);
+        });
+    });
+};
+Array.prototype.show = NodeList.prototype.show = HTMLCollection.prototype.show = HTMLElement.prototype.show = function() {
+    this.classRemove('hide');
+};
+Array.prototype.hide = NodeList.prototype.hide = HTMLCollection.prototype.hide = HTMLElement.prototype.hide = function() {
+    this.classAdd('hide');
+};
