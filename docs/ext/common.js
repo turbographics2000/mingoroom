@@ -21,18 +21,10 @@ function sendData(data, to = null) {
     dispatchCustomEvent('send', { data, to });
 }
 
-function arrayEach(data, func) {
-    if (Array.isArray(data)) {
-        arr = data;
-    } else {
-        arr = [data];
-    }
-    arr.forEach(func);
-}
 function $(selector, func, parent) {
     (parent || document).querySelectorAll(selector).forEach(func);
 };
-function classAdd(elm, ...cls) {
+/*function classAdd(elm, ...cls) {
     if (!elm || !(elm instanceof HTMLElement)) return;
     elm.classList.add(...cls);
 }
@@ -69,6 +61,7 @@ function elmHide(elm) {
 function appendChild(parent, ...child) {
     arrayEach(child, elm => parent.appendChild(elm));
 }
+*/
 function objKeys(obj, idx = null) {
     if (!obj) return;
     if (idx !== null) {
@@ -80,6 +73,13 @@ function objKeys(obj, idx = null) {
 function objKeysEach(obj, func) {
     if (!obj) return;
     objKeys(obj).forEach(func);
+}
+function objPropsEach(obj, func) {
+    if(!obj) return;
+    var keys = objKeys(obj);
+    keys.forEach((key, idx) => {
+        func(obj[key], key, idx);
+    });
 }
 function upsertDataset(elm, dataset) {
     objKeysEach(dataset, key => elm.dataset[key] = dataset[key]);
@@ -157,14 +157,24 @@ function messageDialogShow(msg) {
     dialogShow(messageDialog);
 }
 
-
+HTMLElement.prototype.appendChildren = function(children) {
+    if(!children) return;
+    if(!children instanceof HTMLElement && !children instanceof HTMLCollection && !children instanceof NodeList) return;
+    if(children instanceof HTMLElement) children = [children];
+    children.forEach(elm => {
+        this.appendChild(elm);
+    });
+}
 HTMLElement.prototype.hasClass = function(cls) {
     return this.classList.contains(cls);
 };
 HTMLElement.prototype.isShowing = function() {
     return !this.hasClass('hide');
 };
-Array.prototype.classAdd = NodeList.prototype.classAdd = HTMLCollection.prototype.classAdd = HTMLElement.prototype.classAdd = function(classies) {
+Array.prototype.classAdd = 
+NodeList.prototype.classAdd = 
+HTMLCollection.prototype.classAdd = 
+HTMLElement.prototype.classAdd = function(classies) {
     if(!classies) return;
     if(Array.isArray(this)) {
         for(var i = 0, l = this.length; i < l; i++) {
@@ -179,7 +189,10 @@ Array.prototype.classAdd = NodeList.prototype.classAdd = HTMLCollection.prototyp
         });
     });
 };
-Array.prototype.classRemove = NodeList.prototype.classRemove = HTMLCollection.prototype.classRemove = HTMLElement.prototype.classRemove = function(classies) {
+Array.prototype.classRemove = 
+NodeList.prototype.classRemove = 
+HTMLCollection.prototype.classRemove = 
+HTMLElement.prototype.classRemove = function(classies) {
     if(!classies) return;
     if(Array.isArray(this)) {
         for(var i = 0, l = this.length; i < l; i++) {
@@ -194,9 +207,15 @@ Array.prototype.classRemove = NodeList.prototype.classRemove = HTMLCollection.pr
         });
     });
 };
-Array.prototype.show = NodeList.prototype.show = HTMLCollection.prototype.show = HTMLElement.prototype.show = function() {
+Array.prototype.show = 
+NodeList.prototype.show = 
+HTMLCollection.prototype.show = 
+HTMLElement.prototype.show = function() {
     this.classRemove('hide');
 };
-Array.prototype.hide = NodeList.prototype.hide = HTMLCollection.prototype.hide = HTMLElement.prototype.hide = function() {
+Array.prototype.hide = 
+NodeList.prototype.hide = 
+HTMLCollection.prototype.hide = 
+HTMLElement.prototype.hide = function() {
     this.classAdd('hide');
 };

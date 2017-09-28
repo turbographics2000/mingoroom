@@ -487,11 +487,12 @@ button:active, div[id^="btn"]:active {
   padding: 10px;
 }
 #roomViewComment h1, #roomViewComment h2, #roomViewComment h3, #roomViewComment h4{
-  text-align: left;
+  text-align: center;
   margin-bottom: 0;
 }
 #roomViewComment table {
   border-collapse: collapse;
+  text-align: center;
 }
 #roomViewComment table th, #roomViewComment table td {
   border: 1px solid;
