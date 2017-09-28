@@ -492,7 +492,7 @@ button:active, div[id^="btn"]:active {
 }
 #roomViewComment table {
   border-collapse: collapse;
-  text-align: center;
+  margin: auto;
 }
 #roomViewComment table th, #roomViewComment table td {
   border: 1px solid;
