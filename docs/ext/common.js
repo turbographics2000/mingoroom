@@ -16,14 +16,13 @@ HTMLElement.prototype.isShowing = function() {
 Array.prototype.classAdd = 
 NodeList.prototype.classAdd = 
 HTMLCollection.prototype.classAdd = 
-HTMLElement.prototype.classAdd = function(classies) {
+HTMLElement.prototype.classAdd = function(...classies) {
     if(!classies) return;
     if(Array.isArray(this)) {
         for(var i = 0, l = this.length; i < l; i++) {
             if(!(this[i] instanceof HTMLElement)) return; 
         }
     }
-    if(!Array.isArray(classies)) classies = [classies];
     var elms = this instanceof HTMLElement ? [this] : this;
     classies.forEach(cls => {
         elms.forEach(elm => {
@@ -34,14 +33,13 @@ HTMLElement.prototype.classAdd = function(classies) {
 Array.prototype.classRemove = 
 NodeList.prototype.classRemove = 
 HTMLCollection.prototype.classRemove = 
-HTMLElement.prototype.classRemove = function(classies) {
+HTMLElement.prototype.classRemove = function(...classies) {
     if(!classies) return;
     if(Array.isArray(this)) {
         for(var i = 0, l = this.length; i < l; i++) {
             if(!(this[i] instanceof HTMLElement)) return; 
         }
     }
-    if(!Array.isArray(classies)) classies = [classies];
     var elms = this instanceof HTMLElement ? [this] : this;
     classies.forEach(cls => {
         elms.forEach(elm => {
