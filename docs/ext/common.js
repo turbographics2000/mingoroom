@@ -1,3 +1,67 @@
+HTMLElement.prototype.appendChildren = function(...children) {
+    if(!children) return;
+    for(var i = 0, l = children.length; i < l; i++) {
+        if(!(children[i] instanceof HTMLElement)) return; 
+    }
+    children.forEach(elm => {
+        this.appendChild(elm);
+    });
+}
+HTMLElement.prototype.hasClass = function(cls) {
+    return this.classList.contains(cls);
+};
+HTMLElement.prototype.isShowing = function() {
+    return !this.hasClass('hide');
+};
+Array.prototype.classAdd = 
+NodeList.prototype.classAdd = 
+HTMLCollection.prototype.classAdd = 
+HTMLElement.prototype.classAdd = function(classies) {
+    if(!classies) return;
+    if(Array.isArray(this)) {
+        for(var i = 0, l = this.length; i < l; i++) {
+            if(!(this[i] instanceof HTMLElement)) return; 
+        }
+    }
+    if(!Array.isArray(classies)) classies = [classies];
+    var elms = this instanceof HTMLElement ? [this] : this;
+    classies.forEach(cls => {
+        elms.forEach(elm => {
+            elm.classList.add(cls);
+        });
+    });
+};
+Array.prototype.classRemove = 
+NodeList.prototype.classRemove = 
+HTMLCollection.prototype.classRemove = 
+HTMLElement.prototype.classRemove = function(classies) {
+    if(!classies) return;
+    if(Array.isArray(this)) {
+        for(var i = 0, l = this.length; i < l; i++) {
+            if(!(this[i] instanceof HTMLElement)) return; 
+        }
+    }
+    if(!Array.isArray(classies)) classies = [classies];
+    var elms = this instanceof HTMLElement ? [this] : this;
+    classies.forEach(cls => {
+        elms.forEach(elm => {
+            elm.classList.remove(cls);
+        });
+    });
+};
+Array.prototype.show = 
+NodeList.prototype.show = 
+HTMLCollection.prototype.show = 
+HTMLElement.prototype.show = function() {
+    this.classRemove('hide');
+};
+Array.prototype.hide = 
+NodeList.prototype.hide = 
+HTMLCollection.prototype.hide = 
+HTMLElement.prototype.hide = function() {
+    this.classAdd('hide');
+};
+
 function saveStorage(data) {
     return new Promise((resolve, reject) => {
         chrome.storage.local.set(data, _ => {
@@ -133,18 +197,18 @@ function fmtTime(format, hour, minute) {
     }
 }
 function dialogShow(dialog) {
-    elmShow(dialogMask);
-    elmShow(dialog);
+    dialogMask.show();
+    dialog.show();
     setCurrentDialog(dialog);
 }
 function dialogHide(dialog) {
-    elmHide(dialogMask);
-    elmHide(dialog);
+    dialogMask.hide();
+    dialog.hide();
     setCurrentDialog(dialog);
 }
 function dialogChangeTo(dialog) {
     $('.dialog', elm => elmHide(dialog));
-    elmShow(dialog);
+    dialog.show();
     setCurrentDialog(dialog);
 }
 function setCurrentDialog(dialog) {
@@ -157,66 +221,3 @@ function messageDialogShow(msg) {
     dialogShow(messageDialog);
 }
 
-HTMLElement.prototype.appendChildren = function(...children) {
-    if(!children) return;
-    for(var i = 0, l = children.length; i < l; i++) {
-        if(!(children[i] instanceof HTMLElement)) return; 
-    }
-    children.forEach(elm => {
-        this.appendChild(elm);
-    });
-}
-HTMLElement.prototype.hasClass = function(cls) {
-    return this.classList.contains(cls);
-};
-HTMLElement.prototype.isShowing = function() {
-    return !this.hasClass('hide');
-};
-Array.prototype.classAdd = 
-NodeList.prototype.classAdd = 
-HTMLCollection.prototype.classAdd = 
-HTMLElement.prototype.classAdd = function(classies) {
-    if(!classies) return;
-    if(Array.isArray(this)) {
-        for(var i = 0, l = this.length; i < l; i++) {
-            if(!(this[i] instanceof HTMLElement)) return; 
-        }
-    }
-    if(!Array.isArray(classies)) classies = [classies];
-    var elms = this instanceof HTMLElement ? [this] : this;
-    classies.forEach(cls => {
-        elms.forEach(elm => {
-            elm.classList.add(cls);
-        });
-    });
-};
-Array.prototype.classRemove = 
-NodeList.prototype.classRemove = 
-HTMLCollection.prototype.classRemove = 
-HTMLElement.prototype.classRemove = function(classies) {
-    if(!classies) return;
-    if(Array.isArray(this)) {
-        for(var i = 0, l = this.length; i < l; i++) {
-            if(!(this[i] instanceof HTMLElement)) return; 
-        }
-    }
-    if(!Array.isArray(classies)) classies = [classies];
-    var elms = this instanceof HTMLElement ? [this] : this;
-    classies.forEach(cls => {
-        elms.forEach(elm => {
-            elm.classList.remove(cls);
-        });
-    });
-};
-Array.prototype.show = 
-NodeList.prototype.show = 
-HTMLCollection.prototype.show = 
-HTMLElement.prototype.show = function() {
-    this.classRemove('hide');
-};
-Array.prototype.hide = 
-NodeList.prototype.hide = 
-HTMLCollection.prototype.hide = 
-HTMLElement.prototype.hide = function() {
-    this.classAdd('hide');
-};
