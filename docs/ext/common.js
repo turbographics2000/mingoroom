@@ -157,12 +157,13 @@ function messageDialogShow(msg) {
     dialogShow(messageDialog);
 }
 
-HTMLElement.prototype.appendChildren = function(children) {
+HTMLElement.prototype.appendChildren = function(...children) {
     if(!children) return;
-    if(!children instanceof HTMLElement && !children instanceof HTMLCollection && !children instanceof NodeList) return;
-    if(children instanceof HTMLElement) children = [children];
+    for(var i = 0, l = children.length; i < l; i++) {
+        if(!(children[i] instanceof HTMLElement)) return; 
+    }
     children.forEach(elm => {
-        this.appendChild(elm);
+        children.appendChild(elm);
     });
 }
 HTMLElement.prototype.hasClass = function(cls) {

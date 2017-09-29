@@ -393,7 +393,7 @@ function appendTimetableRow(year, month, day) {
     //     headerCol.textContent = i;
     //     appendChild(colHeader, headerCol);
     // }
-    appendChild(mingoroomContainer, dateRow, colHeader);
+    mingoroomContainer.appendChildren([dateRow, colHeader]);
     var startHour = 0;
     var startMinute = 0;
 
@@ -455,10 +455,10 @@ function appendTimetableRow(year, month, day) {
                 dialogShow(roomViewDialog);    
             }
 
-            appendChild(roomCountContainer, roomCount, roomCountLabel);
-            appendChild(rowHeader, rowTime, roomCountContainer, btnCreateRoom);
-            appendChild(row, rowHeader);
-            appendChild(container, row);
+            roomCountContainer.appendChildren(roomCount, roomCountLabel);
+            rowHeader.appendChildren(rowTime, roomCountContainer, btnCreateRoom);
+            row.appendChildren(rowHeader);
+            container.appendChild(row);
         }
     }
 
@@ -471,7 +471,7 @@ function applyMaxRoomCount() {
         for (var i = 1; i <= maxRoomCount; i++) {
             var headerCol = document.createElement('div');
             headerCol.textContent = i;
-            appendChild(colHeader, headerCol);
+            colHeader.appendChild(headerCol);
         }
     });
     $('.row', row => {
@@ -578,9 +578,9 @@ function appendRoom(data, container) {
         }
     };
 
-    appendChild(roomNo, ownerAvatar);
-    appendChild(room, roomTitle, course, memberCount, roomNo);
-    appendChild(row, room);
+    roomNo.appendChild(ownerAvatar);
+    room.appendChildren(roomTitle, course, memberCount, roomNo);
+    row.appendChild(room);
 }
 
 function checkCreateRoomLimit({ year, month, day, hour, minute }) {
@@ -694,8 +694,8 @@ function updateMemberList(members) {
             memberMingolName.textContent = accountData.mingolName;
             memberTwitterScrName.textContent = '(@' + accountData.twitterScrName + ')';
 
-            appendChild(member, memberAvatar, memberMingolName, memberTwitterScrName);
-            appendChild(memberList, member);
+            member.appendChildren(memberAvatar, memberMingolName, memberTwitterScrName);
+            memberList.appendChild(member);
         });
     }
 }
