@@ -293,6 +293,7 @@ btnRegRoom.onclick = function (evt) {
 };
 btnRegRoomCancel.onclick = function () {
     dialogHide(roomDialog);
+    dialogHide(roomViewDialog);
 };
 btnRoomEdit.onclick = function () {
     dialogHide(roomViewDialog);
@@ -360,6 +361,18 @@ btnRegAccount.onclick = function () {
         return;
     }
     regAccount();
+};
+btnRegTemplate.onclick = function() {
+    var templateName = txtTemplateName.value.trim();
+    if(templateName) {
+        myRoomTemplates[templateName] = {
+            title: regRoomTitle.value,
+            course: regRoomCourse.value,
+            hole: regRoomHole.value,
+            roomNo: regRoomNo.value,
+            comment: regRoomComment.value
+        };
+    }
 };
 btnReserveRoom.onclick = function() {
 
@@ -678,6 +691,12 @@ function roomDialogShow(isView) {
         [btnRoomEdit, btnReserveRoom, btnReserveList, btnRoomViewDialogClose].hide();
         lblPreview.show();
 
+        roomTemplates.innerHTML = '';
+        objKeysEach(myRoomTemplates, templateName => {
+            var opt = document.createElement('opt');
+            opt.value = opt.textContent = templateName;
+            roomTemplates.appendChild(opt);
+        });
         roomStartDate.textContent = fmtDate('y/m/d', year, month, day);
         roomStartTime.textContent = fmtTime('h:m', hour, minute);
         regRoomTitle.value = '';
