@@ -357,6 +357,8 @@ function requireInput() {
     }
     if(this.id === 'regRoomTitle') {
         roomViewTitle.textContent = this.value;
+    } else if(this.id === 'regRoomNo') {
+        roomViewRoomNo.textContent = this.value;
     }
 }
 $('input.require', elm => {
