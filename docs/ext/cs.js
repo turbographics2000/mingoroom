@@ -674,7 +674,7 @@ function roomDialogShow(isView) {
         updateMemberList(currentRoomData.members);
         dialogShow(roomViewDialog);
     } else {
-        [btnReserveRoom, btnReserveList, btnRoomViewDialogClose].hide();
+        [btnRoomEdit, btnReserveRoom, btnReserveList, btnRoomViewDialogClose].hide();
         lblPreview.show();
 
         roomStartDate.textContent = fmtDate('y/m/d', year, month, day);
