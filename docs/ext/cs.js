@@ -288,6 +288,7 @@ btnRegRoom.onclick = function (evt) {
 
     upsertRoomData(data);
     dialogHide(roomDialog);
+    dialogHide(roomViewDialog);
     saveStorage({ myRooms }).then(_ => console.log('save myRooms.'));
 };
 btnRegRoomCancel.onclick = function () {
@@ -390,7 +391,7 @@ function requireInput() {
     if(this.id === 'regRoomTitle') {
         roomViewTitle.textContent = this.value;
     } else if(this.id === 'regRoomNo') {
-        roomViewRoomNo.textContent = this.value;
+        roomViewRoomNo.textContent = '#' + this.value;
     }
 }
 $('input.require', elm => {
