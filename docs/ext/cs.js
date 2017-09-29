@@ -47,7 +47,9 @@ function stepNextDialogShow(stepNo) {
     if (stepNo < 3) {
         tutorialMask.style.background = 'gray';
     } else {
-        $('.step-dialog', elm => classAdd(elm, 'opdesc-mode'));
+        $('.step-dialog', elm => {
+            elm.classAdd('opdesc-mode');
+        });
         accountAvatar.src = 'https://turbographics2000.github.io/mingoroom/imgs/avatar/avatar_a.png';
         var year = nowYear();
         var month = nowMonth();
@@ -67,24 +69,30 @@ function stepNextDialogShow(stepNo) {
         } else if (stepNo === 6) {
             dialogHide(roomViewDialog);
             $('.row', row => {
-                classAdd(row.querySelector('.room'), 'reserved');
+                row.querySelector('.room').classAdd('reserved');
             });
         } else if (stepNo === 7) {
-            $('.reserved', elm => classRemove(elm, 'reserved'));
-            $('.create-room-button', elm => classAdd(elm, 'opdesc-mode'));
+            $('.reserved', elm => {
+                elm.classAdd('reserved');
+            });
+            $('.create-room-button', elm => {
+                elm.classAdd('opdesc-mode');
+            });
         } else if (stepNo === 8) {
-            $('.create-room-button', elm => classRemove(elm, 'opdesc-mode'));
-            classAdd(btnModeChange, 'opdesc-mode');
+            $('.create-room-button', elm => {
+                elm.classRemove('opdesc-mode');
+            });
+            btnModeChange.classAdd('opdesc-mode');
         } else if (stepNo === 9) {
-            classRemove(btnModeChange, 'opdesc-mode');
+            btnModeChange.classRemove('opdesc-mode');
             myAccountData = demoAccounts[objKeys(demoAccounts)[0]];
             updateAllRow();
             btnModeChange.click();
         } else if (stepNo === 10) {
             btnModeChange.click();
-            classAdd(accountAvatar, 'opdesc-mode');
+            accountAvatar.classAdd('opdesc-mode');
         } else if (stepNo === 11) {
-            classRemove(accountAvatar, 'opdesc-mode');
+            accountAvatar.classRemove('opdesc-mode');
         }
     }
 }
@@ -108,24 +116,30 @@ function stepBackDialogShow(stepNo) {
             dialogHide(roomViewDialog);
         } else if (stepNo === 5) {
             document.querySelector('.room').click();
-            $('.reserved', elm => classRemove(elm, 'reserved'));
+            $('.reserved', elm => {
+                elm.classRemove('reserved');
+            });
         } else if (stepNo === 6) {
             dialogHide(roomViewDialog);
-            $('.create-room-button', elm => classRemove(elm, 'opdesc-mode'));
+            $('.create-room-button', elm => {
+                elm.classRemove('opdesc-mode');
+            });
             $('.row', row => {
-                classAdd(row.querySelector('.room'), 'reserved');
+                row.querySelector('.room').classAdd('reserved');
             });
         } else if (stepNo === 7) {
-            $('.create-room-button', elm => classAdd(elm, 'opdesc-mode'));
-            classRemove(btnModeChange, 'opdesc-mode');
+            $('.create-room-button', elm => {
+                elm.classAdd('opdesc-mode');
+            });
+            btnModeChange.classRemove('opdesc-mode');
         } else if (stepNo === 8) {
-            classAdd(btnModeChange, 'opdesc-mode');
+            btnModeChange.classAdd('opdesc-mode');
             btnModeChange.click();
         } else if (stepNo === 9) {
-            classRemove(accountAvatar, 'opdesc-mode');
+            accountAvatar.classRemove('opdesc-mode');
             btnModeChange.click();
         } else if (stepNo === 10) {
-            classAdd(accountAvatar, 'opdesc-mode');
+            accountAvatar.classAdd('opdesc-mode');
         }
     }
 }
@@ -269,8 +283,8 @@ btnRegRoom.onclick = function (evt) {
     data.hole = regRoomHole.value;
     data.no = regRoomNo.value;
     data.comment = regRoomComment.value;
-    classRemove(regRoomTitle, 'hasvalue');
-    classRemove(regRoomNo, 'hasvalue');
+    regRoomTitle.classRemove('hasvalue');
+    regRoomNo.classRemove('hasvalue');
 
     upsertRoomData(data);
     dialogHide(roomDialog);
@@ -291,23 +305,41 @@ btnReserveList.onclick = function() {
 };
 btnModeChange.onclick = function () {
     if (this.classList.contains('delete-mode')) {
-        classRemove(this, 'delete-mode');
+        this.classRemove('delete-mode');
         modeChangeLabel.textContent = 'ノーマル';
-        $('.create-room-button', elm => elm.show());
-        $('.timetable-roomcount', elm => elm.show());
-        $('.row[data-room-count="0"], .row[data-my-room-count="0"]', row => classRemove(row, 'empty'));
-        $('.room', elm => classRemove(elm, 'delete-mode'));
+        $('.create-room-button', elm => {
+            elm.show();
+        });
+        $('.timetable-roomcount', elm => {
+            elm.show();
+        });
+        $('.row[data-room-count="0"], .row[data-my-room-count="0"]', row => {
+            row.classRemove('empty');
+        });
+        $('.room', elm => {
+            elm.classRemove('delete-mode');
+        });
         filterCourse.onchange.call(filterCourse);
         //filterMask.show();
         currentMode = 'add';
     } else {
-        classAdd(this, 'delete-mode');
+        this.classAdd('delete-mode');
         modeChangeLabel.textContent = '削除';
-        $('.create-room-button', elm => elm.hide());
-        $('.timetable-roomcount', elm => elm.hide());
-        $('.room:not([data-owner="' + myAccountData.twitterScrName + '"])', elm => elm.hide());
-        $('.row[data-room-count="0"], .row[data-my-room-count="0"]', row => classAdd(row, 'empty'));
-        $('.room', elm => classAdd(elm, 'delete-mode'));
+        $('.create-room-button', elm => {
+            elm.hide();
+        });
+        $('.timetable-roomcount', elm => {
+            elm.hide();
+        });
+        $('.room:not([data-owner="' + myAccountData.twitterScrName + '"])', elm => {
+            elm.hide();
+        });
+        $('.row[data-room-count="0"], .row[data-my-room-count="0"]', row => {
+            row.classAdd('empty');
+        });
+        $('.room', elm => {
+            elm.classAdd('delete-mode');
+        });
         currentMode = 'delete';
     }
     //document.querySelector('div[data-owner="gtk2kおしgtk2k"]');
@@ -351,9 +383,9 @@ regRoomComment.oninput = function() {
 
 function requireInput() {
     if (this.value) {
-        classAdd(this, 'hasvalue');
+        this.classAdd('hasvalue');
     } else {
-        classRemove(this, 'hasvalue');
+        this.classRemove('hasvalue');
     }
     if(this.id === 'regRoomTitle') {
         roomViewTitle.textContent = this.value;
@@ -426,11 +458,11 @@ function appendTimetableRow(year, month, day) {
             roomCount.textContent = '0';
             roomCountLabel.textContent = '室';
             rowTime.textContent = fmtTime('h:m', hour, minute);
-            classAdd(row, 'row');
-            classAdd(rowHeader, 'rowheader');
-            classAdd(rowTime, 'timetable-time');
-            classAdd(roomCountContainer, 'timetable-roomcount');
-            classAdd(btnCreateRoom, 'create-room-button');
+            row.classAdd('row');
+            rowHeader.classAdd('rowheader');
+            rowTime.classAdd('timetable-time');
+            roomCountContainer.classAdd('timetable-roomcount');
+            btnCreateRoom.classAdd('create-room-button');
             if (currentMode === 'delete') {
                 btnCreateRoom.hide();
             }
@@ -451,7 +483,7 @@ function appendTimetableRow(year, month, day) {
                     owner: myAccountData.twitterScrName
                 };
                 roomDialogShow();
-                classAdd(roomViewDialog, 'preview');
+                roomViewDialog.classAdd('preview');
                 dialogShow(roomViewDialog);    
             }
 
@@ -546,11 +578,11 @@ function appendRoom(data, container) {
     room.id = data.roomId;
     memberCount.id = data.roomId + 'Count';
 
-    classAdd(room, 'room');
-    classAdd(roomTitle, 'room-title');
-    classAdd(roomNo, 'room-no');
-    classAdd(course, 'course');
-    classAdd(ownerAvatar, 'room-owner-avatar', data.owner);
+    room.classAdd('room');
+    roomTitle.classAdd('room-title');
+    roomNo.classAdd('room-no');
+    course.classAdd('course');
+    ownerAvatar.classAdd('room-owner-avatar', data.owner);
 
     roomTitle.textContent = data.title;
     roomNo.textContent = '#' + ('00000' + data.no).slice(-6);
@@ -683,10 +715,10 @@ function updateMemberList(members) {
             var memberMingolName = document.createElement('span');
             var memberTwitterScrName = document.createElement('span');
 
-            classAdd(member, 'member');
-            classAdd(memberAvatar, 'member-avatar', memberId);
-            classAdd(memberMingolName, 'member-mingolname');
-            classAdd(memberTwitterScrName, 'member-twitterscrname');
+            member.classAdd('member');
+            memberAvatar.classAdd('member-avatar', memberId);
+            memberMingolName.classAdd('member-mingolname');
+            memberTwitterScrName.classAdd('member-twitterscrname');
 
             if (accountData.avatar) {
                 memberAvatar.src = accountData.avatar;

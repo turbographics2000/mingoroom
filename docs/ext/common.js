@@ -163,7 +163,7 @@ HTMLElement.prototype.appendChildren = function(...children) {
         if(!(children[i] instanceof HTMLElement)) return; 
     }
     children.forEach(elm => {
-        children.appendChild(elm);
+        this.appendChild(elm);
     });
 }
 HTMLElement.prototype.hasClass = function(cls) {
