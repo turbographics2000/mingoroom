@@ -134,7 +134,6 @@ button:active, div[id^="btn"]:active {
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: chenter;
 }
 .filter-label {
   display: inline-block;
@@ -147,7 +146,6 @@ button:active, div[id^="btn"]:active {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
-  text-align: center;
   font-weight: bold;
   color:white;
   font-size: 24px;
@@ -173,11 +171,9 @@ button:active, div[id^="btn"]:active {
   display: inline-block;
   width: 208px;
   border-left: 1px solid gray;
-  text-align:center;
   font-size: 12px;
 }
 .timetable-daterow {
-  text-align: center;
   position: -webkit-sticky;
   position: sticky;
   left: 0;
@@ -211,7 +207,6 @@ button:active, div[id^="btn"]:active {
   left: 0;
   float:left;
   top: 0;
-  text-align: center;
   background: white;
   border-right: 1px solid gray;
   z-index: 1;
@@ -229,7 +224,6 @@ button:active, div[id^="btn"]:active {
   width: 30px;
   height: 30px;
   border: 1px solid gray;
-  text-align: center;
   cursor: pointer;
   background: url('data:image/svg+xml;utf8,<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" transform="rotate(45, 12, 12)"/></svg>') no-repeat center;
   background-size: 30px;
@@ -273,7 +267,6 @@ button:active, div[id^="btn"]:active {
 .room div {
   font-size: 14px;
   padding: 0 2px;
-  text-align: center;
   /*border-bottom: 1px solid gray;*/
   height: 14px;
   line-height: 16px;
@@ -298,7 +291,6 @@ button:active, div[id^="btn"]:active {
 .room-title, .room-no {
   height: 20px !important;
   line-height: 20px !important;
-  text-align: center;
   vertical-align: middle;
   font-size: 16px !important;
   font-weight: 800;
@@ -343,7 +335,6 @@ button:active, div[id^="btn"]:active {
 }
 
 .dialog-header {
-  text-align: center;
   font-size: 24px;
 }
 .dialog h2, .dialog h3, .dialog h4 {
@@ -370,7 +361,6 @@ button:active, div[id^="btn"]:active {
   display: inline-block;
 }
 .dialog-comment-title {
-  text-align:center;
   margin-top: 10px;
 }
 .dialog-comment {
@@ -467,9 +457,7 @@ button:active, div[id^="btn"]:active {
 #roomViewDialog.preview {
   transform: translateX(50%);
 }
-#roomViewSummary {
-  text-align:center;
-}
+
 #roomViewOwnerAvatar {
   width: 30px;
   height: 30px;
@@ -543,7 +531,6 @@ button:active, div[id^="btn"]:active {
   padding: 10px 0 0 0;
   background: white;
   font-size: 14px;
-  text-align:center;
 }
 
 #btnModeChange {
@@ -553,7 +540,6 @@ button:active, div[id^="btn"]:active {
   width: 30px;
   height: 30px;
   border: 1px solid gray;
-  text-align: center;
   background: white;    
   background: url('data:image/svg+xml;utf8,<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>') no-repeat center;
   background-size: 30px;
@@ -633,9 +619,6 @@ button:active, div[id^="btn"]:active {
 #messageDialog {
   height: 120px;
 }
-#dlgMessage {
-  /*text-align: center;*/
-}
 
 .hide {
   display: none;
@@ -652,7 +635,6 @@ button:active, div[id^="btn"]:active {
   width: 120px;
   margin: auto;
   border: 1px solid black;
-  text-align: center;
   cursor: pointer;
   background: white;
 }

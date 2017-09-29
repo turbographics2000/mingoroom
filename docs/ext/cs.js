@@ -415,10 +415,10 @@ filterCourse.onchange = filterHole.onchange = function () {
 function appendTimetableRow(year, month, day) {
     var dateRow = document.createElement('div');
     var colHeader = document.createElement('div');
-    dateRow.className = 'timetable-daterow';
+    dateRow.className = 'timetable-daterow center';
     dateRow.textContent = fmtDate('y/m/d', year, month, day);
 
-    colHeader.className = 'timetable-colheader border-bottom';
+    colHeader.className = 'timetable-colheader border-bottom center';
     // colHeader.style.width = ((maxRoomCount * 208) + 50 + 80) + 'px';
     // for(var i = 1; i <= maxRoomCount; i++) {
     //     var headerCol = document.createElement('div');
@@ -459,10 +459,10 @@ function appendTimetableRow(year, month, day) {
             roomCountLabel.textContent = '室';
             rowTime.textContent = fmtTime('h:m', hour, minute);
             row.classAdd('row');
-            rowHeader.classAdd('rowheader');
+            rowHeader.classAdd('rowheader', 'center');
             rowTime.classAdd('timetable-time');
             roomCountContainer.classAdd('timetable-roomcount');
-            btnCreateRoom.classAdd('create-room-button');
+            btnCreateRoom.classAdd('create-room-button', 'center');
             if (currentMode === 'delete') {
                 btnCreateRoom.hide();
             }
@@ -578,7 +578,7 @@ function appendRoom(data, container) {
     room.id = data.roomId;
     memberCount.id = data.roomId + 'Count';
 
-    room.classAdd('room');
+    room.classAdd('room', 'center');
     roomTitle.classAdd('room-title');
     roomNo.classAdd('room-no');
     course.classAdd('course');
