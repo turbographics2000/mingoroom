@@ -207,7 +207,9 @@ function dialogHide(dialog) {
     setCurrentDialog(dialog);
 }
 function dialogChangeTo(dialog) {
-    $('.dialog', elm => elmHide(dialog));
+    $('.dialog', elm => {
+        dialog.hide();
+    });
     dialog.show();
     setCurrentDialog(dialog);
 }
