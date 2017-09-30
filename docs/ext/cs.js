@@ -608,6 +608,7 @@ function appendRoom(data, container) {
     upsertDataset(room, { owner: data.owner, course: data.course, hole: data.hole });
     room.onclick = function (evt) {
         var data = rooms_id[this.id];
+        roomViewDialog.classRemove('preview');
         if (myRooms[this.id]) {
             btnReserveRoom.hide();
             btnRoomEdit.show();
@@ -637,13 +638,13 @@ function checkCreateRoomLimit({ year, month, day, hour, minute }) {
     var hourCnt = 0;
 
     objKeysEach(rooms_datetime[date][hour][minute], roomId => {
-        if (rooms_id[roomId].owner.twitterScrName === myAccountData.twitterScrName) {
+        if (rooms_id[roomId].owner === myAccountData.twitterScrName) {
             minuteCnt++;
         }
     });
     objKeysEach(rooms_datetime[date][hour], minute => {
         objKeysEach(rooms_datetime[date][hour][minute], roomId => {
-            if (rooms_id[roomId].owner.twitterScrName === myAccountData.twitterScrName) {
+            if (rooms_id[roomId].owner === myAccountData.twitterScrName) {
                 hourCnt++;
             }
         });
@@ -683,8 +684,8 @@ function roomDialogShow(isView) {
         roomViewTitle.textContent = title;
         roomViewOwnerAvatar.src = accounts[owner].avatar;
         roomViewOwnerAvatar.alt = roomViewOwnerAvatar.title = accounts[owner].mingolName + '(@' + accounts[owner].twitterScrName + ')';
-        roomViewComment.textContent = comment;
-
+        roomViewComment.innerHTML = marked(comment.replace(/\n/g, '  \n'));                
+        
         updateMemberList(currentRoomData.members);
         dialogShow(roomViewDialog);
     } else {
@@ -761,7 +762,7 @@ function upsertRoomData(data, withUpdateRow = true, send = true) {
 
     rooms_id[roomId] = rooms_id[roomId] || data;
 
-    if (owner.twitterScrName === myAccountData.twitterScrName) {
+    if (owner === myAccountData.twitterScrName) {
         myRooms[roomId] = data;
         if (send) {
             dispatchCustomEvent('send', { rooms: { [roomId]: data } });
@@ -837,7 +838,7 @@ function deleteOldMyRoom() {
     myRoomArray.splice(i, idx);
     myRooms = {};
     for(var i = 0, l = myRoomArray.length; i < l; i++) {
-        upsertRoomData(data, false, false);
+        upsertRoomData(myRoomArray, false, false);
     }
 }
 
