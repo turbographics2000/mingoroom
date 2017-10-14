@@ -51,12 +51,13 @@ var demoAccounts = {
     }
 };
 
+var dt = new Date();
 var demoRoomsSrc = [
     {
         title: '残暑お見舞い大会',
-        year: nowYear(),
-        month: nowMonth(),
-        day: nowDay(),
+        year: dt.year,
+        month: dt.month,
+        day: dt.day,
         course: 'panta',
         hole: '9',
         owner: objKeys(demoAccounts, 0),
@@ -65,9 +66,9 @@ var demoRoomsSrc = [
     },
     {
         title: '延長戦',
-        year: nowYear(),
-        month: nowMonth(),
-        day: nowDay(),
+        year: dt.year,
+        month: dt.month,
+        day: dt.day,
         course: 'tokyo',
         hole: '6',
         owner: objKeys(demoAccounts, 1),
@@ -76,9 +77,9 @@ var demoRoomsSrc = [
     },
     {
         title: 'SRギア縛り大会',
-        year: nowYear(),
-        month: nowMonth(),
-        day: nowDay(),
+        year: dt.year,
+        month: dt.month,
+        day: dt.day,
         course: 'ocean',
         hole: '3',
         owner: objKeys(demoAccounts, 2),
@@ -87,9 +88,9 @@ var demoRoomsSrc = [
     },
     {
         title: 'パター縛り大会',
-        year: nowYear(),
-        month: nowMonth(),
-        day: nowDay(),
+        year: dt.year,
+        month: dt.month,
+        day: dt.day,
         course: 'ocean',
         hole: '6',
         owner: objKeys(demoAccounts, 3),

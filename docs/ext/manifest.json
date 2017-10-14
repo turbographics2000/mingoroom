@@ -14,6 +14,7 @@
                 "common.js",
                 "demodata.js",
                 "marked.js",
+                "tutorial.js",
                 "cs.js"
             ]
         }
